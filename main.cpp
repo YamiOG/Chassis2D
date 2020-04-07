@@ -11,6 +11,7 @@ const int scale = 16;
 Chassis c;
 
 Object o; 
+Object ground;
 
 float32 timeStep = 1/60.0f;
 
@@ -29,6 +30,7 @@ void RenderHandler(){
   c.RClear();
 
   c.RFillRect(o.GetScaledPosition(), 100, 100, 100);
+  o.Draw(c);
 
   c.RPresent();
 }
@@ -37,7 +39,9 @@ int main(int argc, char *argv[]){
   c.Setup("Testing", 1600, 900, b2Vec2(0, 70), 8, 3);
   c.SetPhysicsFPS(60);
 
-  o.Setup(c, 100, 100, 10, 10, 0, 0, 0, true, scale);
+  o.Setup(c, 100, 100, 100, 100, 0, 0, 0, true, scale);
+  ground.Setup(c, 0, 900, 1600, 10, 0, 0, 0, false, scale);
+  o.SetTexture(c, "test.png");
 
   while(running){
     EventHandler();

@@ -37,6 +37,8 @@ class Chassis{
   //Get Cmds
   SDL_Event GetEvent() { return ev; }
   b2World* GetWorld() { return world; }
+  SDL_Renderer *GetRenderer(){return renderer;}
+  SDL_Window *GetWindow(){return window;}
 };
 
 #endif
