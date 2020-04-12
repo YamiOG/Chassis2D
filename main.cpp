@@ -3,6 +3,7 @@
 
 #include "Chassis.h"
 #include "Object.h"
+#include "Texture.h"
 
 using namespace std;
 
@@ -29,8 +30,7 @@ void EventHandler(){
 void RenderHandler(){
   c.RClear();
 
-  c.RFillRect(o.GetScaledPosition(), 100, 100, 100);
-  o.Draw(c);
+  o.Draw(c); 
 
   c.RPresent();
 }
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
 
   o.Setup(c, 100, 100, 100, 100, 0, 0, 0, true, scale);
   ground.Setup(c, 0, 900, 1600, 10, 0, 0, 0, false, scale);
-  o.SetTexture(c, "test.png");
+  o.SetTexture(Texture(c, "test.png", 1, 1, false));
 
   while(running){
     EventHandler();
