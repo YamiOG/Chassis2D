@@ -54,6 +54,14 @@ int Chassis::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelo
     return 0;
 }
 
+bool Chassis::IsPressed(int k){
+  const Uint8 *state = SDL_GetKeyboardState(NULL);
+  if(state[k]){
+    return true;
+  }
+  return false;
+}
+
 void Chassis::PhysicsUpdate(){
   if(1000/pFPS <= SDL_GetTicks()-pTime){
     world->Step(1.0f/pFPS, velocityI, positionI);

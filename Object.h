@@ -20,12 +20,16 @@ class Object{
   b2Body* body;
  public:
   Object(){}
+  Object(Chassis c, float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale);
   int Setup(Chassis c, float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale);
   void SetTexture(Texture t) { texture = t; }
   SDL_Rect GetScaledPosition();
   Texture GetTexture(){return texture;}
   b2Body *GetBody(){return body;}
   void SetBody(b2Body *sBody) {body = sBody;}
+  void ApplyConstVelocity(b2Vec2 v);
+  void ApplyImpulse(b2Vec2 v) { body->ApplyLinearImpulse( v, body->GetWorldCenter(), true); }
+  b2Vec2 GetVelocity() { return body->GetLinearVelocity(); }
   void Draw(Chassis c);
 };
 

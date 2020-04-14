@@ -39,6 +39,7 @@ class Chassis{
   b2World* GetWorld() { return world; }
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
+  bool IsPressed(int k);
 };
 
 #endif

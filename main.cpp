@@ -25,6 +25,15 @@ void EventHandler(){
       running = false;
     }
   }
+
+  b2Vec2 motion = b2Vec2(0,o.GetVelocity().y);
+  if(c.IsPressed(SDL_SCANCODE_D)){
+    motion.x = 10;
+  }
+  if(c.IsPressed(SDL_SCANCODE_A)){
+    motion.x = -10;
+  }
+  o.ApplyConstVelocity(motion);
 }
 
 void RenderHandler(){
