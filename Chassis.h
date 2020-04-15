@@ -40,6 +40,7 @@ class Chassis{
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
   bool IsPressed(int k);
+  bool JustPressed(int k);
 };
 
 #endif
