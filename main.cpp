@@ -4,6 +4,7 @@
 #include "Chassis.h"
 #include "Object.h"
 #include "Texture.h"
+#include "Sound.h"
 
 using namespace std;
 
@@ -13,6 +14,9 @@ Chassis c;
 
 Object o; 
 Object ground;
+
+Sound s;
+Sound m;
 
 float32 timeStep = 1/60.0f;
 
@@ -29,9 +33,11 @@ void EventHandler(){
   b2Vec2 motion = b2Vec2(0,o.GetVelocity().y);
   if(c.IsPressed(SDL_SCANCODE_D)){
     motion.x = 10;
+    s.Play();
   }
   if(c.IsPressed(SDL_SCANCODE_A)){
     motion.x = -10;
+    s.Play();
   }
   o.ApplyConstVelocity(motion);
 }
@@ -51,6 +57,13 @@ int main(int argc, char *argv[]){
   o.Setup(c, 100, 100, 100, 100, 0, 0, 0, true, scale);
   ground.Setup(c, 0, 900, 1600, 10, 0, 0, 0, false, scale);
   o.SetTexture(Texture(c, "test.png", 1, 1, false));
+
+  c.SetVolume(50.0f);
+
+  s.Setup("soundeffect.wav", false);
+
+  m.Setup("DeepSpace.mp3", true);
+  m.Play();
 
   while(running){
     EventHandler();

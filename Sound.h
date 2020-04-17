@@ -15,7 +15,10 @@ class Sound{
   Sound(){}
   Sound(const char* loc, bool music);
   int Setup(const char* loc, bool music);
-
+  void Play();
+  void Pause();
+  void Resume();
+  void Stop();
 };
 
 #endif

@@ -16,7 +16,11 @@ Chassis::Chassis(const char* title, int w, int h, b2Vec2 setGravity, int sVeloci
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     if (!renderer) {
-        cout << "ERROR:Renderer Creation Failed" << endl;
+      cout << "ERROR:Renderer Creation Failed" << endl;
+    }
+
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+      cout << "ERROR:SDL_Mixer Iinitialization Failed" << endl;
     }
 
     world = new b2World(gravity);
@@ -44,6 +48,11 @@ int Chassis::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelo
     if (!renderer) {
         cout << "ERROR:Renderer Creation Failed" << endl;
         return 1;
+    }
+
+    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+      cout << "ERROR:SDL_Mixer Iinitialization Failed" << endl;
+      return 1;
     }
 
     world = new b2World(gravity);
@@ -81,4 +90,8 @@ void Chassis::RPresent(){
 void Chassis::RFillRect(SDL_Rect rect, int r, int g, int b){
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
   SDL_RenderFillRect(renderer, &rect);
+}
+
+void Chassis::SetVolume(float value){
+  Mix_VolumeMusic(value);
 }

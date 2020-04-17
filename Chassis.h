@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include <Box2D/Box2D.h>
 
 using namespace std;
@@ -33,6 +34,9 @@ class Chassis{
   void RClear();
   void RFillRect(SDL_Rect rect, int r, int g, int b);
   void RPresent();
+
+  //Set Cmds
+  void SetVolume(float value);
 
   //Get Cmds
   SDL_Event GetEvent() { return ev; }
