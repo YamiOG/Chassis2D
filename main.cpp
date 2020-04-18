@@ -58,9 +58,10 @@ int main(int argc, char *argv[]){
   ground.Setup(c, 0, 900, 1600, 10, 0, 0, 0, false, scale);
   o.SetTexture(Texture(c, "test.png", 1, 1, false));
 
-  c.SetVolume(50.0f);
+  c.SetMusicVolume(50.0f);
 
   s.Setup("soundeffect.wav", false);
+  s.SetVolume(30.0f);
 
   m.Setup("DeepSpace.mp3", true);
   m.Play();

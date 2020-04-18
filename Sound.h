@@ -19,6 +19,7 @@ class Sound{
   void Pause();
   void Resume();
   void Stop();
+  void SetVolume(float value);
 };
 
 #endif

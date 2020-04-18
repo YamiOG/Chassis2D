@@ -79,3 +79,12 @@ void Sound::Stop(){
     cout << "WARNING:This is Not Music File" << endl;
   }
 }
+
+void Sound::SetVolume(float value){
+  if(isMusic){
+    cout << "WARNING:This is Not a WAV File" << endl;
+  }
+  else{
+    Mix_VolumeChunk(w, MIX_MAX_VOLUME * (value/100));
+  }
+}

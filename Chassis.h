@@ -36,7 +36,7 @@ class Chassis{
   void RPresent();
 
   //Set Cmds
-  void SetVolume(float value);
+  void SetMusicVolume(float value);
 
   //Get Cmds
   SDL_Event GetEvent() { return ev; }

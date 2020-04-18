@@ -92,6 +92,6 @@ void Chassis::RFillRect(SDL_Rect rect, int r, int g, int b){
   SDL_RenderFillRect(renderer, &rect);
 }
 
-void Chassis::SetVolume(float value){
-  Mix_VolumeMusic(value);
+void Chassis::SetMusicVolume(float value){
+  Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100));
 }
