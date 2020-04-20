@@ -8,10 +8,13 @@ Chassis::Chassis(const char* title, int w, int h, b2Vec2 setGravity, int sVeloci
     velocityI = sVelocityI;
     positionI = sPositionI;
 
-    SDL_Init(SDL_INIT_EVERYTHING);
+    if( SDL_Init(SDL_INIT_EVERYTHING) == -1){
+      cout << "ERROR:SDL2 Initialization Failed" << endl;
+    }
+
     window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
     if (!window) {
-        cout << "ERROR:Window Creation Failed" << endl;
+      cout << "ERROR:Window Creation Failed" << endl;
     }
 
     renderer = SDL_CreateRenderer(window, -1, 0);
@@ -20,7 +23,11 @@ Chassis::Chassis(const char* title, int w, int h, b2Vec2 setGravity, int sVeloci
     }
 
     if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
-      cout << "ERROR:SDL_Mixer Iinitialization Failed" << endl;
+      cout << "ERROR:SDL_Mixer Initialization Failed" << endl;
+    }
+
+    if( TTF_Init() == -1){
+      cout << "ERROR:TTF Initialization Failed" << endl;
     }
 
     world = new b2World(gravity);
@@ -30,37 +37,46 @@ Chassis::Chassis(const char* title, int w, int h, b2Vec2 setGravity, int sVeloci
 }
 
 int Chassis::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
-    width = w;
-    height = h;
+  width = w;
+  height = h;
 
-    gravity = setGravity;
-    velocityI = sVelocityI;
-    positionI = sPositionI;
+  gravity = setGravity;
+  velocityI = sVelocityI;
+  positionI = sPositionI;
 
-    SDL_Init(SDL_INIT_EVERYTHING);
-    window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
-    if (!window) {
-        cout << "ERROR:Window Creation Failed" << endl;
-        return 1;
-    }
+  if( SDL_Init(SDL_INIT_EVERYTHING) == -1){
+    cout << "ERROR:SDL2 Initialization Failed" << endl;
+    return 1;
+  }
 
-    renderer = SDL_CreateRenderer(window, -1, 0);
-    if (!renderer) {
-        cout << "ERROR:Renderer Creation Failed" << endl;
-        return 1;
-    }
+  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+  if (!window) {
+    cout << "ERROR:Window Creation Failed" << endl;
+    return 1;
+  }
 
-    if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
-      cout << "ERROR:SDL_Mixer Iinitialization Failed" << endl;
-      return 1;
-    }
+  renderer = SDL_CreateRenderer(window, -1, 0);
+  if (!renderer) {
+    cout << "ERROR:Renderer Creation Failed" << endl;
+    return 1;
+  }
 
-    world = new b2World(gravity);
-    if (!world) {
-        cout << "ERROR:b2World Creation Failed" << endl;
-        return 1;
-    }
-    return 0;
+  if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
+    cout << "ERROR:SDL_Mixer Initialization Failed" << endl;
+    return 1;
+  }
+
+  if( TTF_Init() == -1){
+    cout << "ERROR:TTF Initialization Failed" << endl;
+    return 1;
+  }
+
+  world = new b2World(gravity);
+  if (!world) {
+    cout << "ERROR:b2World Creation Failed" << endl;
+    return 1;
+  }
+  return 0;
 }
 
 bool Chassis::IsPressed(int k){

@@ -5,6 +5,8 @@
 #include "Object.h"
 #include "Texture.h"
 #include "Sound.h"
+#include "Text.h"
+#include "Font.h"
 
 using namespace std;
 
@@ -17,6 +19,9 @@ Object ground;
 
 Sound s;
 Sound m;
+
+Font f;
+Text t;
 
 float32 timeStep = 1/60.0f;
 
@@ -47,6 +52,8 @@ void RenderHandler(){
 
   o.Draw(c); 
 
+  t.Draw(c);
+
   c.RPresent();
 }
 
@@ -65,6 +72,8 @@ int main(int argc, char *argv[]){
 
   m.Setup("DeepSpace.mp3", true);
   m.Play();
+
+  t.Setup(0, 0, Font("Roboto-Bold.ttf", 0, 0, 200, 48, false), "Random text");
 
   while(running){
     EventHandler();
