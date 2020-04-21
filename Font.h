@@ -18,7 +18,7 @@ class Font{
   Font(const char* fLoc, int r, int g, int b, int s, bool ch);
   int Setup(const char* fLoc, int r, int g, int b, int s, bool ch);
   int GetText(SDL_Renderer *renderer, int x, int y, const char* text, SDL_Texture **t, SDL_Rect *r );
-  int GetText(SDL_Renderer *renderer, int x, int y, const char* text, int iTime, SDL_Texture **t, SDL_Rect *r );
+  int GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &iTime, SDL_Texture **t, SDL_Rect *r );
   bool GetChroma(){return chroma;}
 };
 

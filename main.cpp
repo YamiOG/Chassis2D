@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
   m.Setup("DeepSpace.mp3", true);
   m.Play();
 
-  t.Setup(0, 0, Font("Roboto-Bold.ttf", 0, 0, 200, 48, false), "Random text");
+  t.Setup(0, 0, Font("Roboto-Bold.ttf", 0, 0, 200, 48, true), "Random text");
 
   while(running){
     EventHandler();

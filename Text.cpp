@@ -2,15 +2,15 @@
 
 Text::Text(int x, int y, Font font, const char* tx){
   f = font;
-  rect.x = x;
-  rect.y = y;
+  pos.x = x;
+  pos.y = y;
   text = (string)tx;
 }
 
 int Text::Setup(int x, int y, Font font, const char* tx){
   f = font;
-  rect.x = x;
-  rect.y = y;
+  pos.x = x;
+  pos.y = y;
   text = (string)tx;
   return 0;
 }
@@ -18,10 +18,10 @@ int Text::Setup(int x, int y, Font font, const char* tx){
 SDL_Texture *Text::GetText(Chassis c){
   SDL_Texture *t;
   if(f.GetChroma()){
-    f.GetText(c.GetRenderer(), rect.x, rect.y, text.c_str(), iTime, &t, &rect);
+    f.GetText(c.GetRenderer(), pos.x, pos.y, text.c_str(), iTime, &t, &rect);
   }
   else{
-    f.GetText(c.GetRenderer(), rect.x, rect.y, text.c_str(), &t, &rect);
+    f.GetText(c.GetRenderer(), pos.x, pos.y, text.c_str(), &t, &rect);
   }
 
   if(!t){

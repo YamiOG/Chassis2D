@@ -38,10 +38,8 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, SDL_Te
     return 1;
   }
 
-  int xPos = x - (s->w/2);
-  cout << xPos << endl;
-  r->x = x;
-  r->y = y;
+  r->x = x - (s->w/2);
+  r->y = y - (s->h/2);
   r->w = s->w;
   r->h = s->h;
 
@@ -55,8 +53,17 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, SDL_Te
   return 0;
 }
 
-int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int iTime, SDL_Texture **t, SDL_Rect *r ){
+int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &iTime, SDL_Texture **t, SDL_Rect *r ){
   SDL_Surface *s;
+
+  if(iTime == -1){
+    iTime = SDL_GetTicks();
+  }
+
+  int time = (iTime-SDL_GetTicks())/10;
+  color.r = (time % 255);
+  color.b = (time % 255);
+  color.g = (time % 255);
 
   s = TTF_RenderText_Solid( font, text, color );
   if(!s){
@@ -64,10 +71,8 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int iT
     return 1;
   }
 
-  int xPos = x - (s->w/2);
-  cout << xPos << endl;
-  r->x = x;
-  r->y = y;
+  r->x = x - (s->w/2);
+  r->y = y - (s->h/2);
   r->w = s->w;
   r->h = s->h;
 

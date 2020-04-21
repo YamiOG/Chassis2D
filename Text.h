@@ -13,10 +13,11 @@ using namespace std;
 class Text{
  private:
   SDL_Texture *t;
+  SDL_Point pos;
   SDL_Rect rect;
   Font f;
   string text;
-  int iTime;
+  int iTime = -1;
 
  public:
   Text(){}
