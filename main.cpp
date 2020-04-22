@@ -1,18 +1,13 @@
 #include <iostream>
 #include <Box2D/Box2D.h>
 
-#include "Chassis.h"
-#include "Object.h"
-#include "Texture.h"
-#include "Sound.h"
-#include "Text.h"
-#include "Font.h"
+#include "Chassis2D.h"
 
 using namespace std;
 
 const int scale = 16;
 
-Chassis c;
+App a;
 
 Object o; 
 Object ground;
@@ -28,19 +23,19 @@ float32 timeStep = 1/60.0f;
 bool running = true;
 
 void EventHandler(){
-  SDL_Event ev = c.GetEvent();
-  while(c.CheckEvents()){
+  SDL_Event ev = a.GetEvent();
+  while(a.CheckEvents()){
     if(ev.type == SDL_QUIT){
       running = false;
     }
   }
 
   b2Vec2 motion = b2Vec2(0,o.GetVelocity().y);
-  if(c.IsPressed(SDL_SCANCODE_D)){
+  if(a.IsPressed(SDL_SCANCODE_D)){
     motion.x = 10;
     s.Play();
   }
-  if(c.IsPressed(SDL_SCANCODE_A)){
+  if(a.IsPressed(SDL_SCANCODE_A)){
     motion.x = -10;
     s.Play();
   }
@@ -48,24 +43,24 @@ void EventHandler(){
 }
 
 void RenderHandler(){
-  c.RClear();
+  a.RClear();
 
-  o.Draw(c); 
+  o.Draw(a); 
 
-  t.Draw(c);
+  t.Draw(a);
 
-  c.RPresent();
+  a.RPresent();
 }
 
 int main(int argc, char *argv[]){
-  c.Setup("Testing", 1600, 900, b2Vec2(0, 70), 8, 3);
-  c.SetPhysicsFPS(60);
+  a.Setup("Testing", 1600, 900, b2Vec2(0, 70), 8, 3);
+  a.SetPhysicsFPS(60);
 
-  o.Setup(c, 100, 100, 100, 100, 0, 0, 0, true, scale);
-  ground.Setup(c, 0, 900, 1600, 10, 0, 0, 0, false, scale);
-  o.SetTexture(Texture(c, "test.png", 1, 1, false));
+  o.Setup(a, 100, 100, 100, 100, 0, 0, 0, true, scale);
+  ground.Setup(a, 0, 900, 1600, 10, 0, 0, 0, false, scale);
+  o.SetTexture(Texture(a, "test.png", 1, 1, false));
 
-  c.SetMusicVolume(50.0f);
+  a.SetMusicVolume(50.0f);
 
   s.Setup("soundeffect.wav", false);
   s.SetVolume(30.0f);
@@ -78,7 +73,7 @@ int main(int argc, char *argv[]){
   while(running){
     EventHandler();
     RenderHandler();
-    c.PhysicsUpdate();
+    a.PhysicsUpdate();
   }
   
   return 0;

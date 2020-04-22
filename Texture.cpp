@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(Chassis c, const char* loc, int hN, int vN, bool isS){
+Texture::Texture(App a, const char* loc, int hN, int vN, bool isS){
   if(isS){
     sheet = true;
     vNum = vN;
@@ -12,7 +12,7 @@ Texture::Texture(Chassis c, const char* loc, int hN, int vN, bool isS){
   if(surf){
     width = surf->w;
     height = surf->h;
-    texture = SDL_CreateTextureFromSurface(c.GetRenderer(), surf);
+    texture = SDL_CreateTextureFromSurface(a.GetRenderer(), surf);
   }
   else{
     cout << "ERROR:Failed to load file" << endl;
@@ -20,7 +20,7 @@ Texture::Texture(Chassis c, const char* loc, int hN, int vN, bool isS){
   SDL_FreeSurface(surf);
 }
 
-int Texture::Setup(Chassis c, const char* loc, int hN, int vN, bool isS){
+int Texture::Setup(App a, const char* loc, int hN, int vN, bool isS){
   if(isS){
     sheet = true;
     vNum = vN;
@@ -32,7 +32,7 @@ int Texture::Setup(Chassis c, const char* loc, int hN, int vN, bool isS){
   if(surf){
     width = surf->w;
     height = surf->h;
-    texture = SDL_CreateTextureFromSurface(c.GetRenderer(), surf);
+    texture = SDL_CreateTextureFromSurface(a.GetRenderer(), surf);
   }
   else{
     cout << "ERROR:Failed to load file" << endl;

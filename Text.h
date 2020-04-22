@@ -5,7 +5,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
-#include "Chassis.h"
+#include "App.h"
 #include "Font.h"
 
 using namespace std;
@@ -23,8 +23,8 @@ class Text{
   Text(){}
   Text(int x, int y, Font font, const char* tx);
   int Setup(int x, int y, Font font, const char* tx);
-  SDL_Texture *GetText(Chassis c);
-  void Draw(Chassis c);
+  SDL_Texture *GetText(App a);
+  void Draw(App a);
 };
 
 #endif

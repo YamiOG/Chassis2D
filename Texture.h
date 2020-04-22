@@ -6,7 +6,7 @@
 #include <SDL2/SDL_image.h>
 #include <Box2D/Box2D.h>
 
-#include "Chassis.h"
+#include "App.h"
 
 using namespace std;
 
@@ -17,8 +17,8 @@ class Texture{
   bool sheet;
  public:
   Texture(){}
-  Texture(Chassis c, const char* loc, int hN, int vN, bool isS);
-  int Setup(Chassis c, const char* loc, int hN, int vN, bool isS);
+  Texture(App a, const char* loc, int hN, int vN, bool isS);
+  int Setup(App a, const char* loc, int hN, int vN, bool isS);
   SDL_Texture *GetTexture(){return texture;}
   SDL_Rect GetCrop();
   SDL_Rect GetFrame(int num);

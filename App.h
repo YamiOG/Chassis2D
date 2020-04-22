@@ -1,5 +1,5 @@
-#ifndef CHASSIS_H
-#define CHASSIS_H
+#ifndef APP_H
+#define APP_H
 
 #include <iostream>
 #include <SDL2/SDL.h>
@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class Chassis{
+class App{
  private:
   SDL_Window* window;
   SDL_Renderer* renderer;
@@ -24,8 +24,8 @@ class Chassis{
   int32 pTime;
 
  public:
-  Chassis(){}
-  Chassis(const char* title, int width, int height, b2Vec2 setGravity, int sVelocityI, int sPositionI);
+  App(){}
+  App(const char* title, int width, int height, b2Vec2 setGravity, int sVelocityI, int sPositionI);
   int Setup(const char* title, int width, int height, b2Vec2 setGravity, int sVelocityI, int sPositionI);
   void PhysicsUpdate();
   void SetPhysicsFPS(int setFPS) { pFPS = setFPS; }

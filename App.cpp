@@ -1,6 +1,6 @@
-#include "Chassis.h"
+#include "App.h"
 
-Chassis::Chassis(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
+App::App(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
     width = w;
     height = h;
 
@@ -36,7 +36,7 @@ Chassis::Chassis(const char* title, int w, int h, b2Vec2 setGravity, int sVeloci
     }
 }
 
-int Chassis::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
+int App::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
   width = w;
   height = h;
 
@@ -79,7 +79,7 @@ int Chassis::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelo
   return 0;
 }
 
-bool Chassis::IsPressed(int k){
+bool App::IsPressed(int k){
   const Uint8 *state = SDL_GetKeyboardState(NULL);
   if(state[k]){
     return true;
@@ -87,27 +87,27 @@ bool Chassis::IsPressed(int k){
   return false;
 }
 
-void Chassis::PhysicsUpdate(){
+void App::PhysicsUpdate(){
   if(1000/pFPS <= SDL_GetTicks()-pTime){
     world->Step(1.0f/pFPS, velocityI, positionI);
     pTime = SDL_GetTicks();
   }
 }
 
-void Chassis::RClear(){
+void App::RClear(){
   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   SDL_RenderClear(renderer);
 }
 
-void Chassis::RPresent(){
+void App::RPresent(){
   SDL_RenderPresent(renderer);
 }
 
-void Chassis::RFillRect(SDL_Rect rect, int r, int g, int b){
+void App::RFillRect(SDL_Rect rect, int r, int g, int b){
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
   SDL_RenderFillRect(renderer, &rect);
 }
 
-void Chassis::SetMusicVolume(float value){
+void App::SetMusicVolume(float value){
   Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100));
 }

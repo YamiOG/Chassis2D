@@ -1,6 +1,6 @@
 #include "Object.h"
 
-Object::Object(Chassis c, float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
+Object::Object(App a, float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
   b2BodyDef bodyDef;
   b2FixtureDef fixture;
   b2PolygonShape shape;
@@ -22,13 +22,13 @@ Object::Object(Chassis c, float x, float y, float w, float h, float friction, fl
   else{
     bodyDef.type = b2_staticBody;
   }
-  body = c.GetWorld()->CreateBody(&bodyDef);
+  body = a.GetWorld()->CreateBody(&bodyDef);
   body->CreateFixture(&fixture);
 
   body->SetUserData(this);
 }
 
-int Object::Setup(Chassis c, float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
+int Object::Setup(App a, float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
   b2BodyDef bodyDef;
   b2FixtureDef fixture;
   b2PolygonShape shape;
@@ -50,7 +50,7 @@ int Object::Setup(Chassis c, float x, float y, float w, float h, float friction,
   else{
     bodyDef.type = b2_staticBody;
   }
-  body = c.GetWorld()->CreateBody(&bodyDef);
+  body = a.GetWorld()->CreateBody(&bodyDef);
   body->CreateFixture(&fixture);
 
   body->SetUserData(this);
@@ -68,7 +68,7 @@ void Object::ApplyConstVelocity(b2Vec2 v){
   body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);
 }
 
-void Object::Draw(Chassis c){
+void Object::Draw(App a){
   SDL_Rect rect = GetScaledPosition();
-  SDL_RenderCopy(c.GetRenderer(), texture.GetTexture(), NULL, &rect);
+  SDL_RenderCopy(a.GetRenderer(), texture.GetTexture(), NULL, &rect);
 }

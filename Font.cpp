@@ -61,9 +61,8 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
   }
 
   int time = (iTime-SDL_GetTicks())/10;
-  color.r = (time % 255);
-  color.b = (time % 255);
-  color.g = (time % 255);
+
+  
 
   s = TTF_RenderText_Solid( font, text, color );
   if(!s){

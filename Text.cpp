@@ -15,13 +15,13 @@ int Text::Setup(int x, int y, Font font, const char* tx){
   return 0;
 }
 
-SDL_Texture *Text::GetText(Chassis c){
+SDL_Texture *Text::GetText(App a){
   SDL_Texture *t;
   if(f.GetChroma()){
-    f.GetText(c.GetRenderer(), pos.x, pos.y, text.c_str(), iTime, &t, &rect);
+    f.GetText(a.GetRenderer(), pos.x, pos.y, text.c_str(), iTime, &t, &rect);
   }
   else{
-    f.GetText(c.GetRenderer(), pos.x, pos.y, text.c_str(), &t, &rect);
+    f.GetText(a.GetRenderer(), pos.x, pos.y, text.c_str(), &t, &rect);
   }
 
   if(!t){
@@ -30,6 +30,6 @@ SDL_Texture *Text::GetText(Chassis c){
   return t;
 }
 
-void Text::Draw(Chassis c){
-  SDL_RenderCopy(c.GetRenderer(), GetText(c), NULL, &rect);
+void Text::Draw(App a){
+  SDL_RenderCopy(a.GetRenderer(), GetText(a), NULL, &rect);
 }
