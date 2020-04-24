@@ -17,7 +17,7 @@ int Text::Setup(int x, int y, Font font, const char* tx){
 
 SDL_Texture *Text::GetText(App a){
   SDL_Texture *t;
-  if(f.GetChroma()){
+  if(f.GetRGB()){
     f.GetText(a.GetRenderer(), pos.x, pos.y, text.c_str(), iTime, &t, &rect);
   }
   else{

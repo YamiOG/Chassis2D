@@ -15,7 +15,6 @@ Object ground;
 Sound s;
 Sound m;
 
-Font f;
 Text t;
 
 float32 timeStep = 1/60.0f;
@@ -68,7 +67,7 @@ int main(int argc, char *argv[]){
   m.Setup("DeepSpace.mp3", true);
   m.Play();
 
-  t.Setup(0, 0, Font("Roboto-Bold.ttf", 0, 0, 200, 48, true), "Random text");
+  t.Setup(400, 100, Font("Roboto-Bold.ttf", 0, 0, 200, 100, true), "Random text");
 
   while(running){
     EventHandler();
