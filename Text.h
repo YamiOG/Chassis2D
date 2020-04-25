@@ -24,6 +24,8 @@ class Text{
   Text(int x, int y, Font font, const char* tx);
   int Setup(int x, int y, Font font, const char* tx);
   SDL_Texture *GetText(App a);
+  void SetPosition(int x, int y) { pos.x = x; pos.y = y; }
+  SDL_Point GetPosition() {return pos;}
   void Draw(App a);
 };
 

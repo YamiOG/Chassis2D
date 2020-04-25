@@ -33,6 +33,7 @@ class App{
 
   //Render Cmds
   void RClear();
+  void RClear(int r, int g, int b);
   void RFillRect(SDL_Rect rect, int r, int g, int b);
   void RPresent();
 

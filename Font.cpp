@@ -1,7 +1,7 @@
 #include "Font.h"
 
 
-Font::Font(const char* fLoc, int r, int g, int b, int s, bool setRGB){
+Font::Font(const char* fLoc, int s, int r, int g, int b, bool setRGB){
   font = TTF_OpenFont(fLoc, s);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
@@ -14,7 +14,7 @@ Font::Font(const char* fLoc, int r, int g, int b, int s, bool setRGB){
   rgb = setRGB;
 }
 
-int Font::Setup(const char* fLoc, int r, int g, int b, int s, bool setRGB){
+int Font::Setup(const char* fLoc, int s, int r, int g, int b, bool setRGB){
   font = TTF_OpenFont(fLoc, s);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
@@ -61,8 +61,6 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
   }
 
   //RGB Color
-  int divisor = 1;
-
   int interval = 256*divisor;
 
   float i = ((float)((SDL_GetTicks()-iTime)%interval))/interval;
@@ -72,6 +70,8 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
   int c = n % 256;
 
   SDL_Color rgbC;
+
+  rgbC.a = 255;
 
   switch(n / 256)
   {

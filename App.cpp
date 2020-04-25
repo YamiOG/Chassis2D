@@ -99,6 +99,11 @@ void App::RClear(){
   SDL_RenderClear(renderer);
 }
 
+void App::RClear(int r, int g, int b){
+  SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+  SDL_RenderClear(renderer);
+}
+
 void App::RPresent(){
   SDL_RenderPresent(renderer);
 }

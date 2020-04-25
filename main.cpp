@@ -42,7 +42,7 @@ void EventHandler(){
 }
 
 void RenderHandler(){
-  a.RClear();
+  a.RClear(0, 0, 0);
 
   o.Draw(a); 
 
@@ -67,7 +67,10 @@ int main(int argc, char *argv[]){
   m.Setup("DeepSpace.mp3", true);
   m.Play();
 
-  t.Setup(400, 100, Font("Roboto-Bold.ttf", 0, 0, 200, 100, true), "Random text");
+  Font f = Font("Roboto-Bold.ttf", 100, 0, 0, 200, true);
+  f.SetDivisor(10);
+
+  t.Setup(400, 100, f, "Random text");
 
   while(running){
     EventHandler();
