@@ -36,11 +36,12 @@ int Texture::Setup(App a, const char* loc, int hN, int vN, bool isS){
   }
   else{
     cout << "ERROR:Failed to load file" << endl;
-    return 1;
+    return -1;
   }
+
   SDL_FreeSurface(surf);
   return 0;
-  }
+}
 
 SDL_Rect Texture::GetCrop(){
   SDL_Rect rect = {0,0,width,height}; 

@@ -1,14 +1,18 @@
 #include "Text.h"
 
-Text::Text(int x, int y, Font font, const char* tx){
+Text::Text(int x, int y, const char* tx, Font font){
   f = font;
   pos.x = x;
   pos.y = y;
   text = (string)tx;
 }
 
-int Text::Setup(int x, int y, Font font, const char* tx){
+int Text::Setup(int x, int y, const char* tx, Font font){
   f = font;
+  if(!font){
+    cout << "ERROR:Font was Unable to Load" << endl;
+    return -1;
+  }
   pos.x = x;
   pos.y = y;
   text = (string)tx;

@@ -70,7 +70,7 @@ int main(int argc, char *argv[]){
   Font f = Font("Roboto-Bold.ttf", 100, 0, 0, 200, true);
   f.SetDivisor(10);
 
-  t.Setup(400, 100, f, "Random text");
+  t.Setup(400, 100, "Random text", f);
 
   while(running){
     EventHandler();

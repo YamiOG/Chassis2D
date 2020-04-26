@@ -18,7 +18,7 @@ int Font::Setup(const char* fLoc, int s, int r, int g, int b, bool setRGB){
   font = TTF_OpenFont(fLoc, s);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
-    return 1;
+    return -1;
   }
   size = s;
   color.r = r;
@@ -35,7 +35,7 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, SDL_Te
   s = TTF_RenderText_Solid( font, text, color );
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
-    return 1;
+    return -1;
   }
 
   r->x = x - (s->w/2);
@@ -46,7 +46,7 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, SDL_Te
   *t = SDL_CreateTextureFromSurface(renderer, s);
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
-    return 1;
+    return -1;
   }
 
   SDL_FreeSurface(s);
@@ -86,7 +86,7 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
   s = TTF_RenderText_Solid( font, text, rgbC );
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
-    return 1;
+    return -1;
   }
 
   r->x = x - (s->w/2);
@@ -97,7 +97,7 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
   *t = SDL_CreateTextureFromSurface(renderer, s);
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
-    return 1;
+    return -1;
   }
 
   SDL_FreeSurface(s);

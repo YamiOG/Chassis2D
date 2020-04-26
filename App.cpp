@@ -46,35 +46,35 @@ int App::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocity
 
   if( SDL_Init(SDL_INIT_EVERYTHING) == -1){
     cout << "ERROR:SDL2 Initialization Failed" << endl;
-    return 1;
+    return -1;
   }
 
   window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
   if (!window) {
     cout << "ERROR:Window Creation Failed" << endl;
-    return 1;
+    return -1;
   }
 
   renderer = SDL_CreateRenderer(window, -1, 0);
   if (!renderer) {
     cout << "ERROR:Renderer Creation Failed" << endl;
-    return 1;
+    return -1;
   }
 
   if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
     cout << "ERROR:SDL_Mixer Initialization Failed" << endl;
-    return 1;
+    return -1;
   }
 
   if( TTF_Init() == -1){
     cout << "ERROR:TTF Initialization Failed" << endl;
-    return 1;
+    return -1;
   }
 
   world = new b2World(gravity);
   if (!world) {
     cout << "ERROR:b2World Creation Failed" << endl;
-    return 1;
+    return -1;
   }
   return 0;
 }
