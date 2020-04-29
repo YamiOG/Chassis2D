@@ -26,6 +26,15 @@ int Button::Setup(int x, int y, int w, int h, SDL_Texture *t, const char* tx, Fo
   return 0;
 }
 
+bool Button::IsPressed(App a){
+  (a.IsMouseInRect(rect)){
+    if(event.type == SDL_MOUSEBUTTONDOWN) {
+      
+    }
+           
+  }
+}
+
 void Button::Draw(App a){
   
 }

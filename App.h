@@ -45,6 +45,8 @@ class App{
   b2World* GetWorld() { return world; }
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
+  SDL_Point GetMouse();
+  bool IsMouseInRect(SDL_Rect rect);
   bool IsPressed(int k);
   bool JustPressed(int k);
 };

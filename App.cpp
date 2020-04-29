@@ -116,3 +116,18 @@ void App::RFillRect(SDL_Rect rect, int r, int g, int b){
 void App::SetMusicVolume(float value){
   Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100));
 }
+
+SDL_Point App::GetMouse(){
+  SDL_Point pos;
+  SDL_GetMouseState(&pos.x, &pos.y);
+  return pos;
+}
+
+bool App::IsMouseInRect(SDL_Rect rect){
+  SDL_Point mPos;
+  SDL_GetMouseState(&mPos.x, &mPos.y);
+  if(rect.x < mPos.x && mPos.x < rect.x + rect.w && rect.y < mPos.y && mPos.y < rect.y + rect.h){
+    return true;
+  }
+  return false;
+}

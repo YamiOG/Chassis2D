@@ -15,10 +15,12 @@ class Button{
   SDL_Texture *texture;
   SDL_Rect rect;
   SDL_Point pos;
+  bool prev = false;
  public:
   Button(){}
   Button(int x, int y, int w, SDL_Texture *t, int h, const char* tx, Font f);
   int Setup(int x, int y, int w, int h, SDL_Texture *t, const char* tx, Font f);
+  bool IsPressed(App a);
   void Draw(App a);
 };
 
