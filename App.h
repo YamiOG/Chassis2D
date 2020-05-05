@@ -7,6 +7,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <Box2D/Box2D.h>
 
+#include "Class.h"
+
 using namespace std;
 
 class App{
@@ -35,10 +37,14 @@ class App{
   void RClear();
   void RClear(int r, int g, int b);
   void RFillRect(SDL_Rect rect, int r, int g, int b);
+  int Draw(Object* o);
+  int Draw(Text* t);
+  int Draw(Button *b);
   void RPresent();
 
   //Set Cmds
   void SetMusicVolume(float value);
+  int AddObject(Object* o);
 
   //Get Cmds
   SDL_Event GetEvent() { return ev; }
@@ -49,6 +55,9 @@ class App{
   bool IsMouseInRect(SDL_Rect rect);
   bool IsPressed(int k);
   bool JustPressed(int k);
+
+  //Destructor
+  ~App();
 };
 
 #endif

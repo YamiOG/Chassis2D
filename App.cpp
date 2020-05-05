@@ -1,5 +1,7 @@
 #include "App.h"
 
+#include "Chassis2D.h"
+
 App::App(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
     width = w;
     height = h;
@@ -130,4 +132,57 @@ bool App::IsMouseInRect(SDL_Rect rect){
     return true;
   }
   return false;
+}
+
+int App::AddObject(Object* o){
+  if(o){
+    o->SetBody(world->CreateBody(&o->bodyDef));
+    o->GetBody()->CreateFixture(&o->fixture);
+  }
+  else{
+    cout << "ERROR:Object is a nullptr" << endl;
+    return 1;
+  }
+  return 0;
+}
+
+int App::Draw(Object *o){
+  if(o){
+    SDL_Rect rect = o->GetScaledPosition();
+    SDL_RenderCopy(renderer, o->GetTexture()->GetTexture(), NULL, &rect);
+  }
+  else{
+    cout << "ERROR:Object is a nullptr" << endl;
+    return 1;
+  }
+  return 0;
+}
+
+int App::Draw(Text *t){
+  if(t){
+    SDL_Rect rect = t->GetRect();
+    SDL_RenderCopy(renderer, t->GetText(this), NULL, &rect);
+  }
+  else{
+    cout << "ERROR:Text is a nullptr" << endl;
+    return 1;
+  }
+  return 0;
+}
+
+int App::Draw(Button *b){
+  if(b){
+    SDL_Rect rect = b->GetRect();
+    SDL_RenderCopy(renderer, b->GetTexture()->GetTexture(), NULL, &rect);
+    Draw(b->GetText());
+  }
+  else{
+    cout << "ERROR:Button is a nullptr" << endl;
+    return 1;
+  }
+  return 0;
+}
+
+App::~App(){
+  
 }

@@ -5,23 +5,26 @@
 #include <SDL2/SDL.h>
 
 #include "App.h"
+#include "Texture.h"
 #include "Text.h"
 
 using namespace std;
 
 class Button{
  private:
-  Text text;
-  SDL_Texture *texture;
+  Text *text;
+  Texture *texture;
   SDL_Rect rect;
-  SDL_Point pos;
   bool prev = false;
+  bool pressed = false;
  public:
   Button(){}
-  Button(int x, int y, int w, SDL_Texture *t, int h, const char* tx, Font f);
-  int Setup(int x, int y, int w, int h, SDL_Texture *t, const char* tx, Font f);
-  bool IsPressed(App a);
-  void Draw(App a);
+  Button(int x, int y, int w, int h, Texture *t, const char* tx, Font *f);
+  int Setup(int x, int y, int w, int h, Texture *t, const char* tx, Font *f);
+  bool IsPressed(App *a);
+  SDL_Rect GetRect() {return rect;}
+  Texture* GetTexture() {return texture;}
+  Text* GetText() {return text;}
 };
 
 #endif

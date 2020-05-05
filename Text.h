@@ -15,18 +15,18 @@ class Text{
   SDL_Texture *t;
   SDL_Point pos;
   SDL_Rect rect;
-  Font f;
+  Font *f;
   string text;
   int iTime = -1;
 
  public:
   Text(){}
-  Text(int x, int y, const char* tx, Font font);
-  int Setup(int x, int y, const char* tx, Font font);
-  SDL_Texture *GetText(App a);
+  Text(int x, int y, const char* tx, Font *font);
+  int Setup(int x, int y, const char* tx, Font *font);
+  SDL_Texture *GetText(App *a);
   void SetPosition(int x, int y) { pos.x = x; pos.y = y; }
   SDL_Point GetPosition() {return pos;}
-  void Draw(App a);
+  SDL_Rect GetRect() { return rect; }
 };
 
 #endif

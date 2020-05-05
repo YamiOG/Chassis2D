@@ -17,6 +17,8 @@ Sound m;
 
 Text t;
 
+Button b;
+
 float32 timeStep = 1/60.0f;
 
 bool running = true;
@@ -38,15 +40,20 @@ void EventHandler(){
     motion.x = -10;
     s.Play();
   }
+  if(b.IsPressed(&a)){
+  }
+
   o.ApplyConstVelocity(motion);
 }
 
 void RenderHandler(){
   a.RClear(0, 0, 0);
 
-  o.Draw(a); 
+  a.Draw(&o); 
 
-  t.Draw(a);
+  a.Draw(&t);
+
+  a.Draw(&b);
 
   a.RPresent();
 }
@@ -55,9 +62,11 @@ int main(int argc, char *argv[]){
   a.Setup("Testing", 1600, 900, b2Vec2(0, 70), 8, 3);
   a.SetPhysicsFPS(60);
 
-  o.Setup(a, 100, 100, 100, 100, 0, 0, 0, true, scale);
-  ground.Setup(a, 0, 900, 1600, 10, 0, 0, 0, false, scale);
-  o.SetTexture(Texture(a, "test.png", 1, 1, false));
+  o.Setup(100, 100, 100, 100, 0, 0, 0, true, scale);
+  o.SetTexture(new Texture(&a, "test.png", 1, 1, false));
+
+  a.AddObject(&o);
+  a.AddObject(new Object(0, 900, 1600, 10, 0, 0, 0, false, scale));
 
   a.SetMusicVolume(50.0f);
 
@@ -70,13 +79,14 @@ int main(int argc, char *argv[]){
   Font f = Font("Roboto-Bold.ttf", 100, 0, 0, 200, true);
   f.SetDivisor(10);
 
-  t.Setup(400, 100, "Random text", f);
+  t.Setup(400, 100, "Random text", &f);
+
+  b.Setup(100, 100, 300, 100, new Texture(&a, "test.png", 1, 1, false), "button", &f);
 
   while(running){
     EventHandler();
     RenderHandler();
     a.PhysicsUpdate();
   }
-  
   return 0;
 }

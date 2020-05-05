@@ -1,6 +1,8 @@
 #include "Texture.h"
 
-Texture::Texture(App a, const char* loc, int hN, int vN, bool isS){
+#include "App.h"
+
+Texture::Texture(App *a, const char* loc, int hN, int vN, bool isS){
   if(isS){
     sheet = true;
     vNum = vN;
@@ -12,7 +14,7 @@ Texture::Texture(App a, const char* loc, int hN, int vN, bool isS){
   if(surf){
     width = surf->w;
     height = surf->h;
-    texture = SDL_CreateTextureFromSurface(a.GetRenderer(), surf);
+    texture = SDL_CreateTextureFromSurface(a->GetRenderer(), surf);
   }
   else{
     cout << "ERROR:Failed to load file" << endl;
@@ -20,7 +22,7 @@ Texture::Texture(App a, const char* loc, int hN, int vN, bool isS){
   SDL_FreeSurface(surf);
 }
 
-int Texture::Setup(App a, const char* loc, int hN, int vN, bool isS){
+int Texture::Setup(App *a, const char* loc, int hN, int vN, bool isS){
   if(isS){
     sheet = true;
     vNum = vN;
@@ -32,7 +34,7 @@ int Texture::Setup(App a, const char* loc, int hN, int vN, bool isS){
   if(surf){
     width = surf->w;
     height = surf->h;
-    texture = SDL_CreateTextureFromSurface(a.GetRenderer(), surf);
+    texture = SDL_CreateTextureFromSurface(a->GetRenderer(), surf);
   }
   else{
     cout << "ERROR:Failed to load file" << endl;
