@@ -3,9 +3,6 @@
 #include "Chassis2D.h"
 
 Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
-  /*b2BodyDef bodyDef;
-  b2FixtureDef fixture;
-  b2PolygonShape shape;*/
 
   width = w;
   height = h;
@@ -24,16 +21,9 @@ Object::Object(float x, float y, float w, float h, float friction, float density
   else{
     bodyDef.type = b2_staticBody;
   }
-  //body = a.GetWorld()->CreateBody(&bodyDef);
-  //body->CreateFixture(&fixture);
-
-  //body->SetUserData(this);
 }
 
 int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
-  /*b2BodyDef bodyDef;
-    b2FixtureDef fixture;
-  b2PolygonShape shape;*/
 
   width = w;
   height = h;
@@ -52,11 +42,11 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
   else{
     bodyDef.type = b2_staticBody;
   }
-  //body = a.GetWorld()->CreateBody(&bodyDef);
-  //body->CreateFixture(&fixture);
-
-  //body->SetUserData(this);
   return 0;
+}
+
+Object::~Object(){
+  delete texture;
 }
 
 SDL_Rect Object::GetScaledPosition() {
@@ -76,8 +66,4 @@ void Object::ApplyConstVelocity(b2Vec2 v){
     v *= body->GetMass();
     body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);
   }
-}
-
-Object::~Object(){
-  delete texture;
 }

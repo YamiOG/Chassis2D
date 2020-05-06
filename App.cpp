@@ -81,6 +81,10 @@ int App::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocity
   return 0;
 }
 
+App::~App(){
+  
+}
+
 bool App::IsPressed(int k){
   const Uint8 *state = SDL_GetKeyboardState(NULL);
   if(state[k]){
@@ -138,6 +142,7 @@ int App::AddObject(Object* o){
   if(o){
     o->SetBody(world->CreateBody(&o->bodyDef));
     o->GetBody()->CreateFixture(&o->fixture);
+    o->GetBody()->SetUserData(o);
   }
   else{
     cout << "ERROR:Object is a nullptr" << endl;
@@ -183,6 +188,22 @@ int App::Draw(Button *b){
   return 0;
 }
 
-App::~App(){
-  
+bool App::CheckButton(Button *b){
+  if(IsMouseInRect(b->GetRect())){
+    if(ev.type == SDL_MOUSEBUTTONDOWN) {
+      if(ev.button.button == SDL_BUTTON_LEFT){
+        if(b->GetPrev() == false){
+          b->SetPrev(true);
+          return true;
+        }
+      }
+    }
+    else{
+      if(b->GetPrev()){
+        b->SetPrev(false);
+      }
+      return false;
+    }
+  }
+  return false;
 }

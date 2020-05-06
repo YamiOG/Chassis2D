@@ -55,6 +55,7 @@ class App{
   bool IsMouseInRect(SDL_Rect rect);
   bool IsPressed(int k);
   bool JustPressed(int k);
+  bool CheckButton(Button *b);
 
   //Destructor
   ~App();

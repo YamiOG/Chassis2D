@@ -1,5 +1,7 @@
 #include "Text.h"
 
+#include "Chassis2D.h"
+
 Text::Text(int x, int y, const char* tx, Font *font){
   f = font;
   pos.x = x;
