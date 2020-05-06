@@ -35,6 +35,25 @@ int Sound::Setup(const char* loc, bool music){
   return 0;
 }
 
+Sound::~Sound(){
+  if(isMusic){
+    if(m){
+      Mix_FreeMusic(m);
+    }
+    else{
+      cout << "WARNING:The Music was NULL" << endl;
+    }
+  }
+  else{
+    if(w){
+      Mix_FreeChunk(w);
+    }
+    else{
+      cout << "WARNING:The Chunk was NULL" << endl;
+    }
+  }
+}
+
 void Sound::Play(){
   if(isMusic){
     if( Mix_PlayingMusic() == 0 ) {
@@ -80,7 +99,7 @@ void Sound::Stop(){
   }
 }
 
-void Sound::SetVolume(float value){
+void Sound::SetChunkVolume(float value){
   if(isMusic){
     cout << "WARNING:This is Not a WAV File" << endl;
   }

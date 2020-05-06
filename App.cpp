@@ -82,7 +82,12 @@ int App::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocity
 }
 
 App::~App(){
-  
+  delete world;
+  TTF_Quit();
+  Mix_CloseAudio();
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
+  SDL_Quit();
 }
 
 bool App::IsPressed(int k){
@@ -120,7 +125,18 @@ void App::RFillRect(SDL_Rect rect, int r, int g, int b){
 }
 
 void App::SetMusicVolume(float value){
-  Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100));
+  Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100.f));
+  mVol = value/100.f;
+}
+
+void App::SetSFXVolume(float value){
+  Mix_Volume(-1, MIX_MAX_VOLUME * (value/100.f));
+  cVol = value/100.f;
+}
+
+void App::SetMasterVolume(float value){
+  Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100.f) * mVol);
+  Mix_Volume(-1, MIX_MAX_VOLUME * (value/100.f) * cVol);
 }
 
 SDL_Point App::GetMouse(){

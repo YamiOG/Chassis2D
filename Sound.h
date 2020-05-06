@@ -15,11 +15,16 @@ class Sound{
   Sound(){}
   Sound(const char* loc, bool music);
   int Setup(const char* loc, bool music);
+
+  //Control
   void Play();
   void Pause();
   void Resume();
   void Stop();
-  void SetVolume(float value);
+  void SetChunkVolume(float value);
+
+  //Destructor
+  ~Sound();
 };
 
 #endif

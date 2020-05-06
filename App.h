@@ -17,6 +17,8 @@ class App{
   SDL_Renderer* renderer;
   SDL_Event ev;
   int width, height;
+  float mVol = 1.f;
+  float cVol = 1.f;
 
   int velocityI, positionI;
   b2Vec2 gravity;
@@ -44,6 +46,8 @@ class App{
 
   //Set Cmds
   void SetMusicVolume(float value);
+  void SetSFXVolume(float value);
+  void SetMasterVolume(float value);
   int AddObject(Object* o);
 
   //Get Cmds
