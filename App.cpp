@@ -156,8 +156,8 @@ bool App::IsMouseInRect(SDL_Rect rect){
 
 int App::AddObject(Object* o){
   if(o){
-    o->SetBody(world->CreateBody(&o->bodyDef));
-    o->GetBody()->CreateFixture(&o->fixture);
+    o->SetBody(world->CreateBody(o->GetBodyDef()));
+    o->GetBody()->CreateFixture(o->GetFixtureDef());
     o->GetBody()->SetUserData(o);
   }
   else{

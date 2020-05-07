@@ -2,7 +2,7 @@
 
 #include "Chassis2D.h"
 
-Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int setScale){
 
   width = w;
   height = h;
@@ -11,6 +11,9 @@ Object::Object(float x, float y, float w, float h, float friction, float density
   bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
   shape.SetAsBox((width/2)/scale, (height/2)/scale);
   fixture.shape = &shape;
+
+  fixture.filter.categoryBits = categoryBits;
+  fixture.filter.maskBits = maskBits;
 
   if(isD){
     bodyDef.type = b2_dynamicBody;
@@ -23,7 +26,7 @@ Object::Object(float x, float y, float w, float h, float friction, float density
   }
 }
 
-int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, bool isD, int setScale){
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int setScale){
 
   width = w;
   height = h;
@@ -32,6 +35,9 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
   bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
   shape.SetAsBox((width/2)/scale, (height/2)/scale);
   fixture.shape = &shape;
+
+  fixture.filter.categoryBits = categoryBits;
+  fixture.filter.maskBits = maskBits;
 
   if(isD){
     bodyDef.type = b2_dynamicBody;

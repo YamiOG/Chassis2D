@@ -49,6 +49,8 @@ class App{
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
   int AddObject(Object* o);
+  int AddParticle(Particle* p);
+  int StartParticleSystem(int x, int y, ParticleSystem* ps, int time);
 
   //Get Cmds
   SDL_Event GetEvent() { return ev; }

@@ -11,3 +11,7 @@ class Text;
 class Font;
 
 class Button;
+
+class ParticleSystem;
+
+class Particle;
