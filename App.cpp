@@ -99,6 +99,13 @@ bool App::IsPressed(int k){
 }
 
 void App::PhysicsUpdate(){
+  for(int i = 0; i < particles.size(); i++){
+    if(SDL_GetTicks() >= particles[i]->GetTime()){
+      world->DestroyBody(particles[i]->GetBody());
+      particles.erase(particles.begin()+i);
+    }
+  }
+
   if(1000/pFPS <= SDL_GetTicks()-pTime){
     world->Step(1.0f/pFPS, velocityI, positionI);
     pTime = SDL_GetTicks();
@@ -174,7 +181,7 @@ int App::Draw(Object *o){
   }
   else{
     cout << "ERROR:Object is a nullptr" << endl;
-    return 1;
+    return -1;
   }
   return 0;
 }
@@ -186,7 +193,7 @@ int App::Draw(Text *t){
   }
   else{
     cout << "ERROR:Text is a nullptr" << endl;
-    return 1;
+    return -1;
   }
   return 0;
 }
@@ -199,9 +206,28 @@ int App::Draw(Button *b){
   }
   else{
     cout << "ERROR:Button is a nullptr" << endl;
-    return 1;
+    return -1;
   }
   return 0;
+}
+
+int App::Draw(Particle *p){
+  if(p){
+    SDL_Rect rect = p->GetScaledPosition();
+    SDL_RenderCopy(renderer, p->GetTexture()->GetTexture(), NULL, &rect);
+  }
+  else{
+    cout << "ERROR:Particle is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+void App::DrawParticles(){
+  for(int i = 0; i < particles.size(); i++){
+    SDL_Rect rect = particles[i]->GetScaledPosition();
+    SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetTexture(), NULL, &rect);
+  }
 }
 
 bool App::CheckButton(Button *b){
@@ -223,3 +249,32 @@ bool App::CheckButton(Button *b){
   }
   return false;
 }
+
+int App::SpawnParticle(Particle *p, int x, int y, float dX, float dY){
+  if(p){
+    Particle *tmp;
+    tmp = new Particle(*p);
+
+    //Body Setup
+    tmp->Create(x, y);
+    
+    tmp->SetBody(world->CreateBody(tmp->GetBodyDef()));
+    tmp->GetBody()->CreateFixture(tmp->GetFixtureDef());
+    tmp->GetBody()->SetUserData(tmp);
+    
+    //Inital Impulse
+    tmp->ApplyImpulse(b2Vec2(dX, dY));
+
+    //Timer
+    tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
+
+
+    particles.push_back(tmp);   
+  }
+  else{
+    cout << "ERROR:Particle is NULL" << endl;
+    return -1;
+  }
+  return 0;
+}
+

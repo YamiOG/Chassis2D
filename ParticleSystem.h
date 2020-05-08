@@ -16,12 +16,14 @@ class ParticleSystem{
   int delay;
   float variation;
   SDL_Point velocity;
+  Particle *bParticle;
+  vector <Particle> *particles;
  public:
   ParticleSystem(){}
   ParticleSystem(Particle* p, SDL_Point velocity, int delay, int amount, float variation);
   void Setup(Particle* p, SDL_Point velocity, int delay, int amount, float variation);
 
-  int SpawnParticle(int x, int y, App *a);
+  int SpawnParticle(App *a, int x, int y);
   void SetTime(int set) {time = set;}
 
   int GetTime() {return time;}

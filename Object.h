@@ -29,8 +29,8 @@ class Object{
   //Physics
   b2Body *GetBody(){return body;}
   void SetBody(b2Body *sBody) {body = sBody;}
-  b2BodyDef *const GetBodyDef() {return &bodyDef;}
-  b2FixtureDef *const GetFixtureDef() {return &fixture;}
+  b2BodyDef *GetBodyDef() {return &bodyDef;}
+  b2FixtureDef *GetFixtureDef() {return &fixture;}
   void ApplyConstVelocity(b2Vec2 v);
   void ApplyImpulse(b2Vec2 v) { if(body) body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);}
   b2Vec2 GetVelocity() { return (body) ? body->GetLinearVelocity() : b2Vec2(0,0); }

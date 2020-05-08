@@ -2,6 +2,7 @@
 #define APP_H
 
 #include <iostream>
+#include <vector>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
@@ -27,6 +28,8 @@ class App{
   int pFPS;
   int32 pTime;
 
+  vector<Particle*> particles;
+
  public:
   App(){}
   App(const char* title, int width, int height, b2Vec2 setGravity, int sVelocityI, int sPositionI);
@@ -42,6 +45,8 @@ class App{
   int Draw(Object* o);
   int Draw(Text* t);
   int Draw(Button *b);
+  int Draw(Particle *p);
+  void DrawParticles();
   void RPresent();
 
   //Set Cmds
@@ -49,7 +54,7 @@ class App{
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
   int AddObject(Object* o);
-  int AddParticle(Particle* p);
+  int SpawnParticle(Particle* p, int x, int y, float dX, float dY);
   int StartParticleSystem(int x, int y, ParticleSystem* ps, int time);
 
   //Get Cmds
