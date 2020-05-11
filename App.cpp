@@ -257,7 +257,7 @@ int App::SpawnParticle(Particle *p, int x, int y, float dX, float dY){
 
     //Body Setup
     tmp->Create(x, y);
-    
+
     tmp->SetBody(world->CreateBody(tmp->GetBodyDef()));
     tmp->GetBody()->CreateFixture(tmp->GetFixtureDef());
     tmp->GetBody()->SetUserData(tmp);
@@ -267,7 +267,6 @@ int App::SpawnParticle(Particle *p, int x, int y, float dX, float dY){
 
     //Timer
     tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
-
 
     particles.push_back(tmp);   
   }

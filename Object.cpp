@@ -17,8 +17,8 @@ Object::Object(float x, float y, float w, float h, float friction, float density
 
   if(isD){
     bodyDef.type = b2_dynamicBody;
-    fixture.density = density;
     fixture.friction = friction;
+    fixture.density = density;
     fixture.restitution = restitution;
   }
   else{
@@ -41,8 +41,8 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 
   if(isD){
     bodyDef.type = b2_dynamicBody;
-    fixture.density = density;
     fixture.friction = friction;
+    fixture.density = density;
     fixture.restitution = restitution;
   }
   else{

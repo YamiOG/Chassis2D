@@ -23,9 +23,7 @@ class ParticleSystem{
   ParticleSystem(Particle* p, SDL_Point velocity, int delay, int amount, float variation);
   void Setup(Particle* p, SDL_Point velocity, int delay, int amount, float variation);
 
-  int SpawnParticle(App *a, int x, int y);
   void SetTime(int set) {time = set;}
-
   int GetTime() {return time;}
 
   //Destructor

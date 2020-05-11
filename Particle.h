@@ -12,10 +12,8 @@ using namespace std;
 
 class Particle{
  private:
-  int scale;
-  int lifetime, time;
-  int width, height;
-  b2Vec2 velocity;
+  int lifetime, time, scale;
+  float width, height;
   Texture *texture;
 
   b2Body *body;
@@ -27,8 +25,8 @@ class Particle{
 
  public:
   Particle(){}
-  Particle(int width, int height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
-  void Setup(int width, int height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
+  Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
+  void Setup(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
 
   b2Body *GetBody(){return body;}
   void SetBody(b2Body *sBody) {body = sBody;}
@@ -37,10 +35,9 @@ class Particle{
   Texture *GetTexture() { return texture; }
   int GetTime() {return time;}
   SDL_Rect GetScaledPosition();
-  int GetLifetime() { return lifetime;}
+  int GetLifetime() { return lifetime; }
 
   int Create(int x, int y);
-  void ApplyInitalImpulse() { if(body) body->ApplyLinearImpulse( velocity, body->GetWorldCenter(), true);}
   void ApplyImpulse(b2Vec2 v) { if(body) body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);}
   void SetLifetime(int set) {lifetime = set;}
   void SetTime(int set) {time = set;}

@@ -2,22 +2,27 @@
 
 #include "Chassis2D.h"
 
-Particle::Particle(int width, int height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
+Particle::Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
   this->width = width;
   this->height = height;
   this->lifetime = lifetime;
   this->texture = texture;
 
   this->scale = scale;
+
 }
 
-void Particle::Setup(int width, int height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
+void Particle::Setup(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
   this->width = width;
   this->height = height;
   this->lifetime = lifetime;
   this->texture = texture;
 
   this->scale = scale;
+
+  this->friction = friction;
+  this->density = density;
+  this->restitution = restitution;
 }
 
 int Particle::Create(int x, int y){
@@ -26,11 +31,11 @@ int Particle::Create(int x, int y){
   fixture.shape = &shape;
 
   fixture.filter.categoryBits = PARTICLE;
-  fixture.filter.maskBits = 0;
+  fixture.filter.maskBits = PARTICLE;
 
   bodyDef.type = b2_dynamicBody;
-  fixture.density = density;
   fixture.friction = friction;
+  fixture.density = density;
   fixture.restitution = restitution;
   return 0;
 }
