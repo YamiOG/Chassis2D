@@ -8,6 +8,8 @@
 
 #include "Class.h"
 
+#include "Vec2.h"
+
 using namespace std;
 
 class Particle{
@@ -38,7 +40,7 @@ class Particle{
   int GetLifetime() { return lifetime; }
 
   int Create(int x, int y);
-  void ApplyImpulse(b2Vec2 v) { if(body) body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);}
+  void ApplyImpulse(Vec2 v) { if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);}
   void SetLifetime(int set) {lifetime = set;}
   void SetTime(int set) {time = set;}
 

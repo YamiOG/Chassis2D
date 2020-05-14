@@ -2,13 +2,12 @@
 
 #include "Chassis2D.h"
 
-App::App(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
-    width = w;
-    height = h;
+App::App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
+    this->width = width;
+    this->height = height;
 
-    gravity = setGravity;
-    velocityI = sVelocityI;
-    positionI = sPositionI;
+    this->velocityI = velocityI;
+    this->positionI = positionI;
 
     if( SDL_Init(SDL_INIT_EVERYTHING) == -1){
       cout << "ERROR:SDL2 Initialization Failed" << endl;
@@ -32,19 +31,18 @@ App::App(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int
       cout << "ERROR:TTF Initialization Failed" << endl;
     }
 
-    world = new b2World(gravity);
+    world = new b2World(gravity.ToB2());
     if (!world) {
         cout << "ERROR:b2World Creation Failed" << endl;
     }
 }
 
-int App::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocityI, int sPositionI){
-  width = w;
-  height = h;
+int App::Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
+  this->width = width;
+  this->height = height;
 
-  gravity = setGravity;
-  velocityI = sVelocityI;
-  positionI = sPositionI;
+  this->velocityI = velocityI;
+  this->positionI = positionI;
 
   if( SDL_Init(SDL_INIT_EVERYTHING) == -1){
     cout << "ERROR:SDL2 Initialization Failed" << endl;
@@ -73,7 +71,7 @@ int App::Setup(const char* title, int w, int h, b2Vec2 setGravity, int sVelocity
     return -1;
   }
 
-  world = new b2World(gravity);
+  world = new b2World(gravity.ToB2());
   if (!world) {
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
@@ -99,6 +97,36 @@ bool App::IsPressed(int k){
 }
 
 void App::PhysicsUpdate(){
+  for(int i = 0; i < particleSystems.size(); i++){
+    if(SDL_GetTicks() >= particleSystems[i]->GetTime()){
+      particleSystems.erase(particleSystems.begin()+i);
+    }
+    else{
+      ParticleSystem* ps = particleSystems[i];
+      if(ps->GetCount() > 0){
+        
+      }
+
+      if(SDL_GetTicks() >= ps->GetDelayTime()){
+        if(ps->GetCount() < ps->GetAmount()){
+          SpawnParticle(ps->GetBaseParticle(), ps->RandomizePosition(ps->GetPosition()), ps->GetParticleVelocity());
+          ps->SetCount(ps->GetCount()+1);
+
+          ps->GetSpawnTimes().push_back(SDL_GetTicks());
+          ps->SetDelayTime(SDL_GetTicks()+ps->GetDelayTime());
+        }
+      }
+
+      for(int i = 0; i < ps->GetSpawnTimes().size(); i++){
+        if(SDL_GetTicks() >= ps->GetLifetime() + ps->GetSpawnTimes()[i]){
+          ps->SetCount(ps->GetCount()-1);
+
+          ps->GetSpawnTimes().erase(ps->GetSpawnTimes().begin()+i);
+        }
+      }
+    }
+  }
+
   for(int i = 0; i < particles.size(); i++){
     if(SDL_GetTicks() >= particles[i]->GetTime()){
       world->DestroyBody(particles[i]->GetBody());
@@ -250,30 +278,66 @@ bool App::CheckButton(Button *b){
   return false;
 }
 
-int App::SpawnParticle(Particle *p, int x, int y, float dX, float dY){
+Particle *App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
   if(p){
     Particle *tmp;
     tmp = new Particle(*p);
 
     //Body Setup
-    tmp->Create(x, y);
+    tmp->Create(pos.x, pos.y);
 
     tmp->SetBody(world->CreateBody(tmp->GetBodyDef()));
     tmp->GetBody()->CreateFixture(tmp->GetFixtureDef());
     tmp->GetBody()->SetUserData(tmp);
     
     //Inital Impulse
-    tmp->ApplyImpulse(b2Vec2(dX, dY));
+    tmp->ApplyImpulse(velocity);
 
     //Timer
     tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
 
     particles.push_back(tmp);   
+
+    return particles[particles.size()];
   }
   else{
     cout << "ERROR:Particle is NULL" << endl;
+  }
+  return new Particle();
+}
+
+int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
+  if(ps){
+    ParticleSystem *tmp = new ParticleSystem(*ps);
+
+    if(time == -1){
+      tmp->SetTime(-1);
+    }
+    else{
+      tmp->SetTime(SDL_GetTicks()+time);
+      tmp->SetDelayTime(SDL_GetTicks()+tmp->GetDelayTime());
+    }
+
+    tmp->SetPosition(pos);
+
+    particleSystems.push_back(tmp);  
+  }
+  else{
+    cout << "ERROR:ParticleSystem is NULL" << endl;
     return -1;
   }
   return 0;
 }
 
+int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos){
+  if(ps){
+    for(int i = 0; i < ps->GetAmount(); i++){
+      SpawnParticle(ps->GetBaseParticle(), ps->RandomizePosition(pos), ps->GetParticleVelocity());
+    }
+  }
+  else{
+    cout << "ERROR:ParticleSystem is NULL" << endl;
+    return -1;
+  }
+  return 0;
+}

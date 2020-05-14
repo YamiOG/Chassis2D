@@ -66,10 +66,10 @@ SDL_Rect Object::GetScaledPosition() {
   return rect;
 }
 
-void Object::ApplyConstVelocity(b2Vec2 v){
+void Object::ApplyConstVelocity(Vec2 v){
   if(body){
-    v -= GetVelocity();
-    v *= body->GetMass();
-    body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);
+    v.Subt(GetVelocity());
+    v.Multi(body->GetMass());
+    body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
   }
 }

@@ -15,3 +15,5 @@ class Button;
 class ParticleSystem;
 
 class Particle;
+
+class Vec2;

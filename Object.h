@@ -8,6 +8,8 @@
 
 #include "Class.h"
 
+#include "Vec2.h"
+
 using namespace std;
 
 class Object{
@@ -31,9 +33,9 @@ class Object{
   void SetBody(b2Body *sBody) {body = sBody;}
   b2BodyDef *GetBodyDef() {return &bodyDef;}
   b2FixtureDef *GetFixtureDef() {return &fixture;}
-  void ApplyConstVelocity(b2Vec2 v);
-  void ApplyImpulse(b2Vec2 v) { if(body) body->ApplyLinearImpulse( v, body->GetWorldCenter(), true);}
-  b2Vec2 GetVelocity() { return (body) ? body->GetLinearVelocity() : b2Vec2(0,0); }
+  void ApplyConstVelocity(Vec2 v);
+  void ApplyImpulse(Vec2 v) { if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);}
+  Vec2 GetVelocity() { return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); }
 
   //Render
   void SetTexture(Texture* t) { texture = t; }

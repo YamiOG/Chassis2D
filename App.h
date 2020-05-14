@@ -10,6 +10,8 @@
 
 #include "Class.h"
 
+#include "Vec2.h"
+
 using namespace std;
 
 class App{
@@ -22,20 +24,20 @@ class App{
   float cVol = 1.f;
 
   int velocityI, positionI;
-  b2Vec2 gravity;
   b2World* world;
 
   int pFPS;
   int32 pTime;
 
   vector<Particle*> particles;
+  vector<ParticleSystem*> particleSystems;
 
  public:
   App(){}
-  App(const char* title, int width, int height, b2Vec2 setGravity, int sVelocityI, int sPositionI);
-  int Setup(const char* title, int width, int height, b2Vec2 setGravity, int sVelocityI, int sPositionI);
+  App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
+  int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   void PhysicsUpdate();
-  void SetPhysicsFPS(int setFPS) { pFPS = setFPS; }
+  void SetPhysicsFPS(int pFPS) { this->pFPS = pFPS; }
   bool CheckEvents(){return SDL_PollEvent(&ev);}
 
   //Render Cmds
@@ -54,8 +56,9 @@ class App{
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
   int AddObject(Object* o);
-  int SpawnParticle(Particle* p, int x, int y, float dX, float dY);
-  int StartParticleSystem(int x, int y, ParticleSystem* ps, int time);
+  Particle *SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
+  int StartParticleSystem(ParticleSystem* ps, Vec2 pos);
+  int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);
 
   //Get Cmds
   SDL_Event GetEvent() { return ev; }
