@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class App{
+class App {
  private:
   SDL_Window* window;
   SDL_Renderer* renderer;
@@ -70,6 +70,7 @@ class App{
   bool IsPressed(int k);
   bool JustPressed(int k);
   bool CheckButton(Button *b);
+  bool IsColliding(Object* o1, Object* o2);
 
   //Destructor
   ~App();

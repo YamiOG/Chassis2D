@@ -341,3 +341,15 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos){
   }
   return 0;
 }
+
+bool App::IsColliding(Object* o1, Object* o2){
+  for (b2Contact* contact = world->GetContactList(); contact; contact = contact->GetNext()){
+    if(contact->GetFixtureA()->GetBody() == o1->GetBody() && contact->GetFixtureB()->GetBody() == o2->GetBody()){
+      return true;
+    }
+    else if(contact->GetFixtureB()->GetBody() == o1->GetBody() && contact->GetFixtureA()->GetBody() == o2->GetBody()){
+      return true;
+    }
+  }
+  return false;
+}

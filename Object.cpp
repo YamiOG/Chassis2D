@@ -73,3 +73,6 @@ void Object::ApplyConstVelocity(Vec2 v){
     body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
   }
 }
+
+void Object::SetMaskBit(uint16 maskBit){
+}
