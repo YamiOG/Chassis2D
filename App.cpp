@@ -35,6 +35,8 @@ App::App(const char* title, int width, int height, Vec2 gravity, int velocityI, 
     if (!world) {
         cout << "ERROR:b2World Creation Failed" << endl;
     }
+
+    world->SetContactListener(this);
 }
 
 int App::Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
@@ -76,6 +78,9 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
   }
+
+  world->SetContactListener(this);
+
   return 0;
 }
 
@@ -343,13 +348,42 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos){
 }
 
 bool App::IsColliding(Object* o1, Object* o2){
-  for (b2Contact* contact = world->GetContactList(); contact; contact = contact->GetNext()){
-    if(contact->GetFixtureA()->GetBody() == o1->GetBody() && contact->GetFixtureB()->GetBody() == o2->GetBody()){
-      return true;
-    }
-    else if(contact->GetFixtureB()->GetBody() == o1->GetBody() && contact->GetFixtureA()->GetBody() == o2->GetBody()){
+  for (b2ContactEdge* edge = o1->GetBody()->GetContactList(); edge; edge = edge->next){
+    if(edge->contact->GetFixtureB()->GetBody() == o2->GetBody()){
       return true;
     }
   }
   return false;
+}
+
+int App::AddContact(Contact *c){
+  if(c){
+    contacts.push_back(c);
+  }
+  else{
+    cout << "ERROR:Contact is NULL" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+void App::BeginContact(b2Contact* contact){
+  
+}
+
+void App::PreSolve(b2Contact* contact, const b2Manifold* oldManifold){
+  for(int i = 0; i < contacts.size(); i++){
+    if(contacts[i]){
+      if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(0)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(0)->GetBody()){
+        if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(1)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(1)->GetBody()){
+          contact->SetEnabled(contacts[i]->GetCollide());
+        }
+      }
+    }
+  }
+}
+
+void App::EndContact(b2Contact* contact){
+  //contact->SetEnabled(true);
+  contacts.clear();
 }

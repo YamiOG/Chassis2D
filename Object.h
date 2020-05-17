@@ -37,7 +37,7 @@ class Object{
   void ApplyImpulse(Vec2 v) { if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);}
   Vec2 GetVelocity() { return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); }
   void SetActive(bool set) { if(body) body->SetActive(set); }
-  void SetMaskBit(uint16 maskBit);
+  void SetCollision(bool val);
 
   //Render
   void SetTexture(Texture* t) { texture = t; }

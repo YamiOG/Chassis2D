@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class App {
+class App : public b2ContactListener{
  private:
   SDL_Window* window;
   SDL_Renderer* renderer;
@@ -31,6 +31,7 @@ class App {
 
   vector<Particle*> particles;
   vector<ParticleSystem*> particleSystems;
+  vector<Contact*> contacts;
 
  public:
   App(){}
@@ -59,6 +60,7 @@ class App {
   Particle *SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);
+  int AddContact(Contact *c);
 
   //Get Cmds
   SDL_Event GetEvent() { return ev; }
@@ -71,6 +73,11 @@ class App {
   bool JustPressed(int k);
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
+
+  //ContactListener
+  void BeginContact(b2Contact* contact);
+	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+  void EndContact(b2Contact* contact);
 
   //Destructor
   ~App();

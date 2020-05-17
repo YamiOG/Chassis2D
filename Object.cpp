@@ -74,5 +74,13 @@ void Object::ApplyConstVelocity(Vec2 v){
   }
 }
 
-void Object::SetMaskBit(uint16 maskBit){
+void Object::SetCollision(bool val){
+  if(body){
+    for(b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext()){
+      fixture->SetSensor(!val);
+    }
+  }
+  else{
+  cout << "ERROR:Object Body is NULL" << endl;
+  }
 }

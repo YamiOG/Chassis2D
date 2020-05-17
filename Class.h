@@ -16,4 +16,6 @@ class ParticleSystem;
 
 class Particle;
 
+class Contact;
+
 class Vec2;

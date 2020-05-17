@@ -9,4 +9,5 @@
 #include "Button.h"
 #include "Particle.h"
 #include "ParticleSystem.h"
+#include "Contact.h"
 #include "Vec2.h"
