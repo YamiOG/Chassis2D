@@ -2,6 +2,8 @@ class App;
 
 class Object;
 
+class Entity;
+
 class Texture;
 
 class Sound;
@@ -19,3 +21,5 @@ class Particle;
 class Contact;
 
 class Vec2;
+
+class Vec4;

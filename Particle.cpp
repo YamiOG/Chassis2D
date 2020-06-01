@@ -10,9 +10,12 @@ Particle::Particle(float width, float height, float friction, float density, flo
 
   this->scale = scale;
 
+  this->friction = friction;
+  this->density = density;
+  this->restitution = restitution;
 }
 
-void Particle::Setup(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
+int Particle::Setup(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
   this->width = width;
   this->height = height;
   this->lifetime = lifetime;
@@ -23,6 +26,7 @@ void Particle::Setup(float width, float height, float friction, float density, f
   this->friction = friction;
   this->density = density;
   this->restitution = restitution;
+  return 0;
 }
 
 int Particle::Create(int x, int y){
@@ -38,17 +42,6 @@ int Particle::Create(int x, int y){
   fixture.density = density;
   fixture.restitution = restitution;
   return 0;
-}
-
-SDL_Rect Particle::GetScaledPosition() {
-  SDL_Rect rect = {0,0,0,0};
-  if(body){
-    rect = { (int)((body->GetPosition().x * scale) - (width / 2)), (int)((body->GetPosition().y * scale) - (height / 2)), (int)width, (int)height };
-  }
-  else{
-    cout << "ERROR:Particle Body is NULL" << endl;
-  }
-  return rect;
 }
 
 Particle::~Particle(){

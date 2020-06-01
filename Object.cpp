@@ -55,15 +55,14 @@ Object::~Object(){
   delete texture;
 }
 
-SDL_Rect Object::GetScaledPosition() {
-  SDL_Rect rect = {0,0,0,0};
+Vec4 Object::GetRect() {
   if(body){
-    rect = { (int)((body->GetPosition().x * scale) - (width / 2)), (int)((body->GetPosition().y * scale) - (height / 2)), (int)width, (int)height };
+    return Vec4((body->GetPosition().x * scale) - (width / 2), (body->GetPosition().y * scale) - (height / 2), width, height );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
   }
-  return rect;
+  return Vec4(0.f, 0.f, 0.f, 0.f);
 }
 
 void Object::ApplyConstVelocity(Vec2 v){
@@ -71,16 +70,5 @@ void Object::ApplyConstVelocity(Vec2 v){
     v.Subt(GetVelocity());
     v.Multi(body->GetMass());
     body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
-  }
-}
-
-void Object::SetCollision(bool val){
-  if(body){
-    for(b2Fixture* fixture = body->GetFixtureList(); fixture; fixture = fixture->GetNext()){
-      fixture->SetSensor(!val);
-    }
-  }
-  else{
-  cout << "ERROR:Object Body is NULL" << endl;
   }
 }

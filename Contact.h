@@ -16,6 +16,9 @@ class Contact{
  public:
   Contact(){}
   Contact(Object *o1, Object *o2, bool collide);
+  Contact(Entity *o1, Object *o2, bool collide);
+  Contact(Object *o1, Entity *o2, bool collide);
+  Contact(Entity *o1, Entity *o2, bool collide);
 
   Object *GetObject(int i){return o[i];}
   bool GetCollide(){ return collide; }

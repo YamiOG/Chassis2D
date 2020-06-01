@@ -6,13 +6,15 @@
 
 #include "Class.h"
 
+#include "Vec4.h"
+
 using namespace std;
 
 class Button{
  private:
   Text *text;
   Texture *texture;
-  SDL_Rect rect;
+  Vec4 rect;
   bool prev = false;
  public:
   Button(){}
@@ -20,7 +22,7 @@ class Button{
   int Setup(int x, int y, int w, int h, Texture *t, const char* tx, Font *f);
   void SetPrev(bool set) { prev = set; }
   bool GetPrev() { return prev; }
-  SDL_Rect GetRect() {return rect;}
+  Vec4 GetRect() {return rect;}
   Texture* GetTexture() {return texture;}
   Text* GetText() {return text;}
 };

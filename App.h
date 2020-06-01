@@ -68,7 +68,7 @@ class App : public b2ContactListener{
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
   SDL_Point GetMouse();
-  bool IsMouseInRect(SDL_Rect rect);
+  bool IsMouseInVec4(Vec4 rect);
   bool IsPressed(int k);
   bool JustPressed(int k);
   bool CheckButton(Button *b);

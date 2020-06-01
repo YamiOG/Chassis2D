@@ -1,7 +1,11 @@
+#include <iostream>
+#include <memory>
+
 #include "Global.h"
 
 #include "App.h"
 #include "Object.h"
+#include "Entity.h"
 #include "Texture.h"
 #include "Sound.h"
 #include "Text.h"
@@ -11,3 +15,4 @@
 #include "ParticleSystem.h"
 #include "Contact.h"
 #include "Vec2.h"
+#include "Vec4.h"

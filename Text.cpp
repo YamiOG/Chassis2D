@@ -13,6 +13,7 @@ Text::Text(int x, int y, const char* tx, Font *font){
   rect.h = 0;
 
   text = (string)tx;
+
 }
 
 int Text::Setup(int x, int y, const char* tx, Font *font){
@@ -26,20 +27,28 @@ int Text::Setup(int x, int y, const char* tx, Font *font){
   rect.h = 0;
 
   text = (string)tx;
+
   return 0;
 }
 
-SDL_Texture *Text::GetText(App *a){
-  SDL_Texture *t;
+Text::~Text(){
+  f->~Font();
+}
+
+shared_ptr<Texture> Text::GetText(App *a){
   if(f->GetRGB()){
-    f->GetText(a->GetRenderer(), pos.x, pos.y, text.c_str(), iTime, &t, &rect);
+    texture = f->GetText(a, text.c_str(), iTime);
   }
   else{
-    f->GetText(a->GetRenderer(), pos.x, pos.y, text.c_str(), &t, &rect);
+    texture = f->GetText(a, text.c_str());
   }
 
-  if(!t){
-    cout << "ERROR:Texture is Null" << endl;
+  if(!texture){
+    cout << "ERROR:Text Texture is NULL" << endl;
   }
-  return t;
+
+  Vec2 size = texture->GetSize();
+  rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
+
+  return texture;
 }

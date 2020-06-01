@@ -1,5 +1,6 @@
 #include "Font.h"
 
+#include "Chassis2D.h"
 
 Font::Font(const char* fLoc, int s, int r, int g, int b, bool setRGB){
   font = TTF_OpenFont(fLoc, s);
@@ -29,33 +30,30 @@ int Font::Setup(const char* fLoc, int s, int r, int g, int b, bool setRGB){
   return 0;
 }
 
-int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, SDL_Texture **t, SDL_Rect *r ){
-  SDL_Surface *s;
 
-  s = TTF_RenderText_Solid( font, text, color );
-  if(!s){
-    cout << "ERROR:Text Surface is NULL" << endl;
-    return -1;
-  }
+Font::~Font(){
 
-  r->x = x - (s->w/2);
-  r->y = y - (s->h/2);
-  r->w = s->w;
-  r->h = s->h;
-
-  *t = SDL_CreateTextureFromSurface(renderer, s);
-  if(!t){
-    cout << "ERROR:Text Texture is NULL" << endl;
-    return -1;
-  }
-
-  SDL_FreeSurface(s);
-  return 0;
 }
 
-int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &iTime, SDL_Texture **t, SDL_Rect *r ){
-  SDL_Surface *s;
+shared_ptr<Texture> Font::GetText(App *a, const char* text){
+  SDL_Surface *s = TTF_RenderText_Solid( font, text, color );
+  if(!s){
+    cout << "ERROR:Text Surface is NULL" << endl;
+  }
 
+  shared_ptr<Texture> t = make_shared<Texture>(SDL_CreateTextureFromSurface(a->GetRenderer(), s));
+  if(!t){
+    cout << "ERROR:Text Texture is NULL" << endl;
+  }
+
+  if(s){
+    SDL_FreeSurface(s);
+  }
+  
+  return t;
+}
+
+shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
   if(iTime == -1){
     iTime = SDL_GetTicks();
   }
@@ -64,6 +62,9 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
   int interval = 256*divisor;
 
   float i = ((float)((SDL_GetTicks()-iTime)%interval))/interval;
+  if(SDL_GetTicks()-iTime >= interval){
+    iTime = SDL_GetTicks();
+  }
 
   int n = i * 256 * 6;
 
@@ -83,23 +84,19 @@ int Font::GetText(SDL_Renderer *renderer, int x, int y, const char* text, int &i
     case 5: rgbC.r = 255;      rgbC.g = 0;        rgbC.b = 255 - c; break;//magenta
   }
 
-  s = TTF_RenderText_Solid( font, text, rgbC );
+  SDL_Surface *s = TTF_RenderText_Solid( font, text, rgbC );
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
-    return -1;
   }
 
-  r->x = x - (s->w/2);
-  r->y = y - (s->h/2);
-  r->w = s->w;
-  r->h = s->h;
-
-  *t = SDL_CreateTextureFromSurface(renderer, s);
+  shared_ptr<Texture> t = make_shared<Texture>(SDL_CreateTextureFromSurface(a->GetRenderer(), s));
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
-    return -1;
   }
 
-  SDL_FreeSurface(s);
-  return 0; 
+  if(s){
+    SDL_FreeSurface(s);
+  }
+
+  return t;
 }

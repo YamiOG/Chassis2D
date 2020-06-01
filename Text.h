@@ -2,18 +2,22 @@
 #define TEXT_H
 
 #include <iostream>
+#include <memory>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
 #include "Class.h"
 
+#include "Vec2.h"
+#include "Vec4.h"
+
 using namespace std;
 
 class Text{
  private:
-  SDL_Texture *t;
-  SDL_Point pos;
-  SDL_Rect rect;
+  shared_ptr<Texture> texture;
+  Vec2 pos;
+  Vec4 rect;
   Font *f;
   string text;
   int iTime = -1;
@@ -22,10 +26,12 @@ class Text{
   Text(){}
   Text(int x, int y, const char* tx, Font *font);
   int Setup(int x, int y, const char* tx, Font *font);
-  SDL_Texture *GetText(App *a);
+  shared_ptr<Texture> GetText(App *a);
   void SetPosition(int x, int y) { pos.x = x; pos.y = y; }
-  SDL_Point GetPosition() {return pos;}
-  SDL_Rect GetRect() { return rect; }
+  Vec2 GetPosition() {return pos;}
+  Vec4 GetRect() { return rect; }
+
+  ~Text();
 };
 
 #endif

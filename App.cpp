@@ -185,7 +185,7 @@ SDL_Point App::GetMouse(){
   return pos;
 }
 
-bool App::IsMouseInRect(SDL_Rect rect){
+bool App::IsMouseInVec4(Vec4 rect){
   SDL_Point mPos;
   SDL_GetMouseState(&mPos.x, &mPos.y);
   if(rect.x < mPos.x && mPos.x < rect.x + rect.w && rect.y < mPos.y && mPos.y < rect.y + rect.h){
@@ -209,8 +209,8 @@ int App::AddObject(Object* o){
 
 int App::Draw(Object *o){
   if(o){
-    SDL_Rect rect = o->GetScaledPosition();
-    SDL_RenderCopy(renderer, o->GetTexture()->GetTexture(), NULL, &rect);
+    SDL_Rect rect = o->GetRect().ToSDL();
+    SDL_RenderCopy(renderer, o->GetTexture()->GetData(), NULL, &rect);
   }
   else{
     cout << "ERROR:Object is a nullptr" << endl;
@@ -221,8 +221,8 @@ int App::Draw(Object *o){
 
 int App::Draw(Text *t){
   if(t){
-    SDL_Rect rect = t->GetRect();
-    SDL_RenderCopy(renderer, t->GetText(this), NULL, &rect);
+    SDL_Rect rect = t->GetRect().ToSDL();
+    SDL_RenderCopy(renderer, t->GetText(this)->GetData(), NULL, &rect);
   }
   else{
     cout << "ERROR:Text is a nullptr" << endl;
@@ -233,8 +233,8 @@ int App::Draw(Text *t){
 
 int App::Draw(Button *b){
   if(b){
-    SDL_Rect rect = b->GetRect();
-    SDL_RenderCopy(renderer, b->GetTexture()->GetTexture(), NULL, &rect);
+    SDL_Rect rect = b->GetRect().ToSDL();
+    SDL_RenderCopy(renderer, b->GetTexture()->GetData(), NULL, &rect);
     Draw(b->GetText());
   }
   else{
@@ -246,8 +246,8 @@ int App::Draw(Button *b){
 
 int App::Draw(Particle *p){
   if(p){
-    SDL_Rect rect = p->GetScaledPosition();
-    SDL_RenderCopy(renderer, p->GetTexture()->GetTexture(), NULL, &rect);
+    SDL_Rect rect = p->GetRect().ToSDL();
+    SDL_RenderCopy(renderer, p->GetTexture()->GetData(), NULL, &rect);
   }
   else{
     cout << "ERROR:Particle is a nullptr" << endl;
@@ -258,13 +258,13 @@ int App::Draw(Particle *p){
 
 void App::DrawParticles(){
   for(int i = 0; i < particles.size(); i++){
-    SDL_Rect rect = particles[i]->GetScaledPosition();
-    SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetTexture(), NULL, &rect);
+    SDL_Rect rect = particles[i]->GetRect().ToSDL();
+    SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetData(), NULL, &rect);
   }
 }
 
 bool App::CheckButton(Button *b){
-  if(IsMouseInRect(b->GetRect())){
+  if(IsMouseInVec4(b->GetRect())){
     if(ev.type == SDL_MOUSEBUTTONDOWN) {
       if(ev.button.button == SDL_BUTTON_LEFT){
         if(b->GetPrev() == false){

@@ -9,11 +9,13 @@
 #include "Class.h"
 
 #include "Vec2.h"
+#include "Vec4.h"
 
 using namespace std;
 
 class Object{
  private:
+ protected:
   b2Body* body;
   b2BodyDef bodyDef;
   b2FixtureDef fixture;
@@ -37,11 +39,12 @@ class Object{
   void ApplyImpulse(Vec2 v) { if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);}
   Vec2 GetVelocity() { return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); }
   void SetActive(bool set) { if(body) body->SetActive(set); }
-  void SetCollision(bool val);
+  int GetScale() {return scale;}
+  void SetPosition(Vec2 position) { if(body) body->SetTransform(position.ToB2(), 0);}
 
   //Render
   void SetTexture(Texture* t) { texture = t; }
-  SDL_Rect GetScaledPosition();
+  Vec4 GetRect();
   Texture* GetTexture(){return texture;}
   bool GetActive() { return (body) ? body->IsActive() : false; }
 
