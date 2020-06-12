@@ -36,4 +36,5 @@ int ParticleSystem::GetLifetime(){
 }
 
 ParticleSystem::~ParticleSystem(){
+  delete bParticle;
 }

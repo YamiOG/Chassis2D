@@ -2,45 +2,36 @@
 
 #include "Chassis2D.h"
 
-Text::Text(int x, int y, const char* tx, Font *font){
-  f = font;
-  pos.x = x;
-  pos.y = y;
+Text::Text(int x, int y, const char* text, Font *font){
+  this->font = font;
 
-  rect.x = 0;
-  rect.y = 0;
-  rect.w = 0;
-  rect.h = 0;
+  pos = Vec2(x, y);
+  rect = Vec4(0,0,0,0);
 
-  text = (string)tx;
+  this->text = (string)text;
 
 }
 
-int Text::Setup(int x, int y, const char* tx, Font *font){
-  f = font;
-  pos.x = x;
-  pos.y = y;
+int Text::Setup(int x, int y, const char* text, Font *font){
+  this->font = font;
 
-  rect.x = 0;
-  rect.y = 0;
-  rect.w = 0;
-  rect.h = 0;
+  pos = Vec2(x, y);
+  rect = Vec4(0,0,0,0);
 
-  text = (string)tx;
+  this->text = (string)text;
 
   return 0;
 }
 
 Text::~Text(){
-  f->~Font();
 }
 
 shared_ptr<Texture> Text::GetText(App *a){
-  if(f->GetRGB()){
-    texture = f->GetText(a, text.c_str(), iTime);
+  if(font->GetRGB()){
+    texture = font->GetText(a, text.c_str(), iTime);
   }
   else{
-    texture = f->GetText(a, text.c_str());
+    texture = font->GetText(a, text.c_str());
   }
 
   if(!texture){

@@ -24,6 +24,8 @@ class Contact{
   bool GetCollide(){ return collide; }
 
   void SetCollision(bool val) { collide = val; }
+
+  ~Contact();
 };
 
 #endif

@@ -2,35 +2,15 @@
 
 #include "Chassis2D.h"
 
-Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int setScale){
-
-  width = w;
-  height = h;
-  scale = setScale;
-
-  bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
-  shape.SetAsBox((width/2)/scale, (height/2)/scale);
-  fixture.shape = &shape;
-
-  fixture.filter.categoryBits = categoryBits;
-  fixture.filter.maskBits = maskBits;
-
-  if(isD){
-    bodyDef.type = b2_dynamicBody;
-    fixture.friction = friction;
-    fixture.density = density;
-    fixture.restitution = restitution;
-  }
-  else{
-    bodyDef.type = b2_staticBody;
-  }
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
+  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, isD, scale);
 }
 
-int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int setScale){
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
 
   width = w;
   height = h;
-  scale = setScale;
+  this->scale = scale;
 
   bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
   shape.SetAsBox((width/2)/scale, (height/2)/scale);
@@ -65,10 +45,13 @@ Vec4 Object::GetRect() {
   return Vec4(0.f, 0.f, 0.f, 0.f);
 }
 
-void Object::ApplyConstVelocity(Vec2 v){
+void Object::ApplyConstVelocity(Vec2 v, bool jumping){
   if(body){
     v.Subt(GetVelocity());
     v.Multi(body->GetMass());
+    if(jumping){
+      v.y = 0;
+    }
     body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
   }
 }

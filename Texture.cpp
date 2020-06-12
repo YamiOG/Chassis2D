@@ -194,15 +194,15 @@ int Texture::Setup(App *a, SDL_Surface *surf, int hN, int vN, bool isS){
   return 0;
 }
 
-SDL_Rect Texture::GetCrop(){
-  SDL_Rect rect = {0,0,width,height}; 
+Vec4 Texture::GetCrop(){
+  Vec4 rect = Vec4(0,0,width,height);
   return rect;
 }
 
-SDL_Rect Texture::GetFrame(int num){
+Vec4 Texture::GetFrame(int num){
   if(!sheet){
     cout << "WARNING:Not A Sprite Sheet" << endl;
-    SDL_Rect rect = {0,0,width,height}; 
+    Vec4 rect = Vec4(0,0,width,height);
     return rect;
   }
   int y = 0;
@@ -211,7 +211,7 @@ SDL_Rect Texture::GetFrame(int num){
   }
   int x = num % hNum;
 
-  SDL_Rect rect = {x, y, wFrame, hFrame};
+  Vec4 rect = Vec4(x, y, wFrame, hFrame);
   return rect;
 }
 

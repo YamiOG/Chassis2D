@@ -31,7 +31,7 @@ class App : public b2ContactListener{
 
   vector<Particle*> particles;
   vector<ParticleSystem*> particleSystems;
-  vector<Contact*> contacts;
+  vector<shared_ptr<Contact>> contacts;
 
  public:
   App(){}
@@ -57,7 +57,7 @@ class App : public b2ContactListener{
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
   int AddObject(Object* o);
-  Particle *SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
+  int SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);
   int AddContact(Contact *c);
@@ -68,6 +68,7 @@ class App : public b2ContactListener{
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
   SDL_Point GetMouse();
+  Uint32 GetTime() { return SDL_GetTicks(); }
   bool IsMouseInVec4(Vec4 rect);
   bool IsPressed(int k);
   bool JustPressed(int k);

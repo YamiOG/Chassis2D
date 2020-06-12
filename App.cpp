@@ -283,7 +283,7 @@ bool App::CheckButton(Button *b){
   return false;
 }
 
-Particle *App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
+int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
   if(p){
     Particle *tmp;
     tmp = new Particle(*p);
@@ -301,14 +301,16 @@ Particle *App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
     //Timer
     tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
 
+    //particles.push_back(shared_ptr<Particle>(tmp));   
+
     particles.push_back(tmp);   
 
-    return particles[particles.size()];
   }
   else{
     cout << "ERROR:Particle is NULL" << endl;
+    return -1;
   }
-  return new Particle();
+  return 0;
 }
 
 int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
@@ -358,7 +360,7 @@ bool App::IsColliding(Object* o1, Object* o2){
 
 int App::AddContact(Contact *c){
   if(c){
-    contacts.push_back(c);
+    contacts.push_back(shared_ptr<Contact>(c));
   }
   else{
     cout << "ERROR:Contact is NULL" << endl;
@@ -384,6 +386,11 @@ void App::PreSolve(b2Contact* contact, const b2Manifold* oldManifold){
 }
 
 void App::EndContact(b2Contact* contact){
-  //contact->SetEnabled(true);
-  contacts.clear();
+  for(int i = 0; i < contacts.size(); i++){
+    if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(0)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(0)->GetBody()){
+      if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(1)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(1)->GetBody()){
+        contacts.erase(contacts.begin()+i); 
+      }
+    }
+  }
 }

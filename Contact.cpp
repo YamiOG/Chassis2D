@@ -29,3 +29,7 @@ Contact::Contact(Entity *o1, Entity *o2, bool collide){
 
   this->collide = collide;
 }
+
+Contact::~Contact(){
+
+}

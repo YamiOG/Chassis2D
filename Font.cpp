@@ -32,7 +32,7 @@ int Font::Setup(const char* fLoc, int s, int r, int g, int b, bool setRGB){
 
 
 Font::~Font(){
-
+  TTF_CloseFont(font);
 }
 
 shared_ptr<Texture> Font::GetText(App *a, const char* text){
