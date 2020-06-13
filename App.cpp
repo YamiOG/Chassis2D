@@ -145,21 +145,21 @@ void App::PhysicsUpdate(){
   }
 }
 
-void App::RClear(){
+void App::Clear(){
   SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   SDL_RenderClear(renderer);
 }
 
-void App::RClear(int r, int g, int b){
+void App::Clear(int r, int g, int b){
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
   SDL_RenderClear(renderer);
 }
 
-void App::RPresent(){
+void App::Present(){
   SDL_RenderPresent(renderer);
 }
 
-void App::RFillRect(SDL_Rect rect, int r, int g, int b){
+void App::FillRect(SDL_Rect rect, int r, int g, int b){
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
   SDL_RenderFillRect(renderer, &rect);
 }
@@ -352,6 +352,15 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos){
 bool App::IsColliding(Object* o1, Object* o2){
   for (b2ContactEdge* edge = o1->GetBody()->GetContactList(); edge; edge = edge->next){
     if(edge->contact->GetFixtureB()->GetBody() == o2->GetBody()){
+      return true;
+    }
+  }
+  return false;
+}
+
+bool App::IsSensorColliding(Object *o, int id){
+  for (b2ContactEdge* edge = o->GetBody()->GetContactList(); edge; edge = edge->next){
+    if((intptr_t)edge->contact->GetFixtureA()->GetUserData() == id){
       return true;
     }
   }

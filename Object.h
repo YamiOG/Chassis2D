@@ -41,6 +41,7 @@ class Object{
   void SetActive(bool set) { if(body) body->SetActive(set); }
   int GetScale() {return scale;}
   void SetPosition(Vec2 position) { if(body) body->SetTransform(position.ToB2(), 0);}
+  void SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id);
 
   //Render
   void SetTexture(Texture* t) { texture = t; }

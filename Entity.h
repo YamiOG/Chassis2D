@@ -16,13 +16,12 @@ class Entity : public Object{
  private:
   float hp, speed;
 
-  bool dead;
+  bool dead, jumping;
 
  public:
   Entity(){}
   Entity(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
   int Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
-  void SetSensor(float x, float y, float w, float h);
   void SetHP(float hp) {this->hp = hp;}
 };
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdint>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL_ttf.h>
@@ -42,15 +43,15 @@ class App : public b2ContactListener{
   bool CheckEvents(){return SDL_PollEvent(&ev);}
 
   //Render Cmds
-  void RClear();
-  void RClear(int r, int g, int b);
-  void RFillRect(SDL_Rect rect, int r, int g, int b);
+  void Clear();
+  void Clear(int r, int g, int b);
+  void FillRect(SDL_Rect rect, int r, int g, int b);
   int Draw(Object* o);
   int Draw(Text* t);
   int Draw(Button *b);
   int Draw(Particle *p);
   void DrawParticles();
-  void RPresent();
+  void Present();
 
   //Set Cmds
   void SetMusicVolume(float value);
@@ -74,6 +75,8 @@ class App : public b2ContactListener{
   bool JustPressed(int k);
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
+  bool OnGround(Entity* e);
+  bool IsSensorColliding(Object *o, int id);
 
   //ContactListener
   void BeginContact(b2Contact* contact);

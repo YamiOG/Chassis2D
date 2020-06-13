@@ -55,3 +55,25 @@ void Object::ApplyConstVelocity(Vec2 v, bool jumping){
     body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
   }
 }
+
+void Object::SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id){
+  if(body){
+    b2FixtureDef tmpFixtureDef;
+    b2PolygonShape tmpShape;
+    tmpShape.SetAsBox((width/2)/scale, (height/2)/scale, b2Vec2(w/2/scale, h/2/scale), 0);
+    tmpFixtureDef.shape = &tmpShape;
+
+    tmpFixtureDef.filter.categoryBits = categoryBits;
+    tmpFixtureDef.filter.maskBits = maskBits;
+
+    tmpFixtureDef.isSensor = true;
+
+    b2Fixture *tmpFixture = body->CreateFixture(&tmpFixtureDef);
+
+    tmpFixture->SetUserData((void*)(size_t)id);
+
+  }
+  else{
+    cout << "ERROR:Object Body is NULL" << endl;
+  }
+}
