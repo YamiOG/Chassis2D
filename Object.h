@@ -17,9 +17,6 @@ class Object{
  private:
  protected:
   b2Body* body;
-  b2BodyDef bodyDef;
-  b2FixtureDef fixture;
-  b2PolygonShape shape;
 
   Texture* texture;
   float width, height;
@@ -27,14 +24,14 @@ class Object{
  public:
 
   Object(){}
-  Object(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale);
-  virtual int Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale);
+  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale);
+  virtual int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale);
 
   //Physics
   b2Body *GetBody(){return body;}
-  void SetBody(b2Body *sBody) {body = sBody;}
-  b2BodyDef *GetBodyDef() {return &bodyDef;}
-  b2FixtureDef *GetFixtureDef() {return &fixture;}
+  void SetBody(b2Body *body) {this->body = body;}
+  //b2BodyDef *GetBodyDef() {return &bodyDef;}
+  //b2FixtureDef *GetFixtureDef() {return &fixture;}
   void ApplyConstVelocity(Vec2 v, bool jumping);
   void ApplyImpulse(Vec2 v) { if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);}
   Vec2 GetVelocity() { return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); }

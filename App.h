@@ -25,7 +25,6 @@ class App : public b2ContactListener{
   float cVol = 1.f;
 
   int velocityI, positionI;
-  b2World* world;
 
   int pFPS;
   int32 pTime;
@@ -35,6 +34,7 @@ class App : public b2ContactListener{
   vector<shared_ptr<Contact>> contacts;
 
  public:
+  b2World* world;
   App(){}
   App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
@@ -57,7 +57,6 @@ class App : public b2ContactListener{
   void SetMusicVolume(float value);
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
-  int AddObject(Object* o);
   int SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);

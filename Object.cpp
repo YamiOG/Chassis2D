@@ -2,32 +2,46 @@
 
 #include "Chassis2D.h"
 
-Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
-  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, isD, scale);
+Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
+  Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, isD, scale);
 }
 
-int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
+int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
+  if(a->GetWorld() != nullptr){
+    b2BodyDef bodyDef;
+    b2FixtureDef fixture;
+    b2PolygonShape shape;
 
-  width = w;
-  height = h;
-  this->scale = scale;
+    width = w;
+    height = h;
+    this->scale = scale;
 
-  bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
-  shape.SetAsBox((width/2)/scale, (height/2)/scale);
-  fixture.shape = &shape;
+    bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
+    shape.SetAsBox((width/2)/scale, (height/2)/scale);
+    fixture.shape = &shape;
 
-  fixture.filter.categoryBits = categoryBits;
-  fixture.filter.maskBits = maskBits;
+    fixture.filter.categoryBits = categoryBits;
+    fixture.filter.maskBits = maskBits;
 
-  if(isD){
-    bodyDef.type = b2_dynamicBody;
-    fixture.friction = friction;
-    fixture.density = density;
-    fixture.restitution = restitution;
+    if(isD){
+      bodyDef.type = b2_dynamicBody;
+      fixture.friction = friction;
+      fixture.density = density;
+      fixture.restitution = restitution;
+    }
+    else{
+      bodyDef.type = b2_staticBody;
+    }
+
+    body = a->GetWorld()->CreateBody(&bodyDef);
+    body->CreateFixture(&fixture);
+    body->SetUserData(this);
   }
   else{
-    bodyDef.type = b2_staticBody;
+    cout << "ERROR:b2World is nullptr" << endl;
+    return -1;
   }
+
   return 0;
 }
 
@@ -58,20 +72,17 @@ void Object::ApplyConstVelocity(Vec2 v, bool jumping){
 
 void Object::SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id){
   if(body){
-    b2FixtureDef tmpFixtureDef;
+    b2FixtureDef tmpFixture;
     b2PolygonShape tmpShape;
     tmpShape.SetAsBox((width/2)/scale, (height/2)/scale, b2Vec2(w/2/scale, h/2/scale), 0);
-    tmpFixtureDef.shape = &tmpShape;
+    tmpFixture.shape = &tmpShape;
+    tmpFixture.density = 0;
 
-    tmpFixtureDef.filter.categoryBits = categoryBits;
-    tmpFixtureDef.filter.maskBits = maskBits;
+    tmpFixture.isSensor = true;
+    tmpFixture.filter.categoryBits = categoryBits;
+    tmpFixture.filter.maskBits = maskBits;
 
-    tmpFixtureDef.isSensor = true;
-
-    b2Fixture *tmpFixture = body->CreateFixture(&tmpFixtureDef);
-
-    tmpFixture->SetUserData((void*)(size_t)id);
-
+    body->CreateFixture(&tmpFixture)->SetUserData((void*)(size_t)id);
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;

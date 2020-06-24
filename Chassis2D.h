@@ -14,5 +14,6 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 #include "Contact.h"
+#include "Timer.h"
 #include "Vec2.h"
 #include "Vec4.h"

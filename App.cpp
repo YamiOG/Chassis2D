@@ -194,19 +194,6 @@ bool App::IsMouseInVec4(Vec4 rect){
   return false;
 }
 
-int App::AddObject(Object* o){
-  if(o){
-    o->SetBody(world->CreateBody(o->GetBodyDef()));
-    o->GetBody()->CreateFixture(o->GetFixtureDef());
-    o->GetBody()->SetUserData(o);
-  }
-  else{
-    cout << "ERROR:Object is a nullptr" << endl;
-    return 1;
-  }
-  return 0;
-}
-
 int App::Draw(Object *o){
   if(o){
     SDL_Rect rect = o->GetRect().ToSDL();
@@ -289,19 +276,13 @@ int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
     tmp = new Particle(*p);
 
     //Body Setup
-    tmp->Create(pos.x, pos.y);
+    tmp->Create(this, pos.x, pos.y);
 
-    tmp->SetBody(world->CreateBody(tmp->GetBodyDef()));
-    tmp->GetBody()->CreateFixture(tmp->GetFixtureDef());
-    tmp->GetBody()->SetUserData(tmp);
-    
     //Inital Impulse
     tmp->ApplyImpulse(velocity);
 
     //Timer
     tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
-
-    //particles.push_back(shared_ptr<Particle>(tmp));   
 
     particles.push_back(tmp);   
 

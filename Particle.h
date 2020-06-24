@@ -28,7 +28,7 @@ class Particle : public Object{
   int GetTime() {return time;}
   int GetLifetime() { return lifetime; }
 
-  int Create(int x, int y);
+  int Create(App *a, int x, int y);
   void SetLifetime(int set) {lifetime = set;}
   void SetTime(int set) {time = set;}
 

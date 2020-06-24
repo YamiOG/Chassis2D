@@ -15,14 +15,13 @@ Texture::Texture(App *a, const char* loc){
   SDL_FreeSurface(surf);
 }
 
-Texture::Texture(App *a, const char* loc, int hN, int vN, bool isS){
-  if(isS){
-    sheet = true;
-    vNum = vN;
-    hNum = hN;
-    wFrame = width/vNum;
-    hFrame = height/hNum;
-  }
+Texture::Texture(App *a, const char* loc, int hN, int vN){
+  sheet = true;
+  vNum = vN;
+  hNum = hN;
+  wFrame = width/vNum;
+  hFrame = height/hNum;
+
   SDL_Surface *surf = IMG_Load(loc);
   if(surf){
     width = surf->w;
@@ -45,14 +44,12 @@ Texture::Texture(SDL_Texture *t){
   }
 }
 
-Texture::Texture(SDL_Texture *t, int hN, int vN, bool isS){
-  if(isS){
-    sheet = true;
-    vNum = vN;
-    hNum = hN;
-    wFrame = width/vNum;
-    hFrame = height/hNum;
-  }
+Texture::Texture(SDL_Texture *t, int hN, int vN){
+  sheet = true;
+  vNum = vN;
+  hNum = hN;
+  wFrame = width/vNum;
+  hFrame = height/hNum;
   if(t){
     texture = t;
     SDL_QueryTexture(t, NULL, NULL, &width, &height);
@@ -73,14 +70,12 @@ Texture::Texture(App *a, SDL_Surface *surf){
   }
 }
 
-Texture::Texture(App *a, SDL_Surface *surf, int hN, int vN, bool isS){
-  if(isS){
-    sheet = true;
-    vNum = vN;
-    hNum = hN;
-    wFrame = width/vNum;
-    hFrame = height/hNum;
-  }
+Texture::Texture(App *a, SDL_Surface *surf, int hN, int vN){
+  sheet = true;
+  vNum = vN;
+  hNum = hN;
+  wFrame = width/vNum;
+  hFrame = height/hNum;
 
   if(surf){
     width = surf->w;
@@ -107,14 +102,13 @@ int Texture::Setup(App *a, const char* loc){
   return 0;
 }
 
-int Texture::Setup(App *a, const char* loc, int hN, int vN, bool isS){
-  if(isS){
-    sheet = true;
-    vNum = vN;
-    hNum = hN;
-    wFrame = width/vNum;
-    hFrame = height/hNum;
-  }
+int Texture::Setup(App *a, const char* loc, int hN, int vN){
+  sheet = true;
+  vNum = vN;
+  hNum = hN;
+  wFrame = width/vNum;
+  hFrame = height/hNum;
+
   SDL_Surface *surf = IMG_Load(loc);
   if(surf){
     width = surf->w;
@@ -141,14 +135,13 @@ int Texture::Setup(SDL_Texture *t){
   return 0;
 }
 
-int Texture::Setup(SDL_Texture *t, int hN, int vN, bool isS){
-  if(isS){
-    sheet = true;
-    vNum = vN;
-    hNum = hN;
-    wFrame = width/vNum;
-    hFrame = height/hNum;
-  }
+int Texture::Setup(SDL_Texture *t, int hN, int vN){
+  sheet = true;
+  vNum = vN;
+  hNum = hN;
+  wFrame = width/vNum;
+  hFrame = height/hNum;
+
   if(t){
     texture = t;
     SDL_QueryTexture(t, NULL, NULL, &width, &height);
@@ -173,14 +166,12 @@ int Texture::Setup(App *a, SDL_Surface *surf){
   return 0;
 }
 
-int Texture::Setup(App *a, SDL_Surface *surf, int hN, int vN, bool isS){
-  if(isS){
-    sheet = true;
-    vNum = vN;
-    hNum = hN;
-    wFrame = width/vNum;
-    hFrame = height/hNum;
-  }
+int Texture::Setup(App *a, SDL_Surface *surf, int hN, int vN){
+  sheet = true;
+  vNum = vN;
+  hNum = hN;
+  wFrame = width/vNum;
+  hFrame = height/hNum;
 
   if(surf){
     width = surf->w;

@@ -20,8 +20,8 @@ class Entity : public Object{
 
  public:
   Entity(){}
-  Entity(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
-  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
+  Entity(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
+  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
   void SetHP(float hp) {this->hp = hp;}
 };
 
