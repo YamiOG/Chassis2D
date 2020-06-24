@@ -1,2 +1,2 @@
 # Chassis2D
-My Custom Game Framework
+![Official logo](icon.png "Official Logo")
