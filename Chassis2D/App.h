@@ -70,8 +70,8 @@ class App : public b2ContactListener{
   SDL_Point GetMouse();
   Uint32 GetTime() { return SDL_GetTicks(); }
   bool IsMouseInVec4(Vec4 rect);
-  bool IsPressed(int k);
-  bool JustPressed(int k);
+  //bool IsPressed(int k);
+  bool IsPressed(string k);
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
   bool OnGround(Entity* e);

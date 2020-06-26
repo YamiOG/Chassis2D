@@ -93,9 +93,18 @@ App::~App(){
   SDL_Quit();
 }
 
-bool App::IsPressed(int k){
+/*bool App::IsPressed(int k){
   const Uint8 *state = SDL_GetKeyboardState(NULL);
   if(state[k]){
+    return true;
+  }
+  return false;
+}*/
+
+bool App::IsPressed(string k){
+  const Uint8 *state = SDL_GetKeyboardState(NULL);
+
+  if(state[SDL_GetScancodeFromName(k.c_str())]){
     return true;
   }
   return false;

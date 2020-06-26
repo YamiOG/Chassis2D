@@ -21,8 +21,10 @@ class Font{
   int size;
  public:
   Font(){}
-  Font(const char* fLoc, int s, int r, int g, int b, bool setRGB);
-  int Setup(const char* fLoc, int s, int r, int g, int b, bool setRGB);
+  Font(const char* loc, int size, int r, int g, int b);
+  int Setup(const char* loc, int size, int r, int g, int b);
+  Font(const char* loc, int size, int divisor);
+  int Setup(const char* loc, int size, int divisor);
   shared_ptr<Texture> GetText(App *a, const char* text);
   shared_ptr<Texture> GetText(App *a, const char* text, int &iTime);
   bool GetRGB(){return rgb;}

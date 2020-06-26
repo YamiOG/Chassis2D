@@ -2,34 +2,40 @@
 
 #include "Chassis2D.h"
 
-Font::Font(const char* fLoc, int s, int r, int g, int b, bool setRGB){
-  font = TTF_OpenFont(fLoc, s);
-  if(!font){
-    cout << "ERROR:Font Loading Failed" << endl;
-  }
-  size = s;
-  color.r = r;
-  color.g = g;
-  color.b = b;
-  color.a = 255;
-  rgb = setRGB;
+Font::Font(const char* loc, int size, int r, int g, int b){
+  Setup(loc, size, r, g, b);
 }
 
-int Font::Setup(const char* fLoc, int s, int r, int g, int b, bool setRGB){
-  font = TTF_OpenFont(fLoc, s);
+int Font::Setup(const char* loc, int size, int r, int g, int b){
+  font = TTF_OpenFont(loc, size);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
     return -1;
   }
-  size = s;
+  this->size = size;
   color.r = r;
   color.g = g;
   color.b = b;
   color.a = 255;
-  rgb = setRGB; 
+  rgb = false; 
   return 0;
 }
 
+Font::Font(const char* loc, int size, int divisor){
+  Setup(loc, size, divisor);
+}
+
+int Font::Setup(const char* loc, int size, int divisor){
+  font = TTF_OpenFont(loc, size);
+  if(!font){
+    cout << "ERROR:Font Loading Failed" << endl;
+    return -1;
+  }
+  this->size = size;
+  this->divisor = divisor;
+  rgb = true; 
+  return 0;
+}
 
 Font::~Font(){
   TTF_CloseFont(font);
