@@ -40,6 +40,7 @@ class Object{
   void SetPosition(Vec2 position) { if(body) body->SetTransform(position.ToB2(), 0); } 
   void SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id);
   float GetMass() { return body->GetMass(); }
+  float GetAngle() { return body->GetAngle(); }
 
   //Render
   void SetTexture(Texture* t) { texture = t; }

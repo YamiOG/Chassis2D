@@ -74,9 +74,12 @@ void Object::SetSensor(float x, float y, float w, float h, uint16 categoryBits, 
   if(body){
     b2FixtureDef tmpFixture;
     b2PolygonShape tmpShape;
-    tmpShape.SetAsBox((x-width/2)/scale, (y-height/2)/scale, b2Vec2(w/2/scale, h/2/scale), 0);
+    cout << (float)w/2/scale << ":" << (float)h/2/scale << endl;
+    cout << ((x)-width/2)/scale << ":" << ((y)-height/2)/scale << endl;
+    cout << x-width/2 << endl;
+    tmpShape.SetAsBox(w/2/scale, h/2/scale, b2Vec2((x-width/2)/scale, (y-height/2)/scale), 0);
     tmpFixture.shape = &tmpShape;
-    tmpFixture.density = 0;
+    tmpFixture.density = 1;
 
     tmpFixture.isSensor = true;
     tmpFixture.filter.categoryBits = categoryBits;

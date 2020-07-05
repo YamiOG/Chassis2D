@@ -93,14 +93,6 @@ App::~App(){
   SDL_Quit();
 }
 
-/*bool App::IsPressed(int k){
-  const Uint8 *state = SDL_GetKeyboardState(NULL);
-  if(state[k]){
-    return true;
-  }
-  return false;
-}*/
-
 bool App::IsPressed(string k){
   const Uint8 *state = SDL_GetKeyboardState(NULL);
 
@@ -118,7 +110,7 @@ void App::PhysicsUpdate(){
     else{
       ParticleSystem* ps = particleSystems[i];
       if(ps->GetCount() > 0){
-        
+
       }
 
       if(SDL_GetTicks() >= ps->GetDelayTime()){
@@ -168,9 +160,10 @@ void App::Present(){
   SDL_RenderPresent(renderer);
 }
 
-void App::FillRect(SDL_Rect rect, int r, int g, int b){
+void App::FillRect(Vec4 rect, int r, int g, int b){
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-  SDL_RenderFillRect(renderer, &rect);
+  SDL_Rect sRect = rect.ToSDL();
+  SDL_RenderFillRect(renderer, &sRect);
 }
 
 void App::SetMusicVolume(float value){
@@ -293,7 +286,7 @@ int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
     //Timer
     tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
 
-    particles.push_back(tmp);   
+    particles.push_back(tmp);
 
   }
   else{
@@ -317,7 +310,7 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
 
     tmp->SetPosition(pos);
 
-    particleSystems.push_back(tmp);  
+    particleSystems.push_back(tmp);
   }
   else{
     cout << "ERROR:ParticleSystem is NULL" << endl;
@@ -369,7 +362,7 @@ int App::AddContact(Contact *c){
 }
 
 void App::BeginContact(b2Contact* contact){
-  
+
 }
 
 void App::PreSolve(b2Contact* contact, const b2Manifold* oldManifold){
@@ -388,7 +381,7 @@ void App::EndContact(b2Contact* contact){
   for(int i = 0; i < contacts.size(); i++){
     if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(0)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(0)->GetBody()){
       if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(1)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(1)->GetBody()){
-        contacts.erase(contacts.begin()+i); 
+        contacts.erase(contacts.begin()+i);
       }
     }
   }

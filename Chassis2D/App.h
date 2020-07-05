@@ -12,6 +12,7 @@
 #include "Class.h"
 
 #include "Vec2.h"
+#include "Vec4.h"
 
 using namespace std;
 
@@ -45,7 +46,7 @@ class App : public b2ContactListener{
   //Render Cmds
   void Clear();
   void Clear(int r, int g, int b);
-  void FillRect(SDL_Rect rect, int r, int g, int b);
+  void FillRect(Vec4 rect, int r, int g, int b);
   int Draw(Object* o);
   int Draw(Text* t);
   int Draw(Button *b);
