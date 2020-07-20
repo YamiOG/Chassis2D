@@ -15,7 +15,7 @@ class Timer{
 
     int Start(int millis);
 
-    bool Ended();
+    bool Stopped();
 };
 
 #endif

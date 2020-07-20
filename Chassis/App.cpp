@@ -103,43 +103,6 @@ bool App::IsPressed(string k){
 }
 
 void App::PhysicsUpdate(){
-  for(int i = 0; i < particleSystems.size(); i++){
-    if(SDL_GetTicks() >= particleSystems[i]->GetTime()){
-      particleSystems.erase(particleSystems.begin()+i);
-    }
-    else{
-      ParticleSystem* ps = particleSystems[i];
-      if(ps->GetCount() > 0){
-
-      }
-
-      if(SDL_GetTicks() >= ps->GetDelayTime()){
-        if(ps->GetCount() < ps->GetAmount()){
-          SpawnParticle(ps->GetBaseParticle(), ps->RandomizePosition(ps->GetPosition()), ps->GetParticleVelocity());
-          ps->SetCount(ps->GetCount()+1);
-
-          ps->GetSpawnTimes().push_back(SDL_GetTicks());
-          ps->SetDelayTime(SDL_GetTicks()+ps->GetDelayTime());
-        }
-      }
-
-      for(int i = 0; i < ps->GetSpawnTimes().size(); i++){
-        if(SDL_GetTicks() >= ps->GetLifetime() + ps->GetSpawnTimes()[i]){
-          ps->SetCount(ps->GetCount()-1);
-
-          ps->GetSpawnTimes().erase(ps->GetSpawnTimes().begin()+i);
-        }
-      }
-    }
-  }
-
-  for(int i = 0; i < particles.size(); i++){
-    if(SDL_GetTicks() >= particles[i]->GetTime()){
-      world->DestroyBody(particles[i]->GetBody());
-      particles.erase(particles.begin()+i);
-    }
-  }
-
   if(1000/pFPS <= SDL_GetTicks()-pTime){
     world->Step(1.0f/pFPS, velocityI, positionI);
     pTime = SDL_GetTicks();
@@ -305,25 +268,9 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
     }
     else{
       tmp->SetTime(SDL_GetTicks()+time);
-      tmp->SetDelayTime(SDL_GetTicks()+tmp->GetDelayTime());
     }
-
-    tmp->SetPosition(pos);
 
     particleSystems.push_back(tmp);
-  }
-  else{
-    cout << "ERROR:ParticleSystem is NULL" << endl;
-    return -1;
-  }
-  return 0;
-}
-
-int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos){
-  if(ps){
-    for(int i = 0; i < ps->GetAmount(); i++){
-      SpawnParticle(ps->GetBaseParticle(), ps->RandomizePosition(pos), ps->GetParticleVelocity());
-    }
   }
   else{
     cout << "ERROR:ParticleSystem is NULL" << endl;
@@ -335,7 +282,9 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos){
 bool App::IsColliding(Object* o1, Object* o2){
   for (b2ContactEdge* edge = o1->GetBody()->GetContactList(); edge; edge = edge->next){
     if(edge->contact->GetFixtureB()->GetBody() == o2->GetBody()){
-      return true;
+      if(edge->contact->IsTouching()){
+        return true;
+      }
     }
   }
   return false;
@@ -343,8 +292,10 @@ bool App::IsColliding(Object* o1, Object* o2){
 
 bool App::IsSensorColliding(Object *o, int id){
   for (b2ContactEdge* edge = o->GetBody()->GetContactList(); edge; edge = edge->next){
-    if((intptr_t)edge->contact->GetFixtureA()->GetUserData() == id){
-      return true;
+    if(edge->contact->IsTouching()){
+      if((intptr_t)edge->contact->GetFixtureA()->GetUserData() == id){
+        return true;
+      }
     }
   }
   return false;

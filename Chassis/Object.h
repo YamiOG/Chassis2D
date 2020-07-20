@@ -39,6 +39,7 @@ class Object{
   int GetScale() { return scale; }
   void SetPosition(Vec2 position) { if(body) body->SetTransform(position.ToB2(), 0); } 
   void SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id);
+  void SetBullet(bool bullet) { if(body) body->SetBullet(bullet); }
   float GetMass() { return body->GetMass(); }
   float GetAngle() { return body->GetAngle(); }
 

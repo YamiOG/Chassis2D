@@ -14,37 +14,36 @@ using namespace std;
 
 class ParticleSystem{
  private:
-  int time = 0;
-  int dTime = 0;
-  int amount, delay, variation;
-  int count = 0;
   Vec2 velocity;
+  int time = -1;
+  int rate = 1;
+  int maximum = -1;
+  int count = 0;
 
   Vec2 pos = Vec2(0,0);
   Particle *bParticle;
-  vector<int> spawnTimes;
+  vector<Particle*> particles;
  public:
+
   ParticleSystem(){}
   ParticleSystem(Particle* particle, Vec2 velocity, int delay, int amount, int variation);
   void Setup(Particle* particle, Vec2 velocity, int delay, int amount, int variation);
 
-  void SetTime(int time) {this->time = time;}
-  void SetDelayTime(int dTime) {this->dTime = dTime;}
-  void SetCount(int count) {this->count = count;}
-  void SetPosition(Vec2 pos) {this->pos = pos;}
+  int AddParticle(Particle *particle);
+  void CheckParticles();
 
-  int GetTime() {return time;}
-  int GetDelayTime() {return dTime;}
-  int GetDelay() {return delay;}
-  int GetAmount() {return amount;}
-  int GetCount() {return count;}
-  vector<int> GetSpawnTimes() { return spawnTimes; }
-  int GetLifetime();
-  Vec2 GetPosition() {return pos;}
-
+  vector<Particle*> GetParticles() { return particles; }
   Particle *GetBaseParticle() {return bParticle;}
   Vec2 RandomizePosition(Vec2 pos);
   Vec2 GetParticleVelocity();
+
+  void SetTime(int time) { this->time = time; }
+  void SetMaximum(int max) { this->maximum = max; }
+  void SetRate(int rate) { this->rate = rate; }
+
+  int GetMaximum() { return maximum; }
+  int GetTime() { return time; }
+  int GetRate() { return rate; }
 
   //Destructor
   ~ParticleSystem();
