@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Box2D/Box2D.h>
 
-#include "../Chassis/Chassis2D.h"
+#include "../chassis/Chassis2D.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ Text t;
 
 Button b;
 
-float32 timeStep = 1/60.0f;
+float timeStep = 1.f/60.0f;
 
 bool running = true;
 
