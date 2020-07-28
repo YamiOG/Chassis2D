@@ -8,8 +8,8 @@ compiler:
 
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get -q update
-  - sudo apt-get -y install g++-7
+  - sudo apt-get update -y
+  - sudo apt-get install g++-7 -y
 
 script:
   - cmake --version
