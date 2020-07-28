@@ -1,4 +1,7 @@
-language: C++
+os: linux
+dist: ubuntu
+
+language: cpp 
 compiler:
   - g++
 addons:
@@ -8,7 +11,7 @@ addons:
     packages:
       - cmake
 
-scripts:
+script:
   - mkdir build 
   - cd build
   - cmake ..
