@@ -8,6 +8,9 @@ compiler:
 
 before_install:
   - cmake --version
+  - cd vcpkg
+  - ./bootstrap-vcpkg.sh
+  - cd ..
   - mkdir build 
   - cd build
   - cmake ..
