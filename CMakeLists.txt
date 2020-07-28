@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.7)
 set(VERSION_MAJOR 1)
 set(VERSION_MINOR 0)
 set(PROJECT_NAME Chassis2D)
+set(VCPKG_TARGET_TRIPLET x64-linux)
 
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(CMAKE_TOOLCHAIN_FILE "vcpkg/scripts/buildsystems/vcpkg.cmake"
