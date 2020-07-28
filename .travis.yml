@@ -9,5 +9,6 @@ addons:
       - cmake
 
 scripts:
+  - ls
   - cd build
   - cmake ..
