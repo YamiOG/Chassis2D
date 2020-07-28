@@ -1,3 +1,0 @@
-F:/Code/GameFramework/build/CMakeFiles/Chassis2D.dir
-F:/Code/GameFramework/build/CMakeFiles/ALL_BUILD.dir
-F:/Code/GameFramework/build/CMakeFiles/ZERO_CHECK.dir
