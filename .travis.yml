@@ -1,1 +1,13 @@
 language: C++
+compiler:
+  - g++
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - cmake
+
+scripts:
+  - cd build
+  - cmake ..
