@@ -6,14 +6,8 @@ dist: xenial
 compiler:
   - g++
 
-before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -y
-  - sudo apt-get install g++-7 -y
-
 script:
-  - cmake --version
-  - bash vcpkg/bootstrap-vcpkg.sh
+  - make --version
   - mkdir build 
   - cd build
   - cmake ..
