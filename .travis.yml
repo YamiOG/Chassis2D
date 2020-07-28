@@ -2,17 +2,16 @@ language: cpp
 
 os: linux 
 dist: xenial 
-addons:
-  apt:
-    sources:
-      - ppa:chris-lea/redis-server
-    packages:
-      - g++-7
 
 compiler:
   - g++
 
 before_install:
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get -q update
+  - sudo apt-get -y install g++-7
+
+script:
   - cmake --version
   - bash vcpkg/bootstrap-vcpkg.sh
   - mkdir build 
