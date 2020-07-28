@@ -42,5 +42,5 @@ file(GLOB Sources "chassis/*h" "chassis/*.cpp" "src/*.h" "src/*.cpp")
 add_executable(${PROJECT_NAME} ${Sources})
 
 #Linking Libs
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE SDL2::SDL2_net PRIVATE unofficial::box2d::box2d )
+#target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE SDL2::SDL2_net PRIVATE unofficial::box2d::box2d )
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2main SDL2::SDL2-static PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE SDL2::SDL2_net PRIVATE unofficial::box2d::box2d )
