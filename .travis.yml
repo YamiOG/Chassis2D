@@ -1,17 +1,13 @@
-os: linux
+language: cpp 
+
+os: linux 
 dist: xenial 
 
-language: cpp 
 compiler:
   - g++
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - cmake
 
-script:
+before_install:
+  - cmake --version
   - mkdir build 
   - cd build
   - cmake ..
