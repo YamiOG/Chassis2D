@@ -1,3 +1,0 @@
-/media/noah/AEE22B36E22B0267/Code/GameFramework/build/CMakeFiles/rebuild_cache.dir
-/media/noah/AEE22B36E22B0267/Code/GameFramework/build/CMakeFiles/Chassis2D.dir
-/media/noah/AEE22B36E22B0267/Code/GameFramework/build/CMakeFiles/edit_cache.dir
