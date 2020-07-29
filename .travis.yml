@@ -1,13 +1,17 @@
 language: cpp 
-
-os: linux 
-dist: xenial 
-
 compiler:
   - g++
 
+os: linux 
+dist: xenial 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-7
+
 script:
-  - bash vcpkg\vcpkg integrate install
   - make --version
   - mkdir build 
   - cd build
