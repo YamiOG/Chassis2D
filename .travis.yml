@@ -9,7 +9,7 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - build-essentials 
+      - build-essential 
 
 script:
   - ls
