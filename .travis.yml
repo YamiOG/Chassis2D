@@ -13,8 +13,8 @@ addons:
 
 script:
   - ls
-  - vcpkg/vcpkg list
-  - vcpkg/bootstrap-vcpkg.sh
+  - bash vcpkg/vcpkg list
+  - bash vcpkg/bootstrap-vcpkg.sh
   - make --version
   - mkdir build 
   - cd build
