@@ -12,6 +12,7 @@ addons:
       - g++-7
 
 script:
+  - bash vcpkg/vcpkg list
   - make --version
   - mkdir build 
   - cd build
