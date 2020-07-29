@@ -24,6 +24,7 @@ endif()
 
 project(${PROJECT_NAME})
 
+set(sdl2_DIR "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-linux/share/sdl2")
 find_package(SDL2 CONFIG REQUIRED)
 message(" [INFO] Found SDL2")
 find_package(sdl2-image CONFIG REQUIRED)
