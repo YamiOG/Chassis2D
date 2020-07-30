@@ -4,6 +4,8 @@ if [ -d "vcpkg" ]; then
 	   rm -rf vcpkg
 	   git clone https://github.com/microsoft/vcpkg.git
    fi
+else
+   git clone https://github.com/microsoft/vcpkg.git
 fi
 
 ./vcpkg/bootstrap-vcpkg.sh
