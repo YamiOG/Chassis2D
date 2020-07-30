@@ -12,7 +12,7 @@ addons:
       - build-essential 
 
 before_install:
-  - setup.sh
+  - bash ./setup.sh
 
 script:
   - mkdir build 
