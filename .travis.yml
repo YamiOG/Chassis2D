@@ -11,9 +11,10 @@ addons:
     packages:
       - build-essential 
 
+before_install:
+  - setup.sh
+
 script:
-  - ls
-  - make --version
   - mkdir build 
   - cd build
   - cmake ..
