@@ -1,4 +1,5 @@
 #!/bin/bash
+CXX = g++-7
 g++ --version
 git clone https://github.com/microsoft/vcpkg.git
 ./vcpkg/bootstrap-vcpkg.sh
