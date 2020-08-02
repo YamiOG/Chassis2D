@@ -19,6 +19,7 @@ class ParticleSystem{
   int rate = 1;
   int maximum = -1;
   int count = 0;
+  float minAngle, maxAngle;
 
   Vec2 pos = Vec2(0,0);
   Particle *bParticle;
@@ -26,8 +27,10 @@ class ParticleSystem{
  public:
 
   ParticleSystem(){}
-  ParticleSystem(Particle* particle, Vec2 velocity, int delay, int amount, int variation);
-  void Setup(Particle* particle, Vec2 velocity, int delay, int amount, int variation);
+  ParticleSystem(Particle* particle, float minAngle, float maxAngle, int rate, int max);
+  void Setup(Particle* particle, float minAngle, float maxAngle, int rate, int max);
+
+  void Update(App *a);
 
   int AddParticle(Particle *particle);
   void CheckParticles();
@@ -35,14 +38,14 @@ class ParticleSystem{
   vector<Particle*> GetParticles() { return particles; }
   Particle *GetBaseParticle() {return bParticle;}
   Vec2 RandomizePosition(Vec2 pos);
-  Vec2 GetParticleVelocity();
 
+  void SetPos(Vec2 pos) { this->pos = pos; }
   void SetTime(int time) { this->time = time; }
   void SetMaximum(int max) { this->maximum = max; }
   void SetRate(int rate) { this->rate = rate; }
 
-  int GetMaximum() { return maximum; }
   int GetTime() { return time; }
+  int GetMaximum() { return maximum; }
   int GetRate() { return rate; }
 
   //Destructor

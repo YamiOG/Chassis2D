@@ -31,7 +31,6 @@ int Particle::Create(App *a, int x, int y){
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = PARTICLE;
-    fixture.filter.maskBits = PARTICLE;
 
     bodyDef.type = b2_dynamicBody;
     fixture.friction = friction;

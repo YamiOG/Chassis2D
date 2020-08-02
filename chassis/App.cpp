@@ -104,6 +104,10 @@ bool App::IsPressed(string k){
 
 void App::PhysicsUpdate(){
   if(1000/pFPS <= SDL_GetTicks()-pTime){
+    for(int i = 0; i < particleSystems.size(); i++){
+      particleSystems[i]->Update(this);
+    }
+
     world->Step(1.0f/pFPS, velocityI, positionI);
     pTime = SDL_GetTicks();
   }
@@ -213,6 +217,13 @@ void App::DrawParticles(){
     SDL_Rect rect = particles[i]->GetRect().ToSDL();
     SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetData(), NULL, &rect);
   }
+
+  for(int i = 0; i < particleSystems.size(); i++){
+    for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
+      SDL_Rect rect = particleSystems[i]->GetParticles()[j]->GetRect().ToSDL();
+      SDL_RenderCopy(renderer, particleSystems[i]->GetParticles()[j]->GetTexture()->GetData(), NULL, &rect);
+    }
+  }
 }
 
 bool App::CheckButton(Button *b){
@@ -269,6 +280,8 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
     else{
       tmp->SetTime(SDL_GetTicks()+time);
     }
+
+    tmp->SetPos(pos);
 
     particleSystems.push_back(tmp);
   }

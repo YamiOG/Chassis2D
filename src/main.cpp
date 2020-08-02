@@ -33,6 +33,8 @@ ParticleSystem ps;
 Timer jumpDelay;
 Timer timer;
 
+Vec2 velocity2d;
+
 void EventHandler(){
   SDL_Event ev = a.GetEvent();
   while(a.CheckEvents()){
@@ -58,12 +60,10 @@ void EventHandler(){
     }
   }
 
-
   if(a.CheckButton(&b)){
     volume--;
     a.SetMasterVolume(volume);
   }
-
 
   o.ApplyConstVelocity(motion, true);
 }
@@ -82,6 +82,9 @@ void RenderHandler(){
   a.FillRect(o.GetRect(), 200, 100, 1);
 
   a.FillRect(Vec4(o.GetRect().x+(o.GetRect().w/2), o.GetRect().y+o.GetRect().h, 1, 1), 100, 100, 1);
+
+  SDL_SetRenderDrawColor(a.GetRenderer(), 100, 200, 100, 255);
+  SDL_RenderDrawLine(a.GetRenderer(), 1600/2, 900/2, velocity2d.x + 1600/2, velocity2d.y + 900/2);
 
   a.Present();
 }
@@ -113,17 +116,39 @@ int main(int argc, char *argv[]){
 
   b.Setup(100, 100, 300, 100, new Texture(&a, "test.png"), "Button", &f);
 
-  p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 3000, new Texture(&a, "test.png"), scale);
+  p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 1000, new Texture(&a, "test.png"), scale);
 
-  ps.Setup(&p, Vec2(0, -5), 1, 1000, 10);
+  ps.Setup(&p, 340, 20, 1, 100);
 
-  a.StartParticleSystem(&ps, Vec2(1000, 100), 1000);
+  a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
+
+  a.SpawnParticle(&p, Vec2(100, 600), Vec2(0, 10));
+
+  float angle = 0.0f;
 
   while(running){
     EventHandler();
     RenderHandler();
     a.PhysicsUpdate();
+
+    angle += 0.5f;
+
+    if(angle < 90){
+      angle = 90 - angle;
+    }
+    else if(180 > angle > 90){
+      angle = 180 - angle;
+    }
+    else if(270 > angle > 180){
+      angle -= 180;
+    }
+    else if(360 > angle > 270){
+      angle -= 270;
+    }
+
+    float speed = 100.0f;
+
+    velocity2d = Vec2(cos(angle * (3.14 / 180)) * speed, sin(angle * (3.14/180)) * speed);
   }
-  delete &a;
   return 0;
 }
