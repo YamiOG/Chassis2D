@@ -22,6 +22,7 @@ class Text{
   string text;
   int iTime = -1;
 
+  bool hide = false;
  public:
   Text(){}
   Text(int x, int y, const char* text, Font *font);
@@ -30,6 +31,11 @@ class Text{
   void SetPosition(int x, int y) { pos.x = x; pos.y = y; }
   Vec2 GetPosition() {return pos;}
   Vec4 GetRect() { return rect; }
+
+  void Hide() { hide = true; }
+  void Show() { hide = false; }
+  void SetHide(bool hide) { this->hide = hide; }
+  bool IsHidden() { return hide; }
 
   ~Text();
 };

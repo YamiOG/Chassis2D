@@ -25,17 +25,17 @@ class App : public b2ContactListener{
   float mVol = 1.f;
   float cVol = 1.f;
 
+  b2World* world;
   int velocityI, positionI;
 
   int pFPS;
   int32 pTime;
 
-  vector<Particle*> particles;
-  vector<ParticleSystem*> particleSystems;
+  vector<shared_ptr<Particle>> particles;
+  vector<shared_ptr<ParticleSystem>> particleSystems;
   vector<shared_ptr<Contact>> contacts;
 
  public:
-  b2World* world;
   App(){}
   App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);

@@ -12,19 +12,27 @@ using namespace std;
 
 class Button{
  private:
-  Text *text;
-  Texture *texture;
+  shared_ptr<Text> text;
+  shared_ptr<Texture> texture;
   Vec4 rect;
   bool prev = false;
+  
+  bool hide = false;
  public:
   Button(){}
-  Button(int x, int y, int w, int h, Texture *t, const char* tx, Font *f);
-  int Setup(int x, int y, int w, int h, Texture *t, const char* tx, Font *f);
+  Button(int x, int y, int w, int h, Texture *t, const char* text, Font *f);
+  int Setup(int x, int y, int w, int h, Texture *t, const char* text, Font *f);
   void SetPrev(bool set) { prev = set; }
   bool GetPrev() { return prev; }
   Vec4 GetRect() {return rect;}
-  Texture* GetTexture() {return texture;}
-  Text* GetText() {return text;}
+
+  shared_ptr<Texture> GetTexture() {return texture;}
+  shared_ptr<Text> GetText() {return text;}
+
+  void Hide() { hide = true; }
+  void Show() { hide = false; }
+  void SetHide(bool hide) { this->hide = hide; }
+  bool IsHidden() { return hide; }
 };
 
 #endif

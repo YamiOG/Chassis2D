@@ -10,7 +10,9 @@ int Particle::Setup(float width, float height, float friction, float density, fl
   this->width = width;
   this->height = height;
   this->lifetime = lifetime;
-  this->texture = texture;
+
+  shared_ptr<Texture> sharedTex(texture);
+  this->texture = sharedTex;
 
   this->scale = scale;
 
@@ -25,7 +27,9 @@ int Particle::Create(App *a, int x, int y){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
-    
+
+    this->a = a; 
+
     bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
     shape.SetAsBox((width/2)/scale, (height/2)/scale);
     fixture.shape = &shape;
@@ -48,6 +52,13 @@ int Particle::Create(App *a, int x, int y){
   return 0;
 }
 
+void Particle::Destroy(){
+  if(a != nullptr){
+    a->GetWorld()->DestroyBody(body);
+    body = nullptr;
+  }
+}
+
 Particle::~Particle(){
-  delete texture;
+  Destroy();
 }

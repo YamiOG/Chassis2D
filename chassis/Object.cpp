@@ -12,6 +12,8 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
     b2FixtureDef fixture;
     b2PolygonShape shape;
 
+    this->a = a;
+
     width = w;
     height = h;
     this->scale = scale;
@@ -45,8 +47,15 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
   return 0;
 }
 
+void Object::Destroy(){
+  /*if(a != nullptr){
+    a->GetWorld()->DestroyBody(body);
+    body = nullptr;
+  }*/
+}
+
 Object::~Object(){
-  delete texture;
+  Destroy();
 }
 
 Vec4 Object::GetRect() {

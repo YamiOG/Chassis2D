@@ -22,8 +22,10 @@ class ParticleSystem{
   float minAngle, maxAngle;
 
   Vec2 pos = Vec2(0,0);
-  Particle *bParticle;
-  vector<Particle*> particles;
+  Particle *bParticle = nullptr;
+  vector<shared_ptr<Particle>> particles;
+
+  bool hide = false;
  public:
 
   ParticleSystem(){}
@@ -32,12 +34,8 @@ class ParticleSystem{
 
   void Update(App *a);
 
-  int AddParticle(Particle *particle);
-  void CheckParticles();
-
-  vector<Particle*> GetParticles() { return particles; }
+  vector<shared_ptr<Particle>> GetParticles() { return particles; }
   Particle *GetBaseParticle() {return bParticle;}
-  Vec2 RandomizePosition(Vec2 pos);
 
   void SetPos(Vec2 pos) { this->pos = pos; }
   void SetTime(int time) { this->time = time; }
@@ -47,6 +45,11 @@ class ParticleSystem{
   int GetTime() { return time; }
   int GetMaximum() { return maximum; }
   int GetRate() { return rate; }
+
+  void Hide() { hide = true; }
+  void Show() { hide = false; }
+  void SetHide(bool hide) { this->hide = hide; }
+  bool IsHidden() { return hide; }
 
   //Destructor
   ~ParticleSystem();

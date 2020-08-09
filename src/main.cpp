@@ -79,13 +79,6 @@ void RenderHandler(){
 
   a.DrawParticles();
 
-  a.FillRect(o.GetRect(), 200, 100, 1);
-
-  a.FillRect(Vec4(o.GetRect().x+(o.GetRect().w/2), o.GetRect().y+o.GetRect().h, 1, 1), 100, 100, 1);
-
-  SDL_SetRenderDrawColor(a.GetRenderer(), 100, 200, 100, 255);
-  SDL_RenderDrawLine(a.GetRenderer(), 1600/2, 900/2, velocity2d.x + 1600/2, velocity2d.y + 900/2);
-
   a.Present();
 }
 
@@ -116,13 +109,11 @@ int main(int argc, char *argv[]){
 
   b.Setup(100, 100, 300, 100, new Texture(&a, "test.png"), "Button", &f);
 
-  p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 1000, new Texture(&a, "test.png"), scale);
+  p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 100, new Texture(&a, "test.png"), scale);
 
   ps.Setup(&p, 340, 20, 1, 100);
 
   a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
-
-  a.SpawnParticle(&p, Vec2(100, 600), Vec2(0, 10));
 
   float angle = 0.0f;
 
@@ -131,7 +122,7 @@ int main(int argc, char *argv[]){
     RenderHandler();
     a.PhysicsUpdate();
 
-    angle += 0.5f;
+    /*angle += 0.5f;
 
     if(angle < 90){
       angle = 90 - angle;
@@ -148,7 +139,7 @@ int main(int argc, char *argv[]){
 
     float speed = 100.0f;
 
-    velocity2d = Vec2(cos(angle * (3.14 / 180)) * speed, sin(angle * (3.14/180)) * speed);
+    velocity2d = Vec2(cos(angle * (3.14 / 180)) * speed, sin(angle * (3.14/180)) * speed);*/
   }
   return 0;
 }

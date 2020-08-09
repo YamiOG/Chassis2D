@@ -3,12 +3,7 @@
 #include "Chassis2D.h"
 
 ParticleSystem::ParticleSystem(Particle* p, float minAngle, float maxAngle, int rate, int max){
-  bParticle = p;
-
-  this->minAngle = minAngle;
-  this->maxAngle = maxAngle;
-  this->rate = rate;
-  this->maximum = max;
+  Setup(p, minAngle, maxAngle, rate, max);
 }
 
 void ParticleSystem::Setup(Particle* p, float minAngle, float maxAngle, int rate, int max){
@@ -42,32 +37,18 @@ void ParticleSystem::Update(App *a){
       p->SetVelocity(velocity);
       p->SetTime(SDL_GetTicks() + p->GetLifetime());
 
-      particles.push_back(p);
+      shared_ptr<Particle> sharedParticle(p);
+      particles.push_back(sharedParticle);
     }
   }
 
-  for(int i = 0; i < particles.size(); i++){
-    if(SDL_GetTicks() >= particles[i]->GetTime()){
+  for(int i = 0; i < particles.size();){
+   if(SDL_GetTicks() >= particles[i]->GetTime()){
       particles.erase(particles.begin()+i);
+      cout << particles.size();
     }
-  }
-}
-
-int ParticleSystem::AddParticle(Particle *particle){
-  if(particle){
-    particles.push_back(particle);
-  }
-  else{
-    cout << "ERROR::Particle is NULL"<< endl;
-    return -1;
-  }
-  return 0;
-}
-
-void ParticleSystem::CheckParticles(){
-  for(int i = 0; i < particles.size(); i++){
-    if(SDL_GetTicks() >= particles[i]->GetTime()){
-      particles.erase(particles.begin()+i);
+    else{
+      i++;
     }
   }
 }

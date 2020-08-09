@@ -165,8 +165,10 @@ bool App::IsMouseInVec4(Vec4 rect){
 
 int App::Draw(Object *o){
   if(o){
-    SDL_Rect rect = o->GetRect().ToSDL();
-    SDL_RenderCopy(renderer, o->GetTexture()->GetData(), NULL, &rect);
+    if(!o->IsHidden()){
+      SDL_Rect rect = o->GetRect().ToSDL();
+      SDL_RenderCopy(renderer, o->GetTexture()->GetData(), NULL, &rect);
+    }
   }
   else{
     cout << "ERROR:Object is a nullptr" << endl;
@@ -177,8 +179,10 @@ int App::Draw(Object *o){
 
 int App::Draw(Text *t){
   if(t){
-    SDL_Rect rect = t->GetRect().ToSDL();
-    SDL_RenderCopy(renderer, t->GetText(this)->GetData(), NULL, &rect);
+    if(!t->IsHidden()){ 
+      SDL_Rect rect = t->GetRect().ToSDL();
+      SDL_RenderCopy(renderer, t->GetText(this)->GetData(), NULL, &rect);
+    }
   }
   else{
     cout << "ERROR:Text is a nullptr" << endl;
@@ -189,9 +193,14 @@ int App::Draw(Text *t){
 
 int App::Draw(Button *b){
   if(b){
-    SDL_Rect rect = b->GetRect().ToSDL();
-    SDL_RenderCopy(renderer, b->GetTexture()->GetData(), NULL, &rect);
-    Draw(b->GetText());
+    if(!b->IsHidden()){ 
+      SDL_Rect rect = b->GetRect().ToSDL();
+      SDL_RenderCopy(renderer, b->GetTexture()->GetData(), NULL, &rect);
+      if(!b->GetText()->IsHidden()){ 
+        rect = b->GetText()->GetRect().ToSDL();
+        SDL_RenderCopy(renderer, b->GetText()->GetText(this)->GetData(), NULL, &rect);
+      }
+    }
   }
   else{
     cout << "ERROR:Button is a nullptr" << endl;
@@ -202,8 +211,10 @@ int App::Draw(Button *b){
 
 int App::Draw(Particle *p){
   if(p){
-    SDL_Rect rect = p->GetRect().ToSDL();
-    SDL_RenderCopy(renderer, p->GetTexture()->GetData(), NULL, &rect);
+    if(!p->IsHidden()){ 
+      SDL_Rect rect = p->GetRect().ToSDL();
+      SDL_RenderCopy(renderer, p->GetTexture()->GetData(), NULL, &rect);
+    }
   }
   else{
     cout << "ERROR:Particle is a nullptr" << endl;
@@ -214,14 +225,18 @@ int App::Draw(Particle *p){
 
 void App::DrawParticles(){
   for(int i = 0; i < particles.size(); i++){
-    SDL_Rect rect = particles[i]->GetRect().ToSDL();
-    SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetData(), NULL, &rect);
+    if(!particles[i]->IsHidden()){
+      SDL_Rect rect = particles[i]->GetRect().ToSDL();
+      SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetData(), NULL, &rect);
+    }
   }
 
   for(int i = 0; i < particleSystems.size(); i++){
-    for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
-      SDL_Rect rect = particleSystems[i]->GetParticles()[j]->GetRect().ToSDL();
-      SDL_RenderCopy(renderer, particleSystems[i]->GetParticles()[j]->GetTexture()->GetData(), NULL, &rect);
+    if(!particleSystems[i]->IsHidden()){
+      for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
+          SDL_Rect rect = particleSystems[i]->GetParticles()[j]->GetRect().ToSDL();
+          SDL_RenderCopy(renderer, particleSystems[i]->GetParticles()[j]->GetTexture()->GetData(), NULL, &rect);
+      }
     }
   }
 }
@@ -260,7 +275,8 @@ int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
     //Timer
     tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
 
-    particles.push_back(tmp);
+    shared_ptr<Particle> sharedParticle(tmp);
+    particles.push_back(sharedParticle);
 
   }
   else{
@@ -283,7 +299,8 @@ int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
 
     tmp->SetPos(pos);
 
-    particleSystems.push_back(tmp);
+    shared_ptr<ParticleSystem> sharedPS(tmp);
+    particleSystems.push_back(sharedPS);
   }
   else{
     cout << "ERROR:ParticleSystem is NULL" << endl;

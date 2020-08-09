@@ -31,7 +31,7 @@ class Texture{
   int Setup(SDL_Texture *t, int hN, int vN);
   int Setup(App *a, SDL_Surface *surf);
   int Setup(App *a, SDL_Surface *surf, int hN, int vN);
-  SDL_Texture *GetData(){return texture;}
+  SDL_Texture *GetData(){ return texture;}
   Vec4 GetCrop();
   Vec4 GetFrame(int num);
   Vec2 GetSize() { return Vec2(width, height); }

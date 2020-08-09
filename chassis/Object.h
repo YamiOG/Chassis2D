@@ -16,11 +16,13 @@ using namespace std;
 class Object{
  private:
  protected:
-  b2Body* body;
+  App *a = nullptr;
+  b2Body* body = nullptr;
+  shared_ptr<Texture> texture;
 
-  Texture* texture;
   float width, height;
   int scale;
+  bool hide = false;
  public:
 
   Object(){}
@@ -42,12 +44,19 @@ class Object{
   void SetBullet(bool bullet) { if(body) body->SetBullet(bullet); }
   float GetMass() { return body->GetMass(); }
   float GetAngle() { return body->GetAngle(); }
+  bool IsActive() { return (body) ? body->IsActive() : false; }
 
   //Render
-  void SetTexture(Texture* t) { texture = t; }
+  void SetTexture(Texture* t) { shared_ptr<Texture> sharedTex(t); texture = sharedTex; }
   Vec4 GetRect();
-  Texture* GetTexture(){ return texture; }
-  bool IsActive() { return (body) ? body->IsActive() : false; }
+  shared_ptr<Texture> GetTexture(){ return texture; }
+
+  void Hide() { hide = true; }
+  void Show() { hide = false; }
+  void SetHide(bool hide) { this->hide = hide; }
+  bool IsHidden() { return hide; }
+
+  virtual void Destroy();
 
   //Destructor
   ~Object();
