@@ -286,7 +286,7 @@ int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
   return 0;
 }
 
-int App::StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time){
+int App::StartParticleSystem(ParticleSystem *ps, Vec2 pos, int time){
   if(ps){
     ParticleSystem *tmp = new ParticleSystem(*ps);
 
@@ -359,11 +359,14 @@ void App::PreSolve(b2Contact* contact, const b2Manifold* oldManifold){
 }
 
 void App::EndContact(b2Contact* contact){
-  for(int i = 0; i < contacts.size(); i++){
+  for(int i = 0; i < contacts.size();){
     if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(0)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(0)->GetBody()){
       if(contact->GetFixtureA()->GetBody() == contacts[i]->GetObject(1)->GetBody() || contact->GetFixtureB()->GetBody() == contacts[i]->GetObject(1)->GetBody()){
         contacts.erase(contacts.begin()+i);
       }
+    }
+    else{
+      i++;
     }
   }
 }

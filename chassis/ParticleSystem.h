@@ -22,7 +22,7 @@ class ParticleSystem{
   float minAngle, maxAngle;
 
   Vec2 pos = Vec2(0,0);
-  Particle *bParticle = nullptr;
+  shared_ptr<Particle> bParticle;
   vector<shared_ptr<Particle>> particles;
 
   bool hide = false;
@@ -35,7 +35,6 @@ class ParticleSystem{
   void Update(App *a);
 
   vector<shared_ptr<Particle>> GetParticles() { return particles; }
-  Particle *GetBaseParticle() {return bParticle;}
 
   void SetPos(Vec2 pos) { this->pos = pos; }
   void SetTime(int time) { this->time = time; }

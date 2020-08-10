@@ -113,7 +113,7 @@ int main(int argc, char *argv[]){
 
   ps.Setup(&p, 340, 20, 1, 100);
 
-  a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
+  //a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
 
   float angle = 0.0f;
 
@@ -122,7 +122,7 @@ int main(int argc, char *argv[]){
     RenderHandler();
     a.PhysicsUpdate();
 
-    /*angle += 0.5f;
+    angle += 0.5f;
 
     if(angle < 90){
       angle = 90 - angle;
@@ -139,7 +139,7 @@ int main(int argc, char *argv[]){
 
     float speed = 100.0f;
 
-    velocity2d = Vec2(cos(angle * (3.14 / 180)) * speed, sin(angle * (3.14/180)) * speed);*/
+    velocity2d = Vec2(cos(angle * (3.14 / 180)) * speed, sin(angle * (3.14/180)) * speed);
   }
   return 0;
 }
