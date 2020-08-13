@@ -9,4 +9,4 @@ else
 fi
 
 ./vcpkg/bootstrap-vcpkg.sh
-./vcpkg/vcpkg install sdl2 sdl2-image sdl2-mixer sdl2-ttf sdl2-net box2d
+./vcpkg/vcpkg install sdl2 sdl2-image sdl2-mixer sdl2-ttf box2d enet

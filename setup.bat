@@ -20,9 +20,9 @@ IF EXIST vcpkg (
 .\vcpkg\bootstrap-vcpkg.bat
 
 IF "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-	.\vcpkg\vcpkg.exe install sdl2 sdl2-image sdl2-mixer sdl2-ttf sdl2-net box2d --triplet x64-windows
+	.\vcpkg\vcpkg.exe install sdl2 sdl2-image sdl2-mixer sdl2-ttf box2d enet --triplet x64-windows
 ) ELSE (
-	.\vcpkg\vcpkg.exe install sdl2 sdl2-image sdl2-mixer sdl2-ttf sdl2-net box2d --triplet x86-windows
+	.\vcpkg\vcpkg.exe install sdl2 sdl2-image sdl2-mixer sdl2-ttf box2d enet --triplet x86-windows
 )
 
 PAUSE

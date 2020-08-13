@@ -79,6 +79,9 @@ void RenderHandler(){
 
   a.DrawParticles();
 
+  SDL_SetRenderDrawColor(a.GetRenderer(), 100, 200, 100, 255);
+  SDL_RenderDrawLine(a.GetRenderer(), 1600/2, 900/2, velocity2d.x + 1600/2, velocity2d.y + 900/2);
+
   a.Present();
 }
 
@@ -109,11 +112,11 @@ int main(int argc, char *argv[]){
 
   b.Setup(100, 100, 300, 100, new Texture(&a, "test.png"), "Button", &f);
 
-  p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 100, new Texture(&a, "test.png"), scale);
+  p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 1000, new Texture(&a, "test.png"), scale);
 
-  ps.Setup(&p, 340, 20, 1, 100);
+  ps.Setup(&p, 270, 360, 1, 100);
 
-  //a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
+  a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
 
   float angle = 0.0f;
 
@@ -121,8 +124,6 @@ int main(int argc, char *argv[]){
     EventHandler();
     RenderHandler();
     a.PhysicsUpdate();
-
-    angle += 0.5f;
 
     if(angle < 90){
       angle = 90 - angle;
