@@ -1,0 +1,17 @@
+path_classifiers:
+  test:
+    - "*/*/test_*.cpp"
+  docs:
+    - docs.py
+queries:
+  - exclude: vcpkg/            
+extraction:
+  cpp:
+    prepare:
+      - bash ./setup.sh
+    after_prepare:
+      - mkdir build
+      - cd build
+    index:    # Customizable step used by all languages.
+      build_command:
+        - cmake ..
