@@ -20,6 +20,7 @@ class ParticleSystem{
   int maximum = -1;
   int count = 0;
   int minAngle, maxAngle;
+  float speed = 1.f;
 
   Vec2 pos = Vec2(0,0);
   shared_ptr<Particle> bParticle;
@@ -29,8 +30,8 @@ class ParticleSystem{
  public:
 
   ParticleSystem(){}
-  ParticleSystem(Particle* particle, int minAngle, int maxAngle, int rate, int max);
-  void Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max);
+  ParticleSystem(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed);
+  void Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed);
 
   void Update(App *a);
 

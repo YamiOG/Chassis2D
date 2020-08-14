@@ -2,17 +2,18 @@
 
 #include "Chassis2D.h"
 
-ParticleSystem::ParticleSystem(Particle* particle, int minAngle, int maxAngle, int rate, int max){
-  Setup(particle, minAngle, maxAngle, rate, max);
+ParticleSystem::ParticleSystem(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed){
+  Setup(particle, minAngle, maxAngle, rate, max, speed);
 }
 
-void ParticleSystem::Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max){
+void ParticleSystem::Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed){
   bParticle = make_shared<Particle>(*particle);
 
   this->minAngle = minAngle;
   this->maxAngle = maxAngle;
   this->rate = rate;
   this->maximum = max;
+  this->speed = speed;
 }
 
 void ParticleSystem::Update(App *a){
@@ -21,19 +22,14 @@ void ParticleSystem::Update(App *a){
       Particle *p = new Particle(*bParticle);
 
       int diff = 180 - abs(abs(minAngle - maxAngle) - 180); 
-
       float angle = minAngle + (rand() % diff);
 
-      if(angle > 360.f){
-        angle -= 360.f;
-      }
-
+      if(angle > 360.f) angle -= 360.f;
       angle -= 180;
       angle *= (3.14 / 180);
         
-      float speed = 20.f;
-
       Vec2 velocity(0, speed);
+
       velocity.x = velocity.x * cos(angle) - velocity.y * sin(angle);
       velocity.y = velocity.y * cos(angle) + velocity.x * sin(angle);
 

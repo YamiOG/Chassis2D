@@ -114,9 +114,9 @@ int main(int argc, char *argv[]){
 
   p.Setup(10, 10, 0.1f, 1.0f, 0.1f, 1000, new Texture(&a, "test.png"), scale);
 
-  ps.Setup(&p, 270, 360, 1, 100);
+  ps.Setup(&p, 270, 360, 1, 100, 30.f);
 
-  a.StartParticleSystem(&ps, Vec2(800, 450), 1000);
+  a.StartParticleSystem(&ps, Vec2(800, 450), 10000);
 
   float angle = 0.0f;
 

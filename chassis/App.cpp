@@ -104,8 +104,15 @@ bool App::IsPressed(string k){
 
 void App::PhysicsUpdate(){
   if(1000/pFPS <= SDL_GetTicks()-pTime){
-    for(int i = 0; i < particleSystems.size(); i++){
+    for(int i = 0; i < particleSystems.size();){
       particleSystems[i]->Update(this);
+
+      if(SDL_GetTicks() >= particleSystems[i]->GetTime()){
+        particleSystems.erase(particleSystems.begin()+i);
+      }
+      else{
+        i++;
+      }
     }
 
     world->Step(1.0f/pFPS, velocityI, positionI);

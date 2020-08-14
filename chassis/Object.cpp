@@ -48,10 +48,11 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
 }
 
 void Object::Destroy(){
-  /*if(a != nullptr){
+  if(a != nullptr){
     a->GetWorld()->DestroyBody(body);
     body = nullptr;
-  }*/
+    a = nullptr;
+  }
 }
 
 Object::~Object(){

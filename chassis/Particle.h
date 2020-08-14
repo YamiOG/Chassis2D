@@ -32,8 +32,6 @@ class Particle : public Object{
   void SetLifetime(int set) {lifetime = set;}
   void SetTime(int set) {time = set;}
 
-  void Destroy();
-
   //Destructor
   ~Particle();
 };

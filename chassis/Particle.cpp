@@ -35,6 +35,7 @@ int Particle::Create(App *a, int x, int y){
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = PARTICLE;
+    fixture.filter.maskBits = NULL;
 
     bodyDef.type = b2_dynamicBody;
     fixture.friction = friction;
@@ -52,13 +53,5 @@ int Particle::Create(App *a, int x, int y){
   return 0;
 }
 
-void Particle::Destroy(){
-  if(a != nullptr){
-    a->GetWorld()->DestroyBody(body);
-    body = nullptr;
-  }
-}
-
 Particle::~Particle(){
-  Destroy();
 }

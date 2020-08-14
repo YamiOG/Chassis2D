@@ -34,8 +34,6 @@ find_package(sdl2-mixer CONFIG REQUIRED)
 message(" [INFO] Found SDL2-Mixer")
 find_package(sdl2-ttf CONFIG REQUIRED)
 message(" [INFO] Found SDL2-TTF")
-find_package(sdl2-net CONFIG REQUIRED)
-message(" [INFO] Found SDL2-Net")
 find_package(unofficial-box2d CONFIG REQUIRED)
 message(" [INFO] Found Box2D")
 
@@ -44,4 +42,4 @@ file(GLOB Sources "chassis/*h" "chassis/*.cpp" "src/*.h" "src/*.cpp")
 add_executable(${PROJECT_NAME} ${Sources})
 
 #Linking Libs
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE SDL2::SDL2_net PRIVATE unofficial::box2d::box2d )
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE unofficial::box2d::box2d )
