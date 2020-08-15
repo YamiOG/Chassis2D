@@ -6,8 +6,6 @@ queries:
   - exclude: vcpkg            
 extraction:
   cpp:
-    prepare:
-      - build-essential
     after_prepare:
       - bash ./setup.sh
     before_index:
