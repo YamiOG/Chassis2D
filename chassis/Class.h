@@ -1,3 +1,6 @@
+#ifndef CLASS_H
+#define CLASS_H
+
 class App;
 
 class Object;
@@ -27,3 +30,5 @@ class Timer;
 class Vec2;
 
 class Vec4;
+
+#endif

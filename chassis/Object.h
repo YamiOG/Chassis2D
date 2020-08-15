@@ -60,7 +60,7 @@ class Object{
   virtual void Destroy();
 
   //Destructor
-  ~Object();
+  virtual ~Object();
 };
 
 #endif
