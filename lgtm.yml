@@ -2,6 +2,9 @@ path_classifiers:
   test:
     - "chassis/*.h"
     - "chassis/*.cpp"
+queries:
+  - exclude: "vcpkg"
+  - exclude: "src"
 extraction:
   cpp:
     after_prepare:
