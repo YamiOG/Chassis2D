@@ -11,4 +11,15 @@ A simple Game Framework based around SDL2 and Box2D to make an easy to use frame
 
 # Steps
 
+To build the source code
+
+    $mkdir build
+    $cd build
+    $cmake ..
+
+Compiler will vary between operating systems
+
+# License
+
+Chassis2D is released under the [MIT License](https://opensource.org/licenses/MIT)
 
