@@ -1,7 +1,7 @@
 extraction:
   cpp:
     after_prepare:
-      - bash ./setup.sh
+      - ./setup.sh
     before_index:
       - mkdir build
       - cd build

@@ -79,9 +79,6 @@ void RenderHandler(){
 
   a.DrawParticles();
 
-  SDL_SetRenderDrawColor(a.GetRenderer(), 100, 200, 100, 255);
-  SDL_RenderDrawLine(a.GetRenderer(), 1600/2, 900/2, velocity2d.x + 1600/2, velocity2d.y + 900/2);
-
   a.Present();
 }
 
@@ -124,23 +121,6 @@ int main(int argc, char *argv[]){
     EventHandler();
     RenderHandler();
     a.PhysicsUpdate();
-
-    if(angle < 90){
-      angle = 90 - angle;
-    }
-    else if(180 > angle > 90){
-      angle = 180 - angle;
-    }
-    else if(270 > angle > 180){
-      angle -= 180;
-    }
-    else if(360 > angle > 270){
-      angle -= 270;
-    }
-
-    float speed = 100.0f;
-
-    velocity2d = Vec2(cos(angle * (3.14 / 180)) * speed, sin(angle * (3.14/180)) * speed);
   }
   return 0;
 }
