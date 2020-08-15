@@ -2,6 +2,7 @@
 #define BUTTON_H
 
 #include <iostream>
+#include <memory>
 #include <SDL2/SDL.h>
 
 #include "Class.h"
