@@ -53,5 +53,14 @@ int Particle::Create(App *a, int x, int y){
   return 0;
 }
 
+void Particle::Destroy(){
+  if(a != nullptr){
+    a->GetWorld()->DestroyBody(body);
+    body = nullptr;
+    a = nullptr;
+  }
+}
+
 Particle::~Particle(){
+  Destroy();
 }
