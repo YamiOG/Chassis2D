@@ -1,15 +1,14 @@
 path_classifiers:
   test:
-    - "../chassis/*.h"
-    - "../chassis/*.cpp"
+    - "chassis/*.h"
+    - "chassis/*.cpp"
 queries:
-  - exclude: vcpkg/            
+  - exclude: vcpkg            
 extraction:
   cpp:
-    prepare:
+    after_prepare:
       - bash ./setup.sh
+    before_index:
       - mkdir build
       - cd build
-    index:    # Customizable step used by all languages.
-      build_command:
-        - cmake ..
+      - cmake ..

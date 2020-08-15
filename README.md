@@ -1,7 +1,7 @@
 # Build Status
 [![Build Status](https://travis-ci.com/YamiOG/Chassis2D.svg?branch=master)](https://travis-ci.com/YamiOG/Chassis2D)
-[![License: MIT](https://img.shields.io/github/license/YamiOG/Chassis2D.svg)](https://opensource.org/licenses/MIT)
 [![](https://img.shields.io/github/last-commit/YamiOG/Chassis2D.svg)](https://github.com/YamiOG/Chassis2D/commits/master)
+[![License: MIT](https://img.shields.io/github/license/YamiOG/Chassis2D.svg)](https://opensource.org/licenses/MIT)
 
 
 # Chassis2D
