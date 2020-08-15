@@ -1,3 +1,6 @@
+queries:
+  - exclude: "vcpkg"
+  - exclude: "src"
 extraction:
   cpp:
     after_prepare:
