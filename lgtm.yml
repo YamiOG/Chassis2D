@@ -1,5 +1,7 @@
+path_classifiers:
+  test:
+    - exclude: src
 queries:
-  - exclude: vcpkg
   - exclude: src
 extraction:
   cpp:
