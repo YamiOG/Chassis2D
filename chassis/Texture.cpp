@@ -81,22 +81,6 @@ Vec4 Texture::GetCrop(){
   return rect;
 }
 
-Vec4 Texture::GetFrame(int num){
-  if(!sheet){
-    cout << "WARNING:Not A Sprite Sheet" << endl;
-    Vec4 rect = Vec4(0,0,width,height);
-    return rect;
-  }
-  int y = 0;
-  if(num > hNum){
-    y = hFrame * ((int)(num/hNum));
-  }
-  int x = num % hNum;
-
-  Vec4 rect = Vec4(x, y, wFrame, hFrame);
-  return rect;
-}
-
 Texture::~Texture(){
   SDL_DestroyTexture(texture);
 }
