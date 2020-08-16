@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 #include <Box2D/Box2D.h>
 
 #include "../chassis/Chassis2D.h"
@@ -124,5 +124,16 @@ int main(int argc, char *argv[]){
     RenderHandler();
     a.PhysicsUpdate();
   }
+  return 0;
+}*/
+
+
+#include <iostream>
+
+#include "../chassis/Chassis2D.h"
+
+using namespace std;
+
+int main(int argc, char *argv[]){
   return 0;
 }
