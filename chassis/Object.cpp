@@ -47,16 +47,12 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
   return 0;
 }
 
-void Object::Destroy(){
+Object::~Object(){
   if(a != nullptr){
     a->GetWorld()->DestroyBody(body);
     body = nullptr;
     a = nullptr;
   }
-}
-
-Object::~Object(){
-  Destroy();
 }
 
 Vec4 Object::GetRect() {

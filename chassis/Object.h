@@ -57,8 +57,6 @@ class Object{
   void SetHide(bool hide) { this->hide = hide; }
   bool IsHidden() { return hide; }
 
-  virtual void Destroy();
-
   //Destructor
   virtual ~Object();
 };

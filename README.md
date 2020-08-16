@@ -7,7 +7,7 @@
 # Chassis2D
 ![Official logo](icon1.png "Official Logo")
 
-A simple Game Framework based around SDL2 and Box2D to make an easy to use framework.
+Chassis2D is a Game Framework aimed at being easy to use, but also power and functionality. 
 
 # Steps
 
