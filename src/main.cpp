@@ -115,6 +115,8 @@ int main(int argc, char *argv[]){
 
   a.StartParticleSystem(&ps, Vec2(800, 450), 10000);
 
+  //Adding this because of lgtm
+
   float angle = 0.0f;
 
   while(running){
