@@ -27,8 +27,6 @@ endif()
 
 project(${PROJECT_NAME})
 
-set(sdl2_DIR "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-linux/share/sdl2")
-set(SDL2_DIR "${CMAKE_SOURCE_DIR}/vcpkg/installed/x64-linux/share/sdl2")
 find_package(SDL2 CONFIG REQUIRED)
 message(" [INFO] Found SDL2")
 find_package(sdl2-image CONFIG REQUIRED)
@@ -40,9 +38,10 @@ message(" [INFO] Found SDL2-TTF")
 find_package(unofficial-box2d CONFIG REQUIRED)
 message(" [INFO] Found Box2D")
 
-file(GLOB Sources "chassis/*h" "chassis/*.cpp" "src/*.h" "src/*.cpp")
+file(GLOB SOURCES "chassis/*h" "chassis/*.cpp" "src/*.h" "src/*.cpp")
 
-add_executable(${PROJECT_NAME} ${Sources})
+#add_executable(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
 #Linking Libs
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE unofficial::box2d::box2d )
