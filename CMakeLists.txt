@@ -1,10 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(VERSION_MAJOR 1)
-set(VERSION_MINOR 0)
 set(PROJECT_NAME Chassis2D)
 
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
@@ -13,19 +8,7 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     message(" [INFO] VCPKG CMAKE_TOOLCHAIN_FILE = ${CMAKE_TOOLCHAIN_FILE}")
 endif()
 
-if(WIN32)
-    if(CMAKE_CL_64)
-        set(CMAKE_PREFIX_PATH "vcpkg/installed/x64-windows")
-    else()
-        set(CMAKE_PREFIX_PATH "vcpkg/installed/x86-windows")
-    endif()
-elseif(UNIX)
-    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
-        set(CMAKE_PREFIX_PATH "vcpkg/installed/x64-linux")
-    endif()
-endif()
-
-project(${PROJECT_NAME})
+project(${PROJECT_NAME} VERSION 1.0.0)
 
 find_package(SDL2 CONFIG REQUIRED)
 message(" [INFO] Found SDL2")
@@ -38,10 +21,15 @@ message(" [INFO] Found SDL2-TTF")
 find_package(unofficial-box2d CONFIG REQUIRED)
 message(" [INFO] Found Box2D")
 
-file(GLOB SOURCES "chassis/*h" "chassis/*.cpp" "src/*.h" "src/*.cpp")
+file(GLOB SOURCES "chassis/*h" "chassis/*.cpp")
 
-#add_executable(${PROJECT_NAME} ${SOURCES})
 add_library(${PROJECT_NAME} SHARED ${SOURCES})
 
-#Linking Libs
+set_target_properties( ${PROJECT_NAME} 
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
+)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE unofficial::box2d::box2d )
