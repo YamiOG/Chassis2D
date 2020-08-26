@@ -65,7 +65,20 @@ Vec4 Object::GetRect() {
   return Vec4(0.f, 0.f, 0.f, 0.f);
 }
 
-void Object::ApplyConstVelocity(Vec2 v, bool jumping){
+int Object::ApplyConstVelocity(Vec2 v){
+  if(body){
+    v.Subt(GetVelocity());
+    v.Multi(body->GetMass());
+    body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
+  }
+  else{
+    cout << "ERROR:Object Body is NULL" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+int Object::ApplyConstVelocity(Vec2 v, bool jumping){
   if(body){
     v.Subt(GetVelocity());
     v.Multi(body->GetMass());
@@ -74,6 +87,11 @@ void Object::ApplyConstVelocity(Vec2 v, bool jumping){
     }
     body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
   }
+  else{
+    cout << "ERROR:Object Body is NULL" << endl;
+    return -1;
+  }
+  return 0;
 }
 
 void Object::SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id){

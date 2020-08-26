@@ -18,8 +18,10 @@ class Text{
   shared_ptr<Texture> texture;
   Vec2 pos;
   Vec4 rect;
-  Font *font;
   string text;
+
+  Font *font;
+
   int iTime = -1;
 
   bool hide = false;

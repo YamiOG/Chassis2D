@@ -35,7 +35,8 @@ class Object{
   void SetBody(b2Body *body) {this->body = body; }
   void SetVelocity(Vec2 v) { if(body) body->SetLinearVelocity(v.ToB2()); }
   void RotationFixed(bool fixed) { if(body) body->SetFixedRotation(fixed); }
-  void ApplyConstVelocity(Vec2 v, bool jumping);
+  int ApplyConstVelocity(Vec2 v);
+  int ApplyConstVelocity(Vec2 v, bool jumping);
   void ApplyImpulse(Vec2 v) { v.Multi(body->GetMass()); if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true); } 
   Vec2 GetVelocity() { return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); }
   void SetActive(bool set) { if(body) body->SetActive(set); }

@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.7)
 
 set(PROJECT_NAME Chassis2D)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     set(CMAKE_TOOLCHAIN_FILE "vcpkg/scripts/buildsystems/vcpkg.cmake"
     CACHE STRING "")

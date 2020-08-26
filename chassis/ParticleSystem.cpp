@@ -7,7 +7,8 @@ ParticleSystem::ParticleSystem(Particle* particle, int minAngle, int maxAngle, i
 }
 
 void ParticleSystem::Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed){
-  bParticle = make_shared<Particle>(*particle);
+  shared_ptr<Particle> sharedParticle(particle);
+  bParticle = sharedParticle;//make_shared<Particle>(*particle);
 
   this->minAngle = minAngle;
   this->maxAngle = maxAngle;
