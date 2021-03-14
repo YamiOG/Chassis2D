@@ -4,10 +4,6 @@
 #include <iostream>
 #include <vector>
 #include <cstdint>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <SDL2/SDL_ttf.h>
-#include <Box2D/Box2D.h>
 
 #include "Class.h"
 
@@ -16,11 +12,18 @@
 
 using namespace std;
 
-class App : public b2ContactListener{
+struct SDL_Window;
+struct SDL_Renderer;
+union SDL_Event;
+
+class b2World;
+class b2Contact;
+
+class App{
  private:
   SDL_Window* window;
   SDL_Renderer* renderer;
-  SDL_Event ev;
+  SDL_Event *ev = new SDL_Event;
   int width, height;
   float mVol = 1.f;
   float cVol = 1.f;
@@ -29,8 +32,8 @@ class App : public b2ContactListener{
   int velocityI, positionI;
 
   int pFPS;
-  int32 pTime;
-
+  long int pTime;
+  
   vector<shared_ptr<Particle>> particles;
   vector<shared_ptr<ParticleSystem>> particleSystems;
   vector<shared_ptr<Contact>> contacts;
@@ -41,12 +44,14 @@ class App : public b2ContactListener{
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   void PhysicsUpdate();
   void SetPhysicsFPS(int pFPS) { this->pFPS = pFPS; }
-  bool CheckEvents(){return SDL_PollEvent(&ev);}
+  bool CheckEvents();
 
   //Render Cmds
   void Clear();
   void Clear(int r, int g, int b);
   void FillRect(Vec4 rect, int r, int g, int b);
+  int Draw(Texture *texture, Vec4 rect);
+  int Draw(Texture *texture, Vec4 crop, Vec4 rect);
   int Draw(Object* o);
   int Draw(Text* t);
   int Draw(Button *b);
@@ -64,14 +69,13 @@ class App : public b2ContactListener{
   int AddContact(Contact *c);
 
   //Get Cmds
-  SDL_Event GetEvent() { return ev; }
+  SDL_Event *GetEvent() { return ev; }
   b2World* GetWorld() { return world; }
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
   SDL_Point GetMouse();
   Uint32 GetTime() { return SDL_GetTicks(); }
   bool IsMouseInVec4(Vec4 rect);
-  //bool IsPressed(int k);
   bool IsPressed(string k);
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
@@ -79,9 +83,9 @@ class App : public b2ContactListener{
   bool IsSensorColliding(Object *o, int id);
 
   //ContactListener
-  void BeginContact(b2Contact* contact);
+  /*void BeginContact(b2Contact* contact);
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-  void EndContact(b2Contact* contact);
+  void EndContact(b2Contact* contact);*/
 
   //Destructor
   ~App();

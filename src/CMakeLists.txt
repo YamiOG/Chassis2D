@@ -1,24 +1,13 @@
-set(PROJECT_NAME Chassis2D)
-
-find_package(SDL2 CONFIG REQUIRED)
-message(" [INFO] Found SDL2")
-find_package(sdl2-image CONFIG REQUIRED)
-message(" [INFO] Found SDL2-Image")
-find_package(sdl2-mixer CONFIG REQUIRED)
-message(" [INFO] Found SDL2-Mixer")
-find_package(sdl2-ttf CONFIG REQUIRED)
-message(" [INFO] Found SDL2-TTF")
-find_package(unofficial-box2d CONFIG REQUIRED)
-message(" [INFO] Found Box2D")
-
 file(GLOB HEADER_FILES "${CMAKE_SOURCE_DIR}/include/Chassis2D/*.h")
 file(GLOB SOURCES "*.cpp")
 
-add_library(${PROJECT_NAME} STATIC ${SOURCES} ${HEADER_FILES})
+file(GLOB EXTERN_SOURCES "${CMAKE_SOURCE_DIR}/extern/stb/include/*.h" "${CMAKE_SOURCE_DIR}/extern/stb/src/*.cpp" "${CMAKE_SOURCE_DIR}/extern/Miniaudio/include/*.h" "${CMAKE_SOURCE_DIR}/extern/Miniaudio/src/*.c")
 
-target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/include/Chassis2D")
+include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/include/Chassis2D" PUBLIC "${CMAKE_SOURCE_DIR}/extern/SDL2/include/" PUBLIC "${CMAKE_SOURCE_DIR}/extern/SDL2_ttf" PUBLIC "${CMAKE_SOURCE_DIR}/extern/stb/include/" PUBLIC "${CMAKE_SOURCE_DIR}/extern/Miniaudio")
 
-target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2 SDL2::SDL2main PRIVATE SDL2::SDL2_image PRIVATE SDL2::SDL2_mixer PRIVATE SDL2::SDL2_ttf PRIVATE unofficial::box2d::box2d )
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADER_FILES} ${EXTERN_SOURCES})
+
+target_link_libraries(${PROJECT_NAME} PUBLIC SDL2 SDL2main SDL2_ttf box2d)
 
 set_target_properties( ${PROJECT_NAME}
     PROPERTIES

@@ -2,6 +2,9 @@
 
 #include "Chassis2D.h"
 
+#include <SDL.h>
+#include <SDL_ttf.h>
+
 Font::Font(const char* loc, int size, int r, int g, int b){
   Setup(loc, size, r, g, b);
 }
@@ -42,7 +45,8 @@ Font::~Font(){
 }
 
 shared_ptr<Texture> Font::GetText(App *a, const char* text){
-  SDL_Surface *s = TTF_RenderText_Solid( font, text, color );
+  SDL_Color tmp = {color.r, color.g, color.b, color.a};
+  SDL_Surface *s = TTF_RenderText_Solid(font, text, tmp);
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
   }

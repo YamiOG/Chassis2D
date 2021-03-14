@@ -3,8 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
 
 #include "Class.h"
 

@@ -2,8 +2,6 @@
 #define ENTITY_H
 
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
 
 #include "Class.h"
 
@@ -20,8 +18,8 @@ class Entity : public Object{
 
  public:
   Entity(){}
-  Entity(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
-  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale);
+  Entity(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
 
   void SetHP(float hp) { this->hp = hp; }
   void SetDead(bool dead) { this->dead = dead; }

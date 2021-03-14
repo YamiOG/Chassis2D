@@ -2,7 +2,8 @@
 #define VEC2_H
 
 #include <iostream>
-#include <Box2D/Box2D.h>
+
+struct b2Vec2;
 
 class Vec2{
  private:
@@ -10,7 +11,7 @@ class Vec2{
   float x, y;
   Vec2(){}
   Vec2(float x, float y) { this->x = x; this->y = y; }
-  Vec2(b2Vec2 p) { this->x = p.x; this->y = p.y; }
+  Vec2(b2Vec2 p);
 
   void Multi(Vec2 val) { x *= val.x; y *= val.y; }
   void Multi(float val) { x *= val; y *= val; }
@@ -30,7 +31,7 @@ class Vec2{
   Vec2 operator +(Vec2 val) { return Vec2(x + val.x, y + val.y); }
   Vec2 operator +(float val) { return Vec2(x + val, y + val); }
 
-  b2Vec2 ToB2() { return b2Vec2(x, y);}
+  b2Vec2 *ToB2();
 };
 
 #endif

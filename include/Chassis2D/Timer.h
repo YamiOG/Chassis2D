@@ -2,10 +2,8 @@
 #define TIMER_H
 
 #include <iostream>
-#include <SDL2/SDL.h>
 
 using namespace std;
-
 class Timer{
   private:
     int millis = 0;

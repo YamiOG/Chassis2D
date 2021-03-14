@@ -2,7 +2,6 @@
 #define CONTACT_H
 
 #include <iostream>
-#include <Box2D/Box2D.h>
 
 #include "Class.h"
 

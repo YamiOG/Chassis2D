@@ -2,6 +2,8 @@
 
 #include "Chassis2D.h"
 
+#include <Box2D/Box2D.h>
+
 Particle::Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
   Setup(width, height, friction, density, restitution, lifetime, texture, scale);
 }
@@ -44,7 +46,8 @@ int Particle::Create(App *a, int x, int y){
 
     body = a->GetWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
-    body->SetUserData(this);
+    //body->SetUserData(this);
+    body->GetUserData().pointer = (uintptr_t)this;
   }
   else{
     cout << "ERROR:b2World is nullptr" << endl;

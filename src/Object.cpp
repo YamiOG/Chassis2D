@@ -2,11 +2,14 @@
 
 #include "Chassis2D.h"
 
-Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
+#include <SDL.h>
+#include <Box2D/Box2D.h>
+
+Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale){
   Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, isD, scale);
 }
 
-int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale){
+int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale){
   if(a->GetWorld() != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -37,7 +40,8 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
 
     body = a->GetWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
-    body->SetUserData(this);
+    //body->SetUserData(this);
+    body->GetUserData().pointer = (uintptr_t)this;
   }
   else{
     cout << "ERROR:b2World is nullptr" << endl;
@@ -69,7 +73,7 @@ int Object::ApplyConstVelocity(Vec2 v){
   if(body){
     v.Subt(GetVelocity());
     v.Multi(body->GetMass());
-    body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
+    body->ApplyLinearImpulse( *v.ToB2(), body->GetWorldCenter(), true);
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -85,7 +89,7 @@ int Object::ApplyConstVelocity(Vec2 v, bool jumping){
     if(jumping){
       v.y = 0;
     }
-    body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true);
+    body->ApplyLinearImpulse( *v.ToB2(), body->GetWorldCenter(), true);
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -94,7 +98,7 @@ int Object::ApplyConstVelocity(Vec2 v, bool jumping){
   return 0;
 }
 
-void Object::SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id){
+void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int maskBits, int id){
   if(body){
     b2FixtureDef tmpFixture;
     b2PolygonShape tmpShape;
@@ -105,9 +109,51 @@ void Object::SetSensor(float x, float y, float w, float h, uint16 categoryBits, 
     tmpFixture.filter.categoryBits = categoryBits;
     tmpFixture.filter.maskBits = maskBits;
 
-    body->CreateFixture(&tmpFixture)->SetUserData((void*)(size_t)id);
+    //body->CreateFixture(&tmpFixture)->userData.pointer = (uintptr_t)id);
+    body->CreateFixture(&tmpFixture)->GetUserData().pointer = (uintptr_t)id;
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
   }
+}
+
+//void SetBody(b2Body *body) {this->body = body; }
+void Object::SetVelocity(Vec2 v) { 
+  if(body) body->SetLinearVelocity(*v.ToB2()); 
+}
+
+void Object::RotationFixed(bool fixed) { 
+  if(body) body->SetFixedRotation(fixed);
+}
+
+void Object::ApplyImpulse(Vec2 v) { 
+  v.Multi(body->GetMass()); if(body) body->ApplyLinearImpulse( *v.ToB2(), body->GetWorldCenter(), true);
+}
+
+Vec2 Object::GetVelocity() { 
+  return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); 
+}
+
+void Object::SetActive(bool set) {
+   if(body) body->SetAwake(set); 
+}
+
+void Object::SetPosition(Vec2 position) { 
+  if(body) body->SetTransform(*position.ToB2(), 0);
+}
+
+void Object::SetBullet(bool bullet) { 
+  if(body) body->SetBullet(bullet); 
+}
+
+float Object::GetMass() { 
+  return body->GetMass(); 
+}
+
+float Object::GetAngle() { 
+  return body->GetAngle();
+} 
+
+bool Object::IsActive() { 
+  return (body) ? body->IsAwake() : false;
 }

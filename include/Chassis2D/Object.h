@@ -3,9 +3,7 @@
 
 #include <iostream>
 #include <memory>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <Box2D/Box2D.h>
+#include <cstdint>
 
 #include "Class.h"
 
@@ -13,6 +11,8 @@
 #include "Vec4.h"
 
 using namespace std;
+
+class b2Body;
 
 class Object{
  private:
@@ -25,28 +25,27 @@ class Object{
   int scale;
   bool hide = false;
  public:
-
   Object(){}
-  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale);
-  virtual int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, bool isD, int scale);
+  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale);
+  virtual int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale);
 
   //Physics
   b2Body *GetBody(){ return body; }
   void SetBody(b2Body *body) {this->body = body; }
-  void SetVelocity(Vec2 v) { if(body) body->SetLinearVelocity(v.ToB2()); }
-  void RotationFixed(bool fixed) { if(body) body->SetFixedRotation(fixed); }
+  void SetVelocity(Vec2 v);
+  void RotationFixed(bool fixed);
   int ApplyConstVelocity(Vec2 v);
   int ApplyConstVelocity(Vec2 v, bool jumping);
-  void ApplyImpulse(Vec2 v) { v.Multi(body->GetMass()); if(body) body->ApplyLinearImpulse( v.ToB2(), body->GetWorldCenter(), true); } 
-  Vec2 GetVelocity() { return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); }
-  void SetActive(bool set) { if(body) body->SetAwake(set); }
+  void ApplyImpulse(Vec2 v);
+  Vec2 GetVelocity();
+  void SetActive(bool set);
   int GetScale() { return scale; }
-  void SetPosition(Vec2 position) { if(body) body->SetTransform(position.ToB2(), 0); } 
-  void SetSensor(float x, float y, float w, float h, uint16 categoryBits, uint16 maskBits, int id);
-  void SetBullet(bool bullet) { if(body) body->SetBullet(bullet); }
-  float GetMass() { return body->GetMass(); }
-  float GetAngle() { return body->GetAngle(); }
-  bool IsActive() { return (body) ? body->IsAwake() : false; }
+  void SetPosition(Vec2 position);
+  void SetSensor(float x, float y, float w, float h, int categoryBits, int maskBits, int id);
+  void SetBullet(bool bullet);
+  float GetMass();
+  float GetAngle();
+  bool IsActive();
 
   //Render
   void SetTexture(Texture* t) { shared_ptr<Texture> sharedTex(t); texture = sharedTex; }

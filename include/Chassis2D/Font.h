@@ -3,19 +3,20 @@
 
 #include <iostream>
 #include <memory>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 
 #include "Class.h"
 
 #include "Vec4.h"
+#include "Color.h"
 
 using namespace std;
+
+typedef struct _TTF_Font TTF_Font;
 
 class Font{
  private:
   TTF_Font *font;
-  SDL_Color color;
+  Color color;
   bool rgb;
   int divisor = 1;
   int size;

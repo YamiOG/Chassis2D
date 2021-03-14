@@ -2,8 +2,8 @@
 #define TEXTURE_H 
 
 #include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+
+#include "stb_image.h"
 
 #include "Class.h"
 
@@ -12,6 +12,7 @@
 
 using namespace std;
 
+struct SDL_Texture;
 class Texture{
  private:
   SDL_Texture *texture;
@@ -21,10 +22,10 @@ class Texture{
   Texture(){}
   Texture(App *a, const char* loc);
   Texture(SDL_Texture *t);
-  Texture(App *a, SDL_Surface *surf);
+  Texture(App *a, SDL_Surface *surface);
   int Setup(App *a, const char* loc);
   int Setup(SDL_Texture *t);
-  int Setup(App *a, SDL_Surface *surf);
+  int Setup(App *a, SDL_Surface *surface);
   SDL_Texture *GetData(){ return texture;}
   Vec4 GetCrop();
   Vec2 GetSize() { return Vec2(width, height); }

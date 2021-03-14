@@ -2,12 +2,13 @@
 
 #include "Chassis2D.h"
 
+#include <Box2D/Box2D.h>
 
-Entity::Entity(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale){
+Entity::Entity(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
   Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
 }
 
-int Entity::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, uint16 categoryBits, uint16 maskBits, int scale){
+int Entity::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
   if(a->GetWorld() != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -31,7 +32,7 @@ int Entity::Setup(App *a, float x, float y, float w, float h, float friction, fl
 
     body = a->GetWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
-    body->SetUserData(this);
+    body->GetUserData().pointer = (uintptr_t)this;
   }
   else{
     cout << "ERROR:b2World is nullptr" << endl;
