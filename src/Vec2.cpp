@@ -7,5 +7,6 @@ Vec2::Vec2(b2Vec2 p) {
 }
 
 b2Vec2 *Vec2::ToB2() { 
-    return &b2Vec2(x,y);
+    b2Vec2 tmp(x,y);
+    return &tmp; 
 }
