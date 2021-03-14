@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 App::App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
     Setup(title, width, height, gravity, velocityI, positionI);

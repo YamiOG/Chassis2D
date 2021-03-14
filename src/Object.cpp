@@ -3,7 +3,7 @@
 #include "Chassis2D.h"
 
 #include <SDL.h>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale){
   Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, isD, scale);

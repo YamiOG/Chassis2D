@@ -2,7 +2,7 @@
 
 #include "Chassis2D.h"
 
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 Particle::Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
   Setup(width, height, friction, density, restitution, lifetime, texture, scale);

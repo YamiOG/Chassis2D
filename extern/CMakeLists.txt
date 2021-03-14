@@ -8,4 +8,3 @@ add_library(Freetype::Freetype ALIAS freetype)
 add_subdirectory(SDL2_ttf)
 
 add_subdirectory(Box2D)
-
