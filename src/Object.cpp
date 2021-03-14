@@ -40,7 +40,6 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
 
     body = a->GetWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
-    //body->SetUserData(this);
     body->GetUserData().pointer = (uintptr_t)this;
   }
   else{
