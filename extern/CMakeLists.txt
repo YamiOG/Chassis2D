@@ -7,6 +7,5 @@ add_library(Freetype::Freetype ALIAS freetype)
 
 add_subdirectory(SDL2_ttf)
 
-set(BOX2D_BUILD_TESTBED OFF)
 add_subdirectory(Box2D)
 
