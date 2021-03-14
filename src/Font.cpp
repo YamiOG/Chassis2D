@@ -41,7 +41,9 @@ int Font::Setup(const char* loc, int size, int divisor){
 }
 
 Font::~Font(){
-  TTF_CloseFont(font);
+  if(font){
+    TTF_CloseFont(font);
+  }
 }
 
 shared_ptr<Texture> Font::GetText(App *a, const char* text){

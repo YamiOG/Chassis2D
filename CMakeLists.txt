@@ -9,8 +9,6 @@ set(PROJECT_NAME Chassis2D)
 
 project(${PROJECT_NAME} VERSION 0.1.0)
 
-add_definitions("-fPIC")
-
 add_subdirectory(src)
 
 add_subdirectory(demos)
