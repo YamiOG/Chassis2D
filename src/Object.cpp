@@ -109,7 +109,6 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
     tmpFixture.filter.categoryBits = categoryBits;
     tmpFixture.filter.maskBits = maskBits;
 
-    //body->CreateFixture(&tmpFixture)->userData.pointer = (uintptr_t)id);
     body->CreateFixture(&tmpFixture)->GetUserData().pointer = (uintptr_t)id;
   }
   else{

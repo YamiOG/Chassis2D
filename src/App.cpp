@@ -3,13 +3,8 @@
 #include "Chassis2D.h"
 
 #include <SDL.h>
-//#include <miniaudio.h>
 #include <SDL_ttf.h>
 #include <Box2D/Box2D.h>
-
-/*void DataCallback(ma_device* pDevice, void* pOutput, const void* pInput, ma_uint32 frameCount){
-
-}*/
 
 App::App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
     Setup(title, width, height, gravity, velocityI, positionI);
@@ -38,24 +33,6 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     cout << "ERROR:Renderer Creation Failed" << endl;
     return -1;
   }
-
-  /*if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 ) {
-    cout << "ERROR:SDL_Mixer Initialization Failed" << endl;
-    return -1;
-  }*/
-
-  /*ma_device_config deviceConfig = ma_device_config_init(ma_device_type_playback);
-  deviceConfig.playback.format   = ma_format_f32;
-  deviceConfig.playback.channels = channelCount;
-  deviceConfig.sampleRate        = sampleRate;
-  deviceConfig.dataCallback      = DataCallback;
-  deviceConfig.pUserData         = NULL;
-
-  if (ma_device_init(NULL, &deviceConfig, maDevice) != MA_SUCCESS) {
-      cout << "ERROR:Failed to Create Audio Device" << endl;
-      ma_device_uninit(maDevice);
-      return -1;
-  }*/
 
   if( TTF_Init() == -1){
     cout << "ERROR:TTF Initialization Failed" << endl;
@@ -338,9 +315,9 @@ bool App::IsColliding(Object* o1, Object* o2){
 bool App::IsSensorColliding(Object *o, int id){
   for (b2ContactEdge* edge = o->GetBody()->GetContactList(); edge; edge = edge->next){
     if(edge->contact->IsTouching()){
-      //if((intptr_t)edge->contact->GetFixtureA()->GetUserData() == id){
+      if((intptr_t)edge->contact->GetFixtureA()->GetUserData().pointer == id){
         return true;
-      //}
+      }
     }
   }
   return false;

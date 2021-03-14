@@ -1,8 +1,7 @@
 extraction:
   cpp:
-    after_prepare:
-      - ./setup.sh
     before_index:
       - mkdir build
       - cd build
       - cmake ..
+      - make
