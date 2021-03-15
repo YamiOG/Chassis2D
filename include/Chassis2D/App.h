@@ -20,6 +20,10 @@ union SDL_Event;
 class b2World;
 class b2Contact;
 
+namespace SoLoud{
+  class Soloud;
+}
+
 class App{
  private:
   SDL_Window* window;
@@ -34,6 +38,8 @@ class App{
 
   int pFPS;
   long int pTime;
+
+  SoLoud::Soloud *soloud;
   
   vector<shared_ptr<Particle>> particles;
   vector<shared_ptr<ParticleSystem>> particleSystems;

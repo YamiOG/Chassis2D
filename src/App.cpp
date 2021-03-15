@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <box2d/box2d.h>
+#include <soloud.h>
 
 App::App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
     Setup(title, width, height, gravity, velocityI, positionI);
@@ -45,8 +46,7 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  //world->SetContactListener(this);
-
+  soloud->init();
   return 0;
 }
 
