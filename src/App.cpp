@@ -51,10 +51,9 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
 }
 
 App::~App(){
+  soloud->deinit();
   delete world;
   TTF_Quit();
-  //Mix_CloseAudio();
-  //ma_device_uninit(maDevice);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();

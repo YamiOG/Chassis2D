@@ -8,7 +8,7 @@
 #include "Object.h"
 #include "Entity.h"
 #include "Texture.h"
-//#include "Sound.h"
+#include "Sound.h"
 #include "Text.h"
 #include "Font.h"
 #include "Button.h"

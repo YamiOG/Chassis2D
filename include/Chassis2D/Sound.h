@@ -2,10 +2,9 @@
 #define SOUND_H
 
 #include <iostream>
+#include <string>
 
-#include <soloud.h>
-#include <soloud_wav.h>
-#include <soloud_wavstream.h>
+#include "Class.h"
 
 using namespace std;
 
@@ -16,19 +15,29 @@ namespace SoLoud{
 
 class Sound{
  private:
+  App *app;
+
   SoLoud::Wav *sample;
   SoLoud::WavStream *stream;
+
+  bool isWAV;
  public:
   Sound(){}
-  Sound(const char* loc, bool music);
-  int Setup(const char* loc, bool music);
+  Sound(App *app, string path);
+  int Setup(App *app, string path);
 
   //Control
   void Play();
   void Pause();
   void Resume();
   void Stop();
-  void SetChunkVolume(float value);
+  void Loop();
+  void SetPause(bool set);
+  void SetLoop(bool set);
+  void SetVolume(float value);
+
+  //Get
+  bool IsWAV() { return isWAV; }
 
   //Destructor
   ~Sound();

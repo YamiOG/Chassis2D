@@ -88,6 +88,7 @@ class App{
   bool IsColliding(Object* o1, Object* o2);
   bool OnGround(Entity* e);
   bool IsSensorColliding(Object *o, int id);
+  SoLoud::Soloud *GetSoLoud() { return soloud; }
 
   //ContactListener
   /*void BeginContact(b2Contact* contact);
