@@ -1,11 +1,9 @@
 file(GLOB HEADER_FILES "${CMAKE_SOURCE_DIR}/include/Chassis2D/*.h")
 file(GLOB SOURCES "*.cpp")
 
-file(GLOB EXTERN_SOURCES "${CMAKE_SOURCE_DIR}/extern/stb/include/*.h" "${CMAKE_SOURCE_DIR}/extern/stb/src/*.cpp" "${CMAKE_SOURCE_DIR}/extern/Miniaudio/include/*.h" "${CMAKE_SOURCE_DIR}/extern/Miniaudio/src/*.c")
+file(GLOB EXTERN_SOURCES "${CMAKE_SOURCE_DIR}/extern/stb/include/*.h" "${CMAKE_SOURCE_DIR}/extern/stb/src/*.cpp")
 
 include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/include/Chassis2D" PUBLIC "${CMAKE_SOURCE_DIR}/extern/SDL2/include/" PUBLIC "${CMAKE_SOURCE_DIR}/extern/SDL2_ttf" PUBLIC "${CMAKE_SOURCE_DIR}/extern/Box2D/include" PUBLIC "${CMAKE_SOURCE_DIR}/extern/SoLoud/include" PUBLIC "${CMAKE_SOURCE_DIR}/extern/stb/include")
-
-add_definitions(-lSDL_ttf)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADER_FILES} ${EXTERN_SOURCES})
 
