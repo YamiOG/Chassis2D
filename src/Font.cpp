@@ -42,7 +42,7 @@ int Font::Setup(const char* loc, int size, int divisor){
 
 Font::~Font(){
   if(font){
-    //TTF_CloseFont(font);
+    TTF_CloseFont(font);
   }
 }
 
