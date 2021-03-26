@@ -15,10 +15,12 @@ int Sound::Setup(App *app, string path){
     string extension = path.substr(path.find_last_of(".")+1, path.size());
     if(extension == "wav"){
       isWAV = true;
+      sample = new SoLoud::Wav;
       sample->load(path.c_str());
     }
     else{
       isWAV = false;
+      stream = new SoLoud::WavStream;
       stream->load(path.c_str());
     }
   }

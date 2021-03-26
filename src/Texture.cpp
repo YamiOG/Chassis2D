@@ -4,6 +4,8 @@
 
 #include <SDL.h>
 
+#include "stb_image.h"
+
 Texture::Texture(App *a, const char* loc){
   Setup(a, loc);
 }

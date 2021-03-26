@@ -18,7 +18,7 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
   this->velocityI = velocityI;
   this->positionI = positionI;
 
-  if( SDL_Init(SDL_INIT_EVERYTHING) == -1){
+  if( SDL_Init(SDL_INIT_EVERYTHING) != 0){
     cout << "ERROR:SDL2 Initialization Failed" << endl;
     return -1;
   }
@@ -35,7 +35,7 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  if( TTF_Init() == -1){
+  if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
   }
@@ -46,12 +46,17 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  soloud->init();
+  soloud = new SoLoud::Soloud;
+  if(soloud->init() != 0){
+    cout << "ERROR:SoLoud Initialization Failed" << endl;
+    return -1;
+  }
   return 0;
 }
 
 App::~App(){
   soloud->deinit();
+  delete soloud;
   delete world;
   TTF_Quit();
   SDL_DestroyRenderer(renderer);

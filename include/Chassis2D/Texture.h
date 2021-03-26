@@ -3,8 +3,6 @@
 
 #include <iostream>
 
-#include "stb_image.h"
-
 #include "Class.h"
 
 #include "Vec2.h"
