@@ -11,7 +11,7 @@ bool running = true;
 Texture texture;
 
 int main(int argc, char *argv[]){
-  a.Setup("Textures", 1578, 826, Vec2(0, 70), 8, 3);
+  a.Setup("Textures", 1578, 826);
 
   texture.Setup(&a, "icon1.png");
 

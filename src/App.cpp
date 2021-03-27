@@ -7,8 +7,55 @@
 #include <box2d/box2d.h>
 #include <soloud.h>
 
+App::App(const char* title, int width, int height){
+    Setup(title, width, height);
+}
+
 App::App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){
     Setup(title, width, height, gravity, velocityI, positionI);
+}
+
+int App::Setup(const char* title, int width, int height){
+  this->width = width;
+  this->height = height;
+
+  this->velocityI = 1;
+  this->positionI = 1;
+
+  if( SDL_Init(SDL_INIT_EVERYTHING) != 0){
+    cout << "ERROR:SDL2 Initialization Failed" << endl;
+    return -1;
+  }
+
+  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+  if (!window) {
+    cout << "ERROR:Window Creation Failed" << endl;
+    return -1;
+  }
+
+  renderer = SDL_CreateRenderer(window, -1, 0);
+  if (!renderer) {
+    cout << "ERROR:Renderer Creation Failed" << endl;
+    return -1;
+  }
+
+  if(TTF_Init() != 0){
+    cout << "ERROR:TTF Initialization Failed" << endl;
+    return -1;
+  }
+
+  world = new b2World(b2Vec2(0,0));
+  if (!world) {
+    cout << "ERROR:b2World Creation Failed" << endl;
+    return -1;
+  }
+
+  soloud = new SoLoud::Soloud;
+  if(soloud->init() != 0){
+    cout << "ERROR:SoLoud Initialization Failed" << endl;
+    return -1;
+  }
+  return 0;
 }
 
 int App::Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI){

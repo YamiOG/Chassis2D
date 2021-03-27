@@ -47,8 +47,12 @@ class App{
 
  public:
   App(){}
+  App(const char* title, int width, int height);
   App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
+
+  int Setup(const char* title, int width, int height);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
+
   void PhysicsUpdate();
   void SetPhysicsFPS(int pFPS) { this->pFPS = pFPS; }
   bool CheckEvents();

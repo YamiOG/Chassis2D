@@ -11,7 +11,7 @@ Sound sGas;
 bool running = true;
 
 int main(int argc, char *argv[]){
-  app.Setup("Audio", 1578, 826, Vec2(0, 70), 8, 3);
+  app.Setup("Audio", 1578, 826);
 
   sGas.Setup(&app, "Manuel - Gas Gas Gas.mp3");
 
