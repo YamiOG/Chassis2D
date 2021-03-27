@@ -1,5 +1,3 @@
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
 set(SDL_STATIC OFF)
 add_subdirectory(SDL2)
 add_library(SDL2::SDL2 ALIAS SDL2)
