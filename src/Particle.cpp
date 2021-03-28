@@ -24,7 +24,7 @@ int Particle::Setup(float width, float height, float friction, float density, fl
   return 0;
 }
 
-int Particle::Create(App *a, int x, int y){
+int Particle::Create(App *a, float x, float y){
   if(a->GetWorld() != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;

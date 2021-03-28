@@ -26,7 +26,7 @@ class Texture{
   int Setup(App *a, SDL_Surface *surface);
   SDL_Texture *GetData(){ return texture;}
   Vec4 GetCrop();
-  Vec2 GetSize() { return Vec2(width, height); }
+  Vec2 GetSize() { return Vec2((float)width, (float)height); }
 
   ~Texture();
 };

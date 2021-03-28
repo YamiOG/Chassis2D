@@ -7,10 +7,10 @@ Button::Button(int x, int y, int w, int h, Texture *t, const char* text, Font *f
 }
 
 int Button::Setup(int x, int y, int w, int h, Texture *t, const char* text, Font *f){
-  rect.x = x;
-  rect.y = y;
-  rect.w = w;
-  rect.h = h;
+  rect.x = (float)x;
+  rect.y = (float)y;
+  rect.w = (float)w;
+  rect.h = (float)h;
 
   shared_ptr<Texture> sharedTex(t);
   texture = sharedTex;

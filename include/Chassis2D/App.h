@@ -37,7 +37,7 @@ class App{
   int velocityI, positionI;
 
   int pFPS;
-  long int pTime;
+  Uint32 pTime;
 
   SoLoud::Soloud *soloud;
   
