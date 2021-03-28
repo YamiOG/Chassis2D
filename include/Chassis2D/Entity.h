@@ -18,6 +18,8 @@ class Entity : public Object{
 
  public:
   Entity(){}
+  Entity(App *a, float x, float y, float w, float h, float friction, float density, int scale);
+  int Setup(App *a, float x, float y, float w, float h, float friction, float density, int scale);
   Entity(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
   int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
 

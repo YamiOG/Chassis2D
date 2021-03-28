@@ -26,8 +26,14 @@ class Object{
   bool hide = false;
  public:
   Object(){}
-  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale);
-  virtual int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale);
+  Object(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
+  int Setup(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
+  int Static(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
+  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  int Dynamic(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
+  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
 
   //Physics
   b2Body *GetBody(){ return body; }

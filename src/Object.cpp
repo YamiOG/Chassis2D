@@ -5,11 +5,15 @@
 #include <SDL.h>
 #include <box2d/box2d.h>
 
-Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale){
-  Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, isD, scale);
+Object::Object(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
+  Setup(a, x, y, w, h, categoryBits, maskBits, scale);
 }
 
-int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isD, int scale){
+int Object::Setup(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
+  Static(a, x, y, w, h, categoryBits, maskBits, scale);
+}
+
+int Object::Static(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
   if(a->GetWorld() != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -28,7 +32,88 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
     fixture.filter.categoryBits = categoryBits;
     fixture.filter.maskBits = maskBits;
 
-    if(isD){
+    bodyDef.type = b2_staticBody;
+
+    body = a->GetWorld()->CreateBody(&bodyDef);
+    body->CreateFixture(&fixture);
+    body->GetUserData().pointer = (uintptr_t)this;
+  }
+  else{
+    cout << "ERROR:b2World is nullptr" << endl;
+    return -1;
+  }
+
+  return 0;
+}
+
+Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+  Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+}
+
+int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+  Dynamic(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+}
+
+int Object::Dynamic(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+  if(a->GetWorld() != nullptr){
+    b2BodyDef bodyDef;
+    b2FixtureDef fixture;
+    b2PolygonShape shape;
+
+    this->a = a;
+
+    width = w;
+    height = h;
+    this->scale = scale;
+
+    bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
+    shape.SetAsBox((width/2)/scale, (height/2)/scale);
+    fixture.shape = &shape;
+
+    fixture.filter.categoryBits = categoryBits;
+    fixture.filter.maskBits = maskBits;
+
+    bodyDef.type = b2_dynamicBody;
+    fixture.friction = friction;
+    fixture.density = density;
+    fixture.restitution = restitution;
+
+    body = a->GetWorld()->CreateBody(&bodyDef);
+    body->CreateFixture(&fixture);
+    body->GetUserData().pointer = (uintptr_t)this;
+  }
+  else{
+    cout << "ERROR:b2World is nullptr" << endl;
+    return -1;
+  }
+
+  return 0;
+}
+
+Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
+  Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, isDynamic, scale);
+}
+
+int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
+  if(a->GetWorld() != nullptr){
+    b2BodyDef bodyDef;
+    b2FixtureDef fixture;
+    b2PolygonShape shape;
+
+    this->a = a;
+
+    width = w;
+    height = h;
+    this->scale = scale;
+
+    bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
+    shape.SetAsBox((width/2)/scale, (height/2)/scale);
+    fixture.shape = &shape;
+
+    fixture.filter.categoryBits = categoryBits;
+    fixture.filter.maskBits = maskBits;
+
+    if(isDynamic){
       bodyDef.type = b2_dynamicBody;
       fixture.friction = friction;
       fixture.density = density;
