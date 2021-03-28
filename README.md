@@ -1,4 +1,6 @@
-# **Still Very Much in Alpha**
+# Disclaimer
+
+**This version is still largely incomplete**
 # Build Status
 [![Build Status](https://travis-ci.com/YamiOG/Chassis2D.svg?branch=master)](https://travis-ci.com/YamiOG/Chassis2D)
 [![](https://img.shields.io/github/last-commit/YamiOG/Chassis2D.svg)](https://github.com/YamiOG/Chassis2D/commits/master)
