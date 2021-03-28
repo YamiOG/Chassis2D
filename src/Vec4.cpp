@@ -10,6 +10,9 @@ Vec4::Vec4(SDL_Rect *p) {
 }
 
 SDL_Rect *Vec4::ToSDL() { 
-    SDL_Rect rect = {(int)x, (int)y, (int)w, (int)h};
-    return &rect;
+    rect->x = (int)x;
+    rect->y = (int)y;
+    rect->w = (int)w;
+    rect->h = (int)h;
+    return rect;
 }

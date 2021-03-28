@@ -12,6 +12,8 @@ using namespace std;
 struct SDL_Rect;
 
 class Vec4{
+ private:
+  SDL_Rect *rect;
  public:
   float x, y, w, h; 
   Vec4(){}

@@ -7,6 +7,7 @@ struct b2Vec2;
 
 class Vec2{
  private:
+  b2Vec2 *tmp;
  public:
   float x, y;
   Vec2(){}
