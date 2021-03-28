@@ -2,28 +2,21 @@
 
 #include "Chassis2D.h"
 
-Text::Text(int x, int y, const char* text, Font *font){
-  this->font = font;
-
-  pos = Vec2(x, y);
-  rect = Vec4(0,0,0,0);
-
-  this->text = (string)text;
-
+Text::Text(int x, int y, string text, Font *font){
+  Setup(x, y, text, font);
 }
 
-int Text::Setup(int x, int y, const char* text, Font *font){
+int Text::Setup(int x, int y, string text, Font *font){
   this->font = font;
+  this->text = text;
 
   pos = Vec2(x, y);
-  rect = Vec4(0,0,0,0);
-
-  this->text = (string)text;
 
   return 0;
 }
 
 Text::~Text(){
+  delete font;
 }
 
 shared_ptr<Texture> Text::GetText(App *a){

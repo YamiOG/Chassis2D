@@ -10,7 +10,7 @@ ParticleSystem::ParticleSystem(Particle* particle, int minAngle, int maxAngle, i
 
 void ParticleSystem::Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed){
   shared_ptr<Particle> sharedParticle(particle);
-  bParticle = sharedParticle;//make_shared<Particle>(*particle);
+  bParticle = sharedParticle;
 
   this->minAngle = minAngle;
   this->maxAngle = maxAngle;
@@ -31,7 +31,7 @@ void ParticleSystem::Update(App *a){
       angle -= 180;
       angle *= (3.14 / 180);
         
-      Vec2 velocity(0, speed);
+      Vec2 velocity(0.0f, speed);
 
       velocity.x = velocity.x * cos(angle) - velocity.y * sin(angle);
       velocity.y = velocity.y * cos(angle) + velocity.x * sin(angle);

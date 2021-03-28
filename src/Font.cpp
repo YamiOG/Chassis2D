@@ -5,6 +5,21 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
+Font::Font(const char* loc, int size, Color color){
+  Setup(loc, size, color);
+}
+
+int Font::Setup(const char* loc, int size, Color color){
+  font = TTF_OpenFont(loc, size);
+  if(!font){
+    cout << "ERROR:Font Loading Failed" << endl;
+    return -1;
+  }
+  this->size = size;
+  this->color = color;
+  rgb = false; 
+}
+
 Font::Font(const char* loc, int size, int r, int g, int b){
   Setup(loc, size, r, g, b);
 }
@@ -16,10 +31,31 @@ int Font::Setup(const char* loc, int size, int r, int g, int b){
     return -1;
   }
   this->size = size;
+
   color.r = r;
   color.g = g;
   color.b = b;
   color.a = 255;
+  rgb = false; 
+  return 0;
+}
+
+Font::Font(const char* loc, int size, int r, int g, int b, int a){
+  Setup(loc, size, r, g, b, a);
+}
+
+int Font::Setup(const char* loc, int size, int r, int g, int b, int a){
+  font = TTF_OpenFont(loc, size);
+  if(!font){
+    cout << "ERROR:Font Loading Failed" << endl;
+    return -1;
+  }
+  this->size = size;
+
+  color.r = r;
+  color.g = g;
+  color.b = b;
+  color.a = a;
   rgb = false; 
   return 0;
 }
@@ -36,6 +72,7 @@ int Font::Setup(const char* loc, int size, int divisor){
   }
   this->size = size;
   this->divisor = divisor;
+
   rgb = true; 
   return 0;
 }
@@ -79,24 +116,23 @@ shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
   }
 
   int n = i * 256 * 6;
-
   int c = n % 256;
 
-  SDL_Color rgbC;
+  SDL_Color rgbColor;
 
-  rgbC.a = 255;
+  rgbColor.a = 255;
 
   switch(n / 256)
   {
-    case 0: rgbC.r = 255;      rgbC.g = c;        rgbC.b = 0;       break;//red
-    case 1: rgbC.r = 255 - c;  rgbC.g = 255;      rgbC.b = 0;       break;//yellow
-    case 2: rgbC.r = 0;        rgbC.g = 255;      rgbC.b = c;       break;//green
-    case 3: rgbC.r = 0;        rgbC.g = 255 - c;  rgbC.b = 255;     break;//cyan
-    case 4: rgbC.r = c;        rgbC.g = 0;        rgbC.b = 255;     break;//blue
-    case 5: rgbC.r = 255;      rgbC.g = 0;        rgbC.b = 255 - c; break;//magenta
+    case 0: rgbColor.r = 255;      rgbColor.g = c;        rgbColor.b = 0;       break;//red
+    case 1: rgbColor.r = 255 - c;  rgbColor.g = 255;      rgbColor.b = 0;       break;//yellow
+    case 2: rgbColor.r = 0;        rgbColor.g = 255;      rgbColor.b = c;       break;//green
+    case 3: rgbColor.r = 0;        rgbColor.g = 255 - c;  rgbColor.b = 255;     break;//cyan
+    case 4: rgbColor.r = c;        rgbColor.g = 0;        rgbColor.b = 255;     break;//blue
+    case 5: rgbColor.r = 255;      rgbColor.g = 0;        rgbColor.b = 255 - c; break;//magenta
   }
 
-  SDL_Surface *s = TTF_RenderText_Solid( font, text, rgbC );
+  SDL_Surface *s = TTF_RenderText_Solid(font, text, rgbColor);
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
