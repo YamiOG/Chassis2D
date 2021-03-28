@@ -10,7 +10,7 @@ Object::Object(App *a, float x, float y, float w, float h, int categoryBits, int
 }
 
 int Object::Setup(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
-  Static(a, x, y, w, h, categoryBits, maskBits, scale);
+  return Static(a, x, y, w, h, categoryBits, maskBits, scale);
 }
 
 int Object::Static(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
@@ -51,7 +51,7 @@ Object::Object(App *a, float x, float y, float w, float h, float friction, float
 }
 
 int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
-  Dynamic(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+  return Dynamic(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
 }
 
 int Object::Dynamic(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
