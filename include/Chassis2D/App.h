@@ -28,7 +28,7 @@ class App{
  private:
   SDL_Window* window;
   SDL_Renderer* renderer;
-  SDL_Event *ev = new SDL_Event;
+  SDL_Event *ev;
   int width, height;
   float mVol = 1.f;
   float cVol = 1.f;
@@ -37,7 +37,7 @@ class App{
   int velocityI, positionI;
 
   int pFPS;
-  Uint32 pTime;
+  int pTime;
 
   SoLoud::Soloud *soloud;
   
@@ -80,12 +80,13 @@ class App{
   int AddContact(Contact *c);
 
   //Get Cmds
-  SDL_Event *GetEvent() { return ev; }
   b2World* GetWorld() { return world; }
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
-  SDL_Point GetMouse();
-  Uint32 GetTime() { return SDL_GetTicks(); }
+  SDL_Event *GetEvent() { return ev; }
+  bool ShouldClose();
+  Vec2 GetMouse();
+  long int GetTime();
   bool IsMouseInVec4(Vec4 rect);
   bool IsPressed(string k);
   bool CheckButton(Button *b);

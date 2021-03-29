@@ -16,11 +16,11 @@ int main(int argc, char *argv[]){
   texture.Setup(&a, "icon1.png");
 
   while(running){
-    while(a.CheckEvents()){
-      if(a.GetEvent()->type == SDL_QUIT){
+    /*while(a.CheckEvents()){
+      if(a.ShouldClose()){
         running = false;
       }
-    }
+    }*/
 
     a.Clear();
     a.Draw(&texture, Vec4(0, 0, 1578, 826));

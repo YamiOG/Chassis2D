@@ -6,8 +6,8 @@
 
 #include "stb_image.h"
 
-Texture::Texture(App *a, const char* loc){
-  Setup(a, loc);
+Texture::Texture(App *a, const char* location){
+  Setup(a, location);
 }
 
 Texture::Texture(SDL_Texture *t){
@@ -24,10 +24,10 @@ Texture::Texture(App *a, SDL_Surface *surface){
   Setup(a, surface);
 }
 
-int Texture::Setup(App *a, const char* loc){
+int Texture::Setup(App *a, const char* location){
   int req_format = STBI_rgb_alpha;
   int width, height, orig_format;
-  unsigned char* data = stbi_load(loc, &width, &height, &orig_format, req_format);
+  unsigned char* data = stbi_load(location, &width, &height, &orig_format, req_format);
   if (data == NULL) {
       cout << "ERROR:stb_image Failed to load file" << endl;
       return -1;

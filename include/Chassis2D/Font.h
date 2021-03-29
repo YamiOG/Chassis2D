@@ -23,14 +23,14 @@ class Font{
   int divisor = 1;
  public:
   Font(){}
-  Font(const char* loc, int size, Color color);
-  int Setup(const char* loc, int size, Color color);
-  Font(const char* loc, int size, int r, int g, int b);
-  int Setup(const char* loc, int size, int r, int g, int b);
-  Font(const char* loc, int size, int r, int g, int b, int a);
-  int Setup(const char* loc, int size, int r, int g, int b, int a);
-  Font(const char* loc, int size, int divisor);
-  int Setup(const char* loc, int size, int divisor);
+  Font(const char* location, int size, Color color);
+  int Setup(const char* location, int size, Color color);
+  Font(const char* location, int size, int r, int g, int b);
+  int Setup(const char* location, int size, int r, int g, int b);
+  Font(const char* location, int size, int r, int g, int b, int a);
+  int Setup(const char* location, int size, int r, int g, int b, int a);
+  Font(const char* location, int size, int divisor);
+  int Setup(const char* location, int size, int divisor);
   shared_ptr<Texture> GetText(App *a, const char* text);
   shared_ptr<Texture> GetText(App *a, const char* text, int &iTime);
   bool GetRGB(){return rgb;}

@@ -19,8 +19,8 @@ int App::Setup(const char* title, int width, int height){
   this->width = width;
   this->height = height;
 
-  this->velocityI = 1;
-  this->positionI = 1;
+  this->velocityI = 8;
+  this->positionI = 3;
 
   if( SDL_Init(SDL_INIT_EVERYTHING) != 0){
     cout << "ERROR:SDL2 Initialization Failed" << endl;
@@ -82,6 +82,8 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
+  ev = new SDL_Event;
+
   if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
@@ -109,6 +111,13 @@ App::~App(){
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
+}
+
+bool App::ShouldClose(){
+  /*if(ev->type == SDL_QUIT){
+    return true;
+  }*/
+  return false;
 }
 
 bool App::IsPressed(string k){
@@ -158,7 +167,8 @@ void App::Present(){
 
 void App::FillRect(Vec4 rect, int r, int g, int b){
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-  SDL_RenderFillRect(renderer, rect.ToSDL());
+  SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+  SDL_RenderFillRect(renderer, &tRect);
 }
 
 /*void App::SetMusicVolume(float value){
@@ -176,10 +186,14 @@ void App::SetMasterVolume(float value){
   Mix_Volume(-1, MIX_MAX_VOLUME * (value/100.f) * cVol);
 }*/
 
-SDL_Point App::GetMouse(){
-  SDL_Point pos;
-  SDL_GetMouseState(&pos.x, &pos.y);
-  return pos;
+Vec2 App::GetMouse(){
+  int x, y;
+  SDL_GetMouseState(&x, &y);
+  return Vec2((float)x,(float)y);
+}
+
+long int App::GetTime() { 
+  return SDL_GetTicks();
 }
 
 bool App::IsMouseInVec4(Vec4 rect){
@@ -193,7 +207,8 @@ bool App::IsMouseInVec4(Vec4 rect){
 
 int App::Draw(Texture *texture, Vec4 rect){
   if(texture){
-    SDL_RenderCopy(renderer, texture->GetData(), NULL, rect.ToSDL());
+    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+    SDL_RenderCopy(renderer, texture->GetData(), NULL, &tRect);
   }
   else{
     cout << "ERROR:Texture is a nullptr" << endl;
@@ -204,7 +219,9 @@ int App::Draw(Texture *texture, Vec4 rect){
 
 int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
   if(texture){
-    SDL_RenderCopy(renderer, texture->GetData(), crop.ToSDL(), rect.ToSDL());
+    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+    SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
+    SDL_RenderCopy(renderer, texture->GetData(), &tCrop, &tRect);
   }
   else{
     cout << "ERROR:Texture is a nullptr" << endl;
@@ -216,7 +233,7 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
 int App::Draw(Object *o){
   if(o){
     if(!o->IsHidden()){
-      SDL_RenderCopy(renderer, o->GetTexture()->GetData(), NULL, o->GetRect().ToSDL());
+      Draw(o->GetTexture().get(), o->GetRect());
     }
   }
   else{
@@ -229,7 +246,7 @@ int App::Draw(Object *o){
 int App::Draw(Text *t){
   if(t){
     if(!t->IsHidden()){ 
-      SDL_RenderCopy(renderer, t->GetText(this)->GetData(), NULL, t->GetRect().ToSDL());
+      Draw(t->GetText(this).get(), t->GetRect());
     }
   }
   else{
@@ -242,9 +259,9 @@ int App::Draw(Text *t){
 int App::Draw(Button *b){
   if(b){
     if(!b->IsHidden()){ 
-      SDL_RenderCopy(renderer, b->GetTexture()->GetData(), NULL, b->GetRect().ToSDL());
+      Draw(b->GetTexture().get(), b->GetRect());
       if(!b->GetText()->IsHidden()){ 
-        SDL_RenderCopy(renderer, b->GetText()->GetText(this)->GetData(), NULL, b->GetText()->GetRect().ToSDL());
+        Draw(b->GetText()->GetText(this).get(), b->GetText()->GetRect());
       }
     }
   }
@@ -258,7 +275,7 @@ int App::Draw(Button *b){
 int App::Draw(Particle *p){
   if(p){
     if(!p->IsHidden()){ 
-      SDL_RenderCopy(renderer, p->GetTexture()->GetData(), NULL, p->GetRect().ToSDL());
+      Draw(p->GetTexture().get(), p->GetRect());
     }
   }
   else{
@@ -271,14 +288,14 @@ int App::Draw(Particle *p){
 void App::DrawParticles(){
   for(int i = 0; i < particles.size(); i++){
     if(!particles[i]->IsHidden()){
-      SDL_RenderCopy(renderer, particles[i]->GetTexture()->GetData(), NULL, particles[i]->GetRect().ToSDL());
+      Draw(particles[i]->GetTexture().get(), particles[i]->GetRect());
     }
   }
 
   for(int i = 0; i < particleSystems.size(); i++){
     if(!particleSystems[i]->IsHidden()){
       for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
-          SDL_RenderCopy(renderer, particleSystems[i]->GetParticles()[j]->GetTexture()->GetData(), NULL, particleSystems[i]->GetParticles()[j]->GetRect().ToSDL());
+          Draw(particleSystems[i]->GetParticles()[j]->GetTexture().get(), particleSystems[i]->GetParticles()[j]->GetRect());
       }
     }
   }

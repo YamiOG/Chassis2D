@@ -2,6 +2,7 @@
 
 #include "Chassis2D.h"
 
+#include <SDL.h>
 #include <box2d/box2d.h>
 
 ParticleSystem::ParticleSystem(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed){

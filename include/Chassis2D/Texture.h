@@ -10,18 +10,19 @@
 
 using namespace std;
 
+struct SDL_Surface;
 struct SDL_Texture;
+
 class Texture{
  private:
   SDL_Texture *texture;
-  int width, height, hNum, vNum, wFrame, hFrame;
-  bool sheet;
+  int width, height;
  public:
   Texture(){}
-  Texture(App *a, const char* loc);
+  Texture(App *a, const char* location);
   Texture(SDL_Texture *t);
   Texture(App *a, SDL_Surface *surface);
-  int Setup(App *a, const char* loc);
+  int Setup(App *a, const char* location);
   int Setup(SDL_Texture *t);
   int Setup(App *a, SDL_Surface *surface);
   SDL_Texture *GetData(){ return texture;}

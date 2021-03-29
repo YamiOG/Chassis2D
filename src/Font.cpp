@@ -5,27 +5,28 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-Font::Font(const char* loc, int size, Color color){
-  Setup(loc, size, color);
+Font::Font(const char* location, int size, Color color){
+  Setup(location, size, color);
 }
 
-int Font::Setup(const char* loc, int size, Color color){
-  font = TTF_OpenFont(loc, size);
+int Font::Setup(const char* location, int size, Color color){
+  font = TTF_OpenFont(location, size);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
     return -1;
   }
   this->size = size;
   this->color = color;
+
   rgb = false; 
 }
 
-Font::Font(const char* loc, int size, int r, int g, int b){
-  Setup(loc, size, r, g, b);
+Font::Font(const char* location, int size, int r, int g, int b){
+  Setup(location, size, r, g, b);
 }
 
-int Font::Setup(const char* loc, int size, int r, int g, int b){
-  font = TTF_OpenFont(loc, size);
+int Font::Setup(const char* location, int size, int r, int g, int b){
+  font = TTF_OpenFont(location, size);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
     return -1;
@@ -36,16 +37,17 @@ int Font::Setup(const char* loc, int size, int r, int g, int b){
   color.g = g;
   color.b = b;
   color.a = 255;
+
   rgb = false; 
   return 0;
 }
 
-Font::Font(const char* loc, int size, int r, int g, int b, int a){
-  Setup(loc, size, r, g, b, a);
+Font::Font(const char* location, int size, int r, int g, int b, int a){
+  Setup(location, size, r, g, b, a);
 }
 
-int Font::Setup(const char* loc, int size, int r, int g, int b, int a){
-  font = TTF_OpenFont(loc, size);
+int Font::Setup(const char* location, int size, int r, int g, int b, int a){
+  font = TTF_OpenFont(location, size);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
     return -1;
@@ -56,20 +58,22 @@ int Font::Setup(const char* loc, int size, int r, int g, int b, int a){
   color.g = g;
   color.b = b;
   color.a = a;
+
   rgb = false; 
   return 0;
 }
 
-Font::Font(const char* loc, int size, int divisor){
-  Setup(loc, size, divisor);
+Font::Font(const char* location, int size, int divisor){
+  Setup(location, size, divisor);
 }
 
-int Font::Setup(const char* loc, int size, int divisor){
-  font = TTF_OpenFont(loc, size);
+int Font::Setup(const char* location, int size, int divisor){
+  font = TTF_OpenFont(location, size);
   if(!font){
     cout << "ERROR:Font Loading Failed" << endl;
     return -1;
   }
+
   this->size = size;
   this->divisor = divisor;
 
@@ -84,13 +88,12 @@ Font::~Font(){
 }
 
 shared_ptr<Texture> Font::GetText(App *a, const char* text){
-  SDL_Color tmp = {color.r, color.g, color.b, color.a};
-  SDL_Surface *s = TTF_RenderText_Solid(font, text, tmp);
+  SDL_Surface *s = TTF_RenderText_Solid(font, text, color.ToSDL());
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
 
-  shared_ptr<Texture> t = make_shared<Texture>(SDL_CreateTextureFromSurface(a->GetRenderer(), s));
+  shared_ptr<Texture> t = make_shared<Texture>(a, s);
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
   }
@@ -137,7 +140,7 @@ shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
 
-  shared_ptr<Texture> t = make_shared<Texture>(SDL_CreateTextureFromSurface(a->GetRenderer(), s));
+  shared_ptr<Texture> t = make_shared<Texture>(a, s);
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
   }
