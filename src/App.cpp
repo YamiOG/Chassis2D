@@ -117,9 +117,11 @@ App::~App(){
 
 bool App::IsOpen(){
   eventList.clear();
+
   bool open = true;
   while(SDL_PollEvent(ev)){
     eventList.push_back(ev);
+
     if(ev->type == SDL_QUIT){
       open = false;
     }

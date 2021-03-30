@@ -72,7 +72,7 @@ class App{
   void DrawParticles();
   void Present();
 
-  //Set Cmds
+  //Set Commands
   void SetMusicVolume(float value);
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
@@ -81,7 +81,7 @@ class App{
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);
   int AddContact(Contact *c);
 
-  //Get Cmds
+  //Get Commands
   b2World* GetWorld() { return world; }
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
@@ -97,6 +97,7 @@ class App{
   bool OnGround(Entity* e);
   bool IsSensorColliding(Object *o, int id);
   SoLoud::Soloud *GetSoLoud() { return soloud; }
+  vector<SDL_Event*> GetEventList() { return eventList; }
 
   //ContactListener
   /*void BeginContact(b2Contact* contact);
