@@ -4,27 +4,21 @@
 
 using namespace std;
 
-App a;
+App app;
 
 bool running = true;
 
 Texture texture;
 
 int main(int argc, char *argv[]){
-  a.Setup("Textures", 1578, 826);
+  app.Setup("Textures", 1578, 826);
 
-  texture.Setup(&a, "icon1.png");
+  texture.Setup(&app, "icon1.png");
 
-  while(running){
-    /*while(a.CheckEvents()){
-      if(a.ShouldClose()){
-        running = false;
-      }
-    }*/
-
-    a.Clear();
-    a.Draw(&texture, Vec4(0, 0, 1578, 826));
-    a.Present();
+  while(app.IsOpen()){
+    app.Clear();
+    app.Draw(&texture, Vec4(0, 0, 1578, 826));
+    app.Present();
   }
   return 0;
 }

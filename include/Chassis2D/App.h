@@ -29,6 +29,8 @@ class App{
   SDL_Window* window;
   SDL_Renderer* renderer;
   SDL_Event *ev;
+  vector<SDL_Event *> eventList;
+
   int width, height;
   float mVol = 1.f;
   float cVol = 1.f;
@@ -84,7 +86,8 @@ class App{
   SDL_Renderer *GetRenderer(){return renderer;}
   SDL_Window *GetWindow(){return window;}
   SDL_Event *GetEvent() { return ev; }
-  bool ShouldClose();
+  bool IsOpen();
+  string GetInputText();
   Vec2 GetMouse();
   long int GetTime();
   bool IsMouseInVec4(Vec4 rect);

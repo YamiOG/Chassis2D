@@ -20,19 +20,21 @@ Text::~Text(){
 }
 
 shared_ptr<Texture> Text::GetText(App *a){
-  if(font->GetRGB()){
-    texture = font->GetText(a, text.c_str(), iTime);
-  }
-  else{
-    texture = font->GetText(a, text.c_str());
-  }
+  if(!text.empty()){
+    if(font->GetRGB()){
+      texture = font->GetText(a, text.c_str(), iTime);
+    }
+    else{
+      texture = font->GetText(a, text.c_str());
+    }
 
-  if(!texture){
-    cout << "ERROR:Text Texture is NULL" << endl;
+    if(!texture){
+      cout << "ERROR:Text Texture is NULL" << endl;
+    }
+
+    Vec2 size = texture->GetSize();
+    rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
+
   }
-
-  Vec2 size = texture->GetSize();
-  rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
-
   return texture;
 }

@@ -39,6 +39,8 @@ int App::Setup(const char* title, int width, int height){
     return -1;
   }
 
+  ev = new SDL_Event;
+
   if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
@@ -113,11 +115,25 @@ App::~App(){
   SDL_Quit();
 }
 
-bool App::ShouldClose(){
-  /*if(ev->type == SDL_QUIT){
-    return true;
-  }*/
-  return false;
+bool App::IsOpen(){
+  eventList.clear();
+  bool open = true;
+  while(SDL_PollEvent(ev)){
+    eventList.push_back(ev);
+    if(ev->type == SDL_QUIT){
+      open = false;
+    }
+  }
+  return open; 
+}
+
+string App::GetInputText(){
+  for(int i = 0; i < eventList.size(); i++) { 
+    if(eventList[i]->type == SDL_TEXTINPUT){
+        return eventList[i]->text.text;
+    }
+  }
+  return "";
 }
 
 bool App::IsPressed(string k){
@@ -210,10 +226,6 @@ int App::Draw(Texture *texture, Vec4 rect){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
     SDL_RenderCopy(renderer, texture->GetData(), NULL, &tRect);
   }
-  else{
-    cout << "ERROR:Texture is a nullptr" << endl;
-    return -1;
-  }
   return 0;
 }
 
@@ -222,10 +234,6 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
     SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
     SDL_RenderCopy(renderer, texture->GetData(), &tCrop, &tRect);
-  }
-  else{
-    cout << "ERROR:Texture is a nullptr" << endl;
-    return -1;
   }
   return 0;
 }
