@@ -19,6 +19,7 @@ int Font::Setup(const char* location, int size, Color color){
   this->color = color;
 
   rgb = false; 
+  return 0;
 }
 
 Font::Font(const char* location, int size, int r, int g, int b){

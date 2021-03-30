@@ -1,3 +1,5 @@
+queries:
+  - exclude: extern
 extraction:
   cpp:
     before_index:
