@@ -23,12 +23,12 @@ class Particle;
 
 class Contact;
 
-class Network;
-
 class Timer;
 
 class Vec2;
 
 class Vec4;
+
+class Color;
 
 #endif

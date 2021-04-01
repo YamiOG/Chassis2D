@@ -99,11 +99,6 @@ class App{
   SoLoud::Soloud *GetSoLoud() { return soloud; }
   vector<SDL_Event*> GetEventList() { return eventList; }
 
-  //ContactListener
-  /*void BeginContact(b2Contact* contact);
-	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-  void EndContact(b2Contact* contact);*/
-
   //Destructor
   ~App();
 };

@@ -10,9 +10,13 @@ int Timer::Start(int millis){
     return 0;
 }
 
-bool Timer::Stopped(){
+bool Timer::Ended(){
     if(SDL_GetTicks() >= past + millis){
         return true;
     }
     return false;
+}
+
+bool Timer::Stopped(){
+    return Ended();
 }

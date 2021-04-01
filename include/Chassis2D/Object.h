@@ -22,7 +22,7 @@ class Object{
   shared_ptr<Texture> texture;
 
   float width, height;
-  int scale;
+  int xOffset, yOffset, tWidth, tHeight, scale;
   bool hide = false;
  public:
   Object(){}
@@ -44,6 +44,7 @@ class Object{
   int ApplyConstVelocity(Vec2 v, bool jumping);
   void ApplyImpulse(Vec2 v);
   Vec2 GetVelocity();
+  Vec4 GetCollisionBox();
   void SetActive(bool set);
   int GetScale() { return scale; }
   void SetPosition(Vec2 position);
@@ -54,7 +55,7 @@ class Object{
   bool IsActive();
 
   //Render
-  void SetTexture(Texture* t) { shared_ptr<Texture> sharedTex(t); texture = sharedTex; }
+  void SetTexture(Texture* t, int xOffset, int yOffset, int w, int h);
   Vec4 GetRect();
   shared_ptr<Texture> GetTexture(){ return texture; }
 

@@ -10,10 +10,9 @@ class Timer{
     int past = 0;
   public:
     Timer(){} 
-
     int Start(int millis);
-
     bool Stopped();
+    bool Ended();
 };
 
 #endif

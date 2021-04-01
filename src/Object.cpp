@@ -143,9 +143,29 @@ Object::~Object(){
   }
 }
 
-Vec4 Object::GetRect() {
+void Object::SetTexture(Texture* t, int xOffset, int yOffset, int w, int h) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  this->xOffset = xOffset;
+  this->yOffset = yOffset;
+  this->tWidth = w;
+  this->tHeight = h;
+}
+
+Vec4 Object::GetCollisionBox(){
   if(body){
     return Vec4((body->GetPosition().x * scale) - (width / 2), (body->GetPosition().y * scale) - (height / 2), width, height );
+  }
+  else{
+    cout << "ERROR:Object Body is NULL" << endl;
+  }
+  return Vec4(0.f, 0.f, 0.f, 0.f);
+}
+
+Vec4 Object::GetRect() {
+  if(body){
+    return Vec4((body->GetPosition().x * scale) - (width / 2) + xOffset, (body->GetPosition().y * scale) - (height / 2) + yOffset, tWidth, tHeight );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;

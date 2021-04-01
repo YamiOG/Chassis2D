@@ -77,7 +77,7 @@ int Texture::Setup(App *a, SDL_Surface *surface){
 }
 
 Vec4 Texture::GetCrop(){
-  Vec4 rect = Vec4(0,0,width,height);
+  Vec4 rect = Vec4(0.0f, 0.0f, (float)width, (float)height);
   return rect;
 }
 
