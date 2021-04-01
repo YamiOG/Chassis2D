@@ -5,8 +5,6 @@ class App;
 
 class Object;
 
-class Entity;
-
 class Texture;
 
 class Sound;
@@ -20,8 +18,6 @@ class Button;
 class ParticleSystem;
 
 class Particle;
-
-class Contact;
 
 class Timer;
 

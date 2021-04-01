@@ -45,7 +45,6 @@ class App{
   
   vector<shared_ptr<Particle>> particles;
   vector<shared_ptr<ParticleSystem>> particleSystems;
-  vector<shared_ptr<Contact>> contacts;
 
  public:
   App(){}
@@ -79,7 +78,6 @@ class App{
   int SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos);
   int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);
-  int AddContact(Contact *c);
 
   //Get Commands
   b2World* GetWorld() { return world; }
@@ -94,7 +92,6 @@ class App{
   bool IsPressed(string k);
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
-  bool OnGround(Entity* e);
   bool IsSensorColliding(Object *o, int id);
   SoLoud::Soloud *GetSoLoud() { return soloud; }
   vector<SDL_Event*> GetEventList() { return eventList; }

@@ -165,7 +165,7 @@ Vec4 Object::GetCollisionBox(){
 
 Vec4 Object::GetRect() {
   if(body){
-    return Vec4((body->GetPosition().x * scale) - (width / 2) + xOffset, (body->GetPosition().y * scale) - (height / 2) + yOffset, tWidth, tHeight );
+    return Vec4((body->GetPosition().x * scale) - (width / 2) + (float)xOffset, (body->GetPosition().y * scale) - (height / 2) + (float)yOffset, (float)tWidth, (float)tHeight );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
