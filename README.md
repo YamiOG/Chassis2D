@@ -10,7 +10,7 @@
 
 ![Official logo](icon1.png "Official Logo")
 
-Chassis2D is a Game Framework aimed at being easy to use, but also power and functionality. 
+Chassis2D is a game framework that runs on SDL2 and Box2D and aims to be easy to use!
 
 # Build Steps
 
