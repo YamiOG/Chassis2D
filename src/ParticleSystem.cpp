@@ -26,7 +26,7 @@ void ParticleSystem::Update(App *a){
       Particle *p = new Particle(*bParticle);
 
       int diff = 180 - abs(abs(minAngle - maxAngle) - 180); 
-      float angle = minAngle + (rand() % diff);
+      double angle = minAngle + (rand() % diff);
 
       if(angle > 360.f) angle -= 360.f;
       angle -= 180;

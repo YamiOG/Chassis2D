@@ -36,7 +36,7 @@ class Text{
   void SetHide(bool hide) { this->hide = hide; }
   bool IsHidden() { return hide; }
 
-  ~Text();
+  ~Text(){}
 };
 
 #endif

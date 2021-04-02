@@ -10,13 +10,9 @@ int Text::Setup(int x, int y, string text, Font *font){
   this->font = font;
   this->text = text;
 
-  pos = Vec2(x, y);
+  pos = Vec2((float)x, (float)y);
 
   return 0;
-}
-
-Text::~Text(){
-  delete font;
 }
 
 shared_ptr<Texture> Text::GetText(App *a){
@@ -30,11 +26,13 @@ shared_ptr<Texture> Text::GetText(App *a){
 
     if(!texture){
       cout << "ERROR:Text Texture is NULL" << endl;
+      return nullptr;
     }
 
     Vec2 size = texture->GetSize();
     rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
 
+    return texture;
   }
-  return texture;
+  return nullptr;
 }
