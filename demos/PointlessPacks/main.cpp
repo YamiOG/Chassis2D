@@ -36,7 +36,7 @@ int Setup(){
     title.Center();
 
     music.Setup(&app, "popcorn_remix.mp3");
-    music.SetVolume(0.1);
+    music.SetVolume(0.1f);
     music.Play();
 
     packs[0].Setup(&app, "images/cheap.png");
