@@ -119,11 +119,26 @@ bool App::IsOpen(){
   eventList.clear();
 
   bool open = true;
+  mouseClicks[0] = false;
+  mouseClicks[1] = false;
+  mouseClicks[2] = false;
+
   while(SDL_PollEvent(ev)){
     eventList.push_back(ev);
 
     if(ev->type == SDL_QUIT){
       open = false;
+    }
+    else if(ev->type == SDL_MOUSEBUTTONDOWN){
+      if(ev->button.button == SDL_BUTTON_LEFT){
+        mouseClicks[0] = true;
+      }
+      else if(ev->button.button == SDL_BUTTON_MIDDLE){
+        mouseClicks[1] = true;
+      }
+      else if(ev->button.button == SDL_BUTTON_RIGHT){
+        mouseClicks[2] = true;
+      }
     }
   }
   return open; 

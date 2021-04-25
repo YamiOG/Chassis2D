@@ -21,6 +21,7 @@ class Text{
 
   int iTime = -1;
   bool hide = false;
+  bool center = false;
  public:
   Text(){}
   Text(int x, int y, string text, Font *font);
@@ -35,6 +36,10 @@ class Text{
   void Show() { hide = false; }
   void SetHide(bool hide) { this->hide = hide; }
   bool IsHidden() { return hide; }
+
+  void Center() { center = true; }
+  void SetCenter(bool center) { this->center = center; }
+  bool IsCenter() { return center; }
 
   ~Text(){}
 };

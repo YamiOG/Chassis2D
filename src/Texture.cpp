@@ -10,6 +10,10 @@ Texture::Texture(App *a, const char* location){
   Setup(a, location);
 }
 
+Texture::Texture(App *a, string location){
+  Setup(a, location);
+}
+
 Texture::Texture(SDL_Texture *t){
   if(t){
     texture = t;
@@ -28,6 +32,33 @@ int Texture::Setup(App *a, const char* location){
   int req_format = STBI_rgb_alpha;
   int width, height, orig_format;
   unsigned char* data = stbi_load(location, &width, &height, &orig_format, req_format);
+  if (data == NULL) {
+      cout << "ERROR:stb_image Failed to load file" << endl;
+      return -1;
+  }
+
+  int depth = 32;
+  int pitch = 4*width;
+
+  SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom((void*)data, width, height, depth, pitch, SDL_PIXELFORMAT_RGBA32);
+
+  if(surface){
+    width = surface->w;
+    height = surface->h;
+    texture = SDL_CreateTextureFromSurface(a->GetRenderer(), surface);
+  }
+  else{
+    cout << "ERROR:Failed to load file" << endl;
+    return -1;
+  }
+  SDL_FreeSurface(surface);
+  return 0;
+}
+
+int Texture::Setup(App *a, string location){
+  int req_format = STBI_rgb_alpha;
+  int width, height, orig_format;
+  unsigned char* data = stbi_load(location.c_str(), &width, &height, &orig_format, req_format);
   if (data == NULL) {
       cout << "ERROR:stb_image Failed to load file" << endl;
       return -1;

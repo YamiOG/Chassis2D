@@ -30,6 +30,7 @@ class App{
   SDL_Renderer* renderer;
   SDL_Event *ev;
   vector<SDL_Event *> eventList;
+  bool mouseClicks[3];
 
   int width, height;
   float mVol = 1.f;
@@ -93,6 +94,9 @@ class App{
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
   bool IsSensorColliding(Object *o, int id);
+  bool IsLeftMouse() { return mouseClicks[0]; }
+  bool IsMiddleMouse() { return mouseClicks[1]; }
+  bool IsRightMouse() { return mouseClicks[2]; }
   SoLoud::Soloud *GetSoLoud() { return soloud; }
   vector<SDL_Event*> GetEventList() { return eventList; }
 

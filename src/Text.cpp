@@ -30,7 +30,13 @@ shared_ptr<Texture> Text::GetText(App *a){
     }
 
     Vec2 size = texture->GetSize();
-    rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
+
+    if(center){
+      rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
+    }
+    else{
+      rect = Vec4(pos.x, pos.y, size.x, size.y);
+    }
 
     return texture;
   }
