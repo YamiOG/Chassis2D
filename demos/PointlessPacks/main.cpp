@@ -31,19 +31,19 @@ Sound music;
 int Setup(){
     app.Setup("PointlessPacks", 480, 360);
 
-    font.Setup("Squarewave.ttf", 36, Color(0, 0, 0));
+    font.Setup("assets/Squarewave.ttf", 36, Color(0, 0, 0));
     title.Setup(240, 48, "Pointless Packs", &font);
     title.Center();
 
-    music.Setup(&app, "popcorn_remix.mp3");
+    music.Setup(&app, "assets/popcorn_remix.mp3");
     music.SetVolume(0.1f);
     music.Play();
 
-    packs[0].Setup(&app, "images/cheap.png");
-    packs[1].Setup(&app, "images/normal.png");
-    packs[2].Setup(&app, "images/rich.png");
+    packs[0].Setup(&app, "assets/images/cheap.png");
+    packs[1].Setup(&app, "assets/images/normal.png");
+    packs[2].Setup(&app, "assets/images/rich.png");
     for(int i = 0; i < 15; i++){
-        cards[i].Setup(&app, "images/" + to_string(i+1) + ".png");
+        cards[i].Setup(&app, "assets/images/" + to_string(i+1) + ".png");
     }
     return 0;
 }
