@@ -31,13 +31,9 @@ Sound music;
 int Setup(){
     app.Setup("PointlessPacks", 480, 360);
 
-    font.Setup("assets/Squarewave.ttf", 36, Color(0, 0, 0));
-    title.Setup(240, 48, "Pointless Packs", &font);
+    font.Setup("assets/BalsamiqSans-Bold.ttf", 36, Color(0, 0, 0));
+    title.Setup(240, 56, "Pointless Packs", &font);
     title.Center();
-
-    music.Setup(&app, "assets/popcorn_remix.mp3");
-    music.SetVolume(0.1f);
-    music.Play();
 
     packs[0].Setup(&app, "assets/images/cheap.png");
     packs[1].Setup(&app, "assets/images/normal.png");
@@ -45,6 +41,11 @@ int Setup(){
     for(int i = 0; i < 15; i++){
         cards[i].Setup(&app, "assets/images/" + to_string(i+1) + ".png");
     }
+
+    music.Setup(&app, "assets/popcorn_remix.mp3");
+    music.SetVolume(0.1f);
+    music.Play();
+
     return 0;
 }
 

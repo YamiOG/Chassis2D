@@ -62,6 +62,7 @@ class App{
   //Render Cmds
   void Clear();
   void Clear(int r, int g, int b);
+  void Clear(Color color);
   void FillRect(Vec4 rect, int r, int g, int b);
   int Draw(Texture *texture, Vec4 rect);
   int Draw(Texture *texture, Vec4 crop, Vec4 rect);

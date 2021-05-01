@@ -194,6 +194,11 @@ void App::Clear(int r, int g, int b){
   SDL_RenderClear(renderer);
 }
 
+void App::Clear(Color color){
+  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+  SDL_RenderClear(renderer);
+}
+
 void App::Present(){
   SDL_RenderPresent(renderer);
 }
@@ -203,21 +208,6 @@ void App::FillRect(Vec4 rect, int r, int g, int b){
   SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
   SDL_RenderFillRect(renderer, &tRect);
 }
-
-/*void App::SetMusicVolume(float value){
-  Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100.f));
-  mVol = value/100.f;
-}
-
-void App::SetSFXVolume(float value){
-  Mix_Volume(-1, MIX_MAX_VOLUME * (value/100.f));
-  cVol = value/100.f;
-}
-
-void App::SetMasterVolume(float value){
-  Mix_VolumeMusic(MIX_MAX_VOLUME * (value/100.f) * mVol);
-  Mix_Volume(-1, MIX_MAX_VOLUME * (value/100.f) * cVol);
-}*/
 
 Vec2 App::GetMouse(){
   int x, y;
