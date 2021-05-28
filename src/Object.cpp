@@ -143,19 +143,41 @@ Object::~Object(){
   }
 }
 
-void Object::SetTexture(Texture* t, int xOffset, int yOffset, int w, int h) { 
+void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
   shared_ptr<Texture> sharedTexture(t); 
   texture = sharedTexture;
 
-  this->xOffset = xOffset;
-  this->yOffset = yOffset;
-  this->tWidth = w;
-  this->tHeight = h;
+  offset = Vec2(xOffset, yOffset);
+  size = Vec2(width, height);
+}
+
+void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  this->offset = offset;
+  size = Vec2(width, height);
+}
+
+void Object::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(xOffset, yOffset);
+  this->size = size;
+}
+
+void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  this->offset = offset;
+  this->size = size;
 }
 
 Vec4 Object::GetCollisionBox(){
   if(body){
-    return Vec4((body->GetPosition().x * scale) - (width / 2), (body->GetPosition().y * scale) - (height / 2), width, height );
+    return Vec4((body->GetPosition().x * scale) - (width / 2) + origin.x, (body->GetPosition().y * scale) - (height / 2) + origin.x, width, height );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -164,8 +186,8 @@ Vec4 Object::GetCollisionBox(){
 }
 
 Vec4 Object::GetRect() {
-  if(body){
-    return Vec4((body->GetPosition().x * scale) - (width / 2) + (float)xOffset, (body->GetPosition().y * scale) - (height / 2) + (float)yOffset, (float)tWidth, (float)tHeight );
+  if(body){ 
+    return Vec4((body->GetPosition().x * scale) - (width / 2) + offset.x, (body->GetPosition().y * scale) - (height / 2) + offset.y, size.x, size.y );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -173,11 +195,11 @@ Vec4 Object::GetRect() {
   return Vec4(0.f, 0.f, 0.f, 0.f);
 }
 
-int Object::ApplyConstVelocity(Vec2 v){
+int Object::ApplyConstVelocity(Vec2 velocity){
   if(body){
-    v.Subt(GetVelocity());
-    v.Multi(body->GetMass());
-    body->ApplyLinearImpulse( *v.ToB2(), body->GetWorldCenter(), true);
+    velocity.Subt(GetVelocity());
+    velocity.Multi(body->GetMass());
+    body->ApplyLinearImpulse( b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -186,14 +208,14 @@ int Object::ApplyConstVelocity(Vec2 v){
   return 0;
 }
 
-int Object::ApplyConstVelocity(Vec2 v, bool jumping){
+int Object::ApplyConstVelocity(Vec2 velocity, bool jumping){
   if(body){
-    v.Subt(GetVelocity());
-    v.Multi(body->GetMass());
+    velocity.Subt(GetVelocity());
+    velocity.Multi(body->GetMass());
     if(jumping){
-      v.y = 0;
+      velocity.y = 0;
     }
-    body->ApplyLinearImpulse( *v.ToB2(), body->GetWorldCenter(), true);
+    body->ApplyLinearImpulse( b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -220,17 +242,16 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
   }
 }
 
-//void SetBody(b2Body *body) {this->body = body; }
-void Object::SetVelocity(Vec2 v) { 
-  if(body) body->SetLinearVelocity(*v.ToB2()); 
+void Object::SetVelocity(Vec2 velocity) { 
+  if(body) body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y)); 
 }
 
 void Object::RotationFixed(bool fixed) { 
   if(body) body->SetFixedRotation(fixed);
 }
 
-void Object::ApplyImpulse(Vec2 v) { 
-  v.Multi(body->GetMass()); if(body) body->ApplyLinearImpulse( *v.ToB2(), body->GetWorldCenter(), true);
+void Object::ApplyImpulse(Vec2 velocity) { 
+  velocity.Multi(body->GetMass()); if(body) body->ApplyLinearImpulse(b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
 }
 
 Vec2 Object::GetVelocity() { 
@@ -242,7 +263,7 @@ void Object::SetActive(bool set) {
 }
 
 void Object::SetPosition(Vec2 position) { 
-  if(body) body->SetTransform(*position.ToB2(), 0);
+  if(body) body->SetTransform(*Vec2(position - origin).ToB2(), 0);
 }
 
 void Object::SetBullet(bool bullet) { 

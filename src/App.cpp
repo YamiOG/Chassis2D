@@ -245,10 +245,10 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
   return 0;
 }
 
-int App::Draw(Object *o){
-  if(o){
-    if(!o->IsHidden()){
-      Draw(o->GetTexture().get(), o->GetRect());
+int App::Draw(Object *object){
+  if(object){
+    if(!object->IsHidden()){
+      Draw(object->GetTexture().get(), object->GetRect() - object->GetOrigin());
     }
   }
   else{
@@ -258,10 +258,11 @@ int App::Draw(Object *o){
   return 0;
 }
 
-int App::Draw(Text *t){
-  if(t){
-    if(!t->IsHidden()){ 
-      Draw(t->GetText(this).get(), t->GetRect());
+int App::Draw(Text *text){
+  if(text){
+    if(!text->IsHidden()){ 
+      text->GetOrigin();
+      Draw(text->GetText(this).get(), text->GetRect() - text->GetOrigin());
     }
   }
   else{
@@ -271,12 +272,12 @@ int App::Draw(Text *t){
   return 0;
 }
 
-int App::Draw(Button *b){
-  if(b){
-    if(!b->IsHidden()){ 
-      Draw(b->GetTexture().get(), b->GetRect());
-      if(!b->GetText()->IsHidden()){ 
-        Draw(b->GetText()->GetText(this).get(), b->GetText()->GetRect());
+int App::Draw(Button *button){
+  if(button){
+    if(!button->IsHidden()){ 
+      Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
+      if(!button->GetText()->IsHidden()){ 
+        Draw(button->GetText()->GetText(this).get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
       }
     }
   }
@@ -287,10 +288,10 @@ int App::Draw(Button *b){
   return 0;
 }
 
-int App::Draw(Particle *p){
-  if(p){
-    if(!p->IsHidden()){ 
-      Draw(p->GetTexture().get(), p->GetRect());
+int App::Draw(Particle *particle){
+  if(particle){
+    if(!particle->IsHidden()){ 
+      Draw(particle->GetTexture().get(), particle->GetRect() - particle->GetOrigin());
     }
   }
   else{
@@ -303,14 +304,14 @@ int App::Draw(Particle *p){
 void App::DrawParticles(){
   for(int i = 0; i < particles.size(); i++){
     if(!particles[i]->IsHidden()){
-      Draw(particles[i]->GetTexture().get(), particles[i]->GetRect());
+      Draw(particles[i]->GetTexture().get(), particles[i]->GetRect() - particles[i]->GetOrigin());
     }
   }
 
   for(int i = 0; i < particleSystems.size(); i++){
     if(!particleSystems[i]->IsHidden()){
       for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
-          Draw(particleSystems[i]->GetParticles()[j]->GetTexture().get(), particleSystems[i]->GetParticles()[j]->GetRect());
+          Draw(particleSystems[i]->GetParticles()[j]->GetTexture().get(), particleSystems[i]->GetParticles()[j]->GetRect() - particleSystems[i]->GetParticles()[j]->GetOrigin());
       }
     }
   }
@@ -320,15 +321,15 @@ bool App::CheckButton(Button *b){
   if(IsMouseInVec4(b->GetRect())){
     if(ev->type == SDL_MOUSEBUTTONDOWN) {
       if(ev->button.button == SDL_BUTTON_LEFT){
-        if(b->GetPrev() == false){
-          b->SetPrev(true);
+        if(b->GetPrevious() == false){
+          b->SetPrevious(true);
           return true;
         }
       }
     }
     else{
-      if(b->GetPrev()){
-        b->SetPrev(false);
+      if(b->GetPrevious()){
+        b->SetPrevious(false);
       }
       return false;
     }
@@ -336,13 +337,13 @@ bool App::CheckButton(Button *b){
   return false;
 }
 
-int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
-  if(p){
+int App::SpawnParticle(Particle *particle, Vec2 position, Vec2 velocity){
+  if(particle){
     Particle *tmp;
-    tmp = new Particle(*p);
+    tmp = new Particle(*particle);
 
     //Body Setup
-    tmp->Create(this, pos.x, pos.y);
+    tmp->Create(this, position.x, position.y);
 
     //Inital Impulse
     tmp->ApplyImpulse(velocity);
@@ -361,9 +362,9 @@ int App::SpawnParticle(Particle *p, Vec2 pos, Vec2 velocity){
   return 0;
 }
 
-int App::StartParticleSystem(ParticleSystem *ps, Vec2 pos, int time){
-  if(ps){
-    ParticleSystem *tmp = new ParticleSystem(*ps);
+int App::StartParticleSystem(ParticleSystem *particleSystem, Vec2 position, int time){
+  if(particleSystem){
+    ParticleSystem *tmp = new ParticleSystem(*particleSystem);
 
     if(time == -1){
       tmp->SetTime(-1);
@@ -372,7 +373,7 @@ int App::StartParticleSystem(ParticleSystem *ps, Vec2 pos, int time){
       tmp->SetTime(SDL_GetTicks()+time);
     }
 
-    tmp->SetPos(pos);
+    tmp->SetPosition(position);
 
     shared_ptr<ParticleSystem> sharedPS(tmp);
     particleSystems.push_back(sharedPS);

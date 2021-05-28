@@ -4,6 +4,11 @@
 
 #include <SDL.h>
 
+int Timer::Start(){
+    past = SDL_GetTicks();
+    return 0;
+}
+
 int Timer::Start(int millis){
     this->millis = millis;
     past = SDL_GetTicks();

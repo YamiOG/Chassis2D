@@ -33,8 +33,8 @@ class Font{
   int Setup(const char* location, int size, int divisor);
   shared_ptr<Texture> GetText(App *a, const char* text);
   shared_ptr<Texture> GetText(App *a, const char* text, int &iTime);
-  bool GetRGB(){return rgb;}
-  void SetDivisor(int d) { divisor = d; }
+  bool GetRGB(){ return rgb; }
+  void SetDivisor(int divisor) { this->divisor = divisor; }
 
   ~Font();
 };

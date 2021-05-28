@@ -2,11 +2,11 @@
 
 #include "Chassis2D.h"
 
-Button::Button(int x, int y, int w, int h, Texture *t, const char* text, Font *f){
-  Setup(x, y, w, h, t, text, f);
+Button::Button(int x, int y, int w, int h, Texture *t, const char* text, Font *font){
+  Setup(x, y, w, h, t, text, font);
 }
 
-int Button::Setup(int x, int y, int w, int h, Texture *t, const char* text, Font *f){
+int Button::Setup(int x, int y, int w, int h, Texture *t, const char* text, Font *font){
   rect.x = (float)x;
   rect.y = (float)y;
   rect.w = (float)w;
@@ -15,10 +15,17 @@ int Button::Setup(int x, int y, int w, int h, Texture *t, const char* text, Font
   shared_ptr<Texture> sharedTex(t);
   texture = sharedTex;
 
-  this->text = make_shared<Text>(x+w/2, y+h/2, text, f);
+  this->text = make_shared<Text>(rect.x + rect.w/2, rect.y + rect.h/2, text, font);
   if(!text){
     cout << "ERROR:Text Creation Failed" << endl;
     return -1;
   }
   return 0;
+}
+
+Vec2 Button::GetOrigin(){
+  if(center){
+    origin = Vec2(rect.w/2, rect.h/2);
+  }
+  return origin;
 }

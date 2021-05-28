@@ -21,7 +21,7 @@ class ParticleSystem{
   int minAngle, maxAngle;
   float speed = 1.f;
 
-  Vec2 pos = Vec2(0,0);
+  Vec2 position = Vec2(0,0);
   shared_ptr<Particle> bParticle;
   vector<shared_ptr<Particle>> particles;
 
@@ -36,7 +36,7 @@ class ParticleSystem{
 
   vector<shared_ptr<Particle>> GetParticles() { return particles; }
 
-  void SetPos(Vec2 pos) { this->pos = pos; }
+  void SetPosition(Vec2 position) { this->position = position; }
   void SetTime(int time) { this->time = time; }
   void SetMaximum(int max) { this->maximum = max; }
   void SetRate(int rate) { this->rate = rate; }

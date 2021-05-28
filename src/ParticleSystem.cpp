@@ -37,7 +37,7 @@ void ParticleSystem::Update(App *a){
       velocity.x = velocity.x * cos(angle) - velocity.y * sin(angle);
       velocity.y = velocity.y * cos(angle) + velocity.x * sin(angle);
 
-      p->Create(a, pos.x, pos.y);
+      p->Create(a, position.x, position.y);
 
       p->SetVelocity(velocity);
       p->SetTime(SDL_GetTicks() + p->GetLifetime());

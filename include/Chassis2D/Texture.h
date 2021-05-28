@@ -31,6 +31,8 @@ class Texture{
   Vec4 GetCrop();
   Vec2 GetSize() { return Vec2((float)width, (float)height); }
 
+
+
   ~Texture();
 };
 

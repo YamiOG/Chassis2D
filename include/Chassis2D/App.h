@@ -66,10 +66,10 @@ class App{
   void FillRect(Vec4 rect, int r, int g, int b);
   int Draw(Texture *texture, Vec4 rect);
   int Draw(Texture *texture, Vec4 crop, Vec4 rect);
-  int Draw(Object* o);
-  int Draw(Text* t);
-  int Draw(Button *b);
-  int Draw(Particle *p);
+  int Draw(Object* object);
+  int Draw(Particle *particle);
+  int Draw(Text* text);
+  int Draw(Button *button);
   void DrawParticles();
   void Present();
 
@@ -77,9 +77,8 @@ class App{
   void SetMusicVolume(float value);
   void SetSFXVolume(float value);
   void SetMasterVolume(float value);
-  int SpawnParticle(Particle* p, Vec2 pos, Vec2 velocity);
-  int StartParticleSystem(ParticleSystem* ps, Vec2 pos);
-  int StartParticleSystem(ParticleSystem* ps, Vec2 pos, int time);
+  int SpawnParticle(Particle* particle, Vec2 position, Vec2 velocity);
+  int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 
   //Get Commands
   b2World* GetWorld() { return world; }

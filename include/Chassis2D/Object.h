@@ -22,7 +22,9 @@ class Object{
   shared_ptr<Texture> texture;
 
   float width, height;
-  int xOffset, yOffset, tWidth, tHeight, scale;
+  int scale;
+  Vec2 size, offset, origin;
+
   bool hide = false;
  public:
   Object(){}
@@ -38,11 +40,11 @@ class Object{
   //Physics
   b2Body *GetBody(){ return body; }
   void SetBody(b2Body *body) {this->body = body; }
-  void SetVelocity(Vec2 v);
+  void SetVelocity(Vec2 velocity);
   void RotationFixed(bool fixed);
-  int ApplyConstVelocity(Vec2 v);
-  int ApplyConstVelocity(Vec2 v, bool jumping);
-  void ApplyImpulse(Vec2 v);
+  int ApplyConstVelocity(Vec2 velocity);
+  int ApplyConstVelocity(Vec2 velocity, bool jumping);
+  void ApplyImpulse(Vec2 velocity);
   Vec2 GetVelocity();
   Vec4 GetCollisionBox();
   void SetActive(bool set);
@@ -55,9 +57,22 @@ class Object{
   bool IsActive();
 
   //Render
-  void SetTexture(Texture* t, int xOffset, int yOffset, int w, int h);
   Vec4 GetRect();
+  void SetRect(Vec4 rect);
+
+  void SetTexture(Texture* t, int xOffset, int yOffset, int width, int height);
+  void SetTexture(Texture* t, Vec2 offset, int width, int height);
+  void SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size);
+  void SetTexture(Texture* t, Vec2 offset, Vec2 size);
   shared_ptr<Texture> GetTexture(){ return texture; }
+  Vec2 GetTextureSize() { return size; }
+
+  void SetOffset(int xOffset, int yOffset) { offset.x = (float)xOffset; offset.y = (float)yOffset; }
+  void SetOffset(Vec2 offset) { this->offset = offset; }
+  Vec2 GetOffset() { return offset; }
+
+  void SetOrigin(Vec2 origin) { this->origin = origin; }
+  Vec2 GetOrigin() { return origin; }
 
   void Hide() { hide = true; }
   void Show() { hide = false; }

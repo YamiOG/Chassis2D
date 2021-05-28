@@ -4,6 +4,22 @@
 
 #include <box2d/box2d.h>
 
+Particle::Particle(float width, float height, int lifetime, Texture *texture, int scale){
+  Setup(width, height, lifetime, texture, scale);
+}
+
+int Particle::Setup(float width, float height, int lifetime, Texture *texture, int scale){
+  this->width = width;
+  this->height = height;
+  this->lifetime = lifetime;
+
+  shared_ptr<Texture> sharedTex(texture);
+  this->texture = sharedTex;
+
+  this->scale = scale;
+  return 0;
+}
+
 Particle::Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale){
   Setup(width, height, friction, density, restitution, lifetime, texture, scale);
 }
@@ -46,7 +62,6 @@ int Particle::Create(App *a, float x, float y){
 
     body = a->GetWorld()->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
-    //body->SetUserData(this);
     body->GetUserData().pointer = (uintptr_t)this;
   }
   else{

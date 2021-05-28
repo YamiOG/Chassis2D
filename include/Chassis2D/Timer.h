@@ -10,6 +10,11 @@ class Timer{
     int past = 0;
   public:
     Timer(){} 
+
+    int Setup(int millis) { this->millis = millis; }
+    int SetLength(int millis) { Setup(millis); }
+    
+    int Start();
     int Start(int millis);
     bool Stopped();
     bool Ended();

@@ -33,7 +33,7 @@ int Setup(){
 
     font.Setup("assets/BalsamiqSans-Bold.ttf", 36, Color(0, 0, 0));
     title.Setup(240, 56, "Pointless Packs", &font);
-    title.Center();
+    title.SetOriginCenter(true);
 
     packs[0].Setup(&app, "assets/images/cheap.png");
     packs[1].Setup(&app, "assets/images/normal.png");

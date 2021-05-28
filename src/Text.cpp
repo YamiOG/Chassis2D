@@ -10,8 +10,9 @@ int Text::Setup(int x, int y, string text, Font *font){
   this->font = font;
   this->text = text;
 
-  pos = Vec2((float)x, (float)y);
-
+  //position = Vec2((float)x, (float)y);
+  rect.x = x;
+  rect.y = y;
   return 0;
 }
 
@@ -30,15 +31,16 @@ shared_ptr<Texture> Text::GetText(App *a){
     }
 
     Vec2 size = texture->GetSize();
-
-    if(center){
-      rect = Vec4(pos.x-(size.x/2), pos.y-(size.y/2), size.x, size.y);
-    }
-    else{
-      rect = Vec4(pos.x, pos.y, size.x, size.y);
-    }
+    rect = Vec4(rect.x, rect.y, size.x, size.y);
 
     return texture;
   }
   return nullptr;
+}
+
+Vec2 Text::GetOrigin(){
+  if(center){
+    origin = Vec2(rect.w/2, rect.h/2);
+  }
+  return origin;
 }

@@ -12,9 +12,10 @@ Text text;
 int main(int argc, char *argv[]){
   app.Setup("Audio", 300, 100);
 
-  font.Setup("Squarewave.ttf", 30, 3);
+  font.Setup("Squarewave.ttf", 30, 4);
   
   text.Setup(150, 50, "popcorn_remix.mp3", &font);
+  text.SetOriginCenter(true);
 
   song.Setup(&app, "popcorn_remix.mp3");
   song.Play();

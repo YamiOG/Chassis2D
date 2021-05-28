@@ -128,12 +128,12 @@ shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
 
   switch(n / 256)
   {
-    case 0: rgbColor.r = 255;      rgbColor.g = c;        rgbColor.b = 0;       break;//red
-    case 1: rgbColor.r = 255 - c;  rgbColor.g = 255;      rgbColor.b = 0;       break;//yellow
-    case 2: rgbColor.r = 0;        rgbColor.g = 255;      rgbColor.b = c;       break;//green
-    case 3: rgbColor.r = 0;        rgbColor.g = 255 - c;  rgbColor.b = 255;     break;//cyan
-    case 4: rgbColor.r = c;        rgbColor.g = 0;        rgbColor.b = 255;     break;//blue
-    case 5: rgbColor.r = 255;      rgbColor.g = 0;        rgbColor.b = 255 - c; break;//magenta
+    case 0: rgbColor.r = 255;      rgbColor.g = c;        rgbColor.b = 0;       break;
+    case 1: rgbColor.r = 255 - c;  rgbColor.g = 255;      rgbColor.b = 0;       break;
+    case 2: rgbColor.r = 0;        rgbColor.g = 255;      rgbColor.b = c;       break;
+    case 3: rgbColor.r = 0;        rgbColor.g = 255 - c;  rgbColor.b = 255;     break;
+    case 4: rgbColor.r = c;        rgbColor.g = 0;        rgbColor.b = 255;     break;
+    case 5: rgbColor.r = 255;      rgbColor.g = 0;        rgbColor.b = 255 - c; break;
   }
 
   SDL_Surface *s = TTF_RenderText_Solid(font, text, rgbColor);

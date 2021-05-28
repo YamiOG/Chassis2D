@@ -20,6 +20,8 @@ class Particle : public Object{
 
  public:
   Particle(){}
+  Particle(float width, float height, int lifetime, Texture *texture, int scale);
+  int Setup(float width, float height, int lifetime, Texture *texture, int scale);
   Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
   int Setup(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
 
