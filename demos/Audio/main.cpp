@@ -20,7 +20,9 @@ int main(int argc, char *argv[]){
   song.Setup(&app, "popcorn_remix.mp3");
   song.Play();
 
-  while(app.IsOpen()){
+  while(!app.ShouldClose()){
+    app.Update();
+
     app.Clear(0, 0, 0);
     app.Draw(&text);
     app.Present();

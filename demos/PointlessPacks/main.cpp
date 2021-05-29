@@ -65,6 +65,8 @@ int GenerateRandomCards(int amount){
 }
 
 void EventHandler(){
+    app.Update();
+
     if(scene == 0){
         if(app.IsLeftMouse()){
             for(int i = 0; i < 3; i++){
@@ -128,7 +130,7 @@ void RenderHandler(){
 
 int main(int argc, char *argv[]){
     Setup();
-    while(app.IsOpen()){
+    while(!app.ShouldClose()){
         EventHandler();
         RenderHandler();
     }

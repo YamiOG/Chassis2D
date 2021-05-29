@@ -115,10 +115,9 @@ App::~App(){
   SDL_Quit();
 }
 
-bool App::IsOpen(){
+void App::Update(){
   eventList.clear();
 
-  bool open = true;
   mouseClicks[0] = false;
   mouseClicks[1] = false;
   mouseClicks[2] = false;
@@ -127,21 +126,27 @@ bool App::IsOpen(){
     eventList.push_back(ev);
 
     if(ev->type == SDL_QUIT){
-      open = false;
+      close = true;
     }
+
     else if(ev->type == SDL_MOUSEBUTTONDOWN){
-      if(ev->button.button == SDL_BUTTON_LEFT){
+      switch (ev->button.button)
+      {
+      case SDL_BUTTON_LEFT:
         mouseClicks[0] = true;
-      }
-      else if(ev->button.button == SDL_BUTTON_MIDDLE){
+        break;
+      case SDL_BUTTON_MIDDLE:
         mouseClicks[1] = true;
-      }
-      else if(ev->button.button == SDL_BUTTON_RIGHT){
+        break;
+      case SDL_BUTTON_RIGHT:
         mouseClicks[2] = true;
+        break;
+
+      default:
+        break;
       }
     }
   }
-  return open; 
 }
 
 string App::GetInputText(){
@@ -163,7 +168,7 @@ bool App::IsPressed(string k){
 }
 
 void App::PhysicsUpdate(){
-  if((unsigned)(1000/pFPS) <= SDL_GetTicks()-pTime){
+  if((unsigned)(1000/physicsFPS) <= SDL_GetTicks()-pastTime){
     for(int i = 0; i < particleSystems.size();){
       particleSystems[i]->Update(this);
 
@@ -175,13 +180,11 @@ void App::PhysicsUpdate(){
       }
     }
 
-    world->Step(1.0f/pFPS, velocityI, positionI);
-    pTime = SDL_GetTicks();
+    world->Step(1.0f/physicsFPS, velocityI, positionI);
+    pastTime = SDL_GetTicks();
   }
-}
 
-bool App::CheckEvents(){
-  return SDL_PollEvent(ev);
+  Update();
 }
 
 void App::Clear(){
@@ -405,4 +408,8 @@ bool App::IsSensorColliding(Object *o, int id){
     }
   }
   return false;
+}
+
+void App::SetMasterVolume(float value){
+  soloud->setGlobalVolume(value);
 }

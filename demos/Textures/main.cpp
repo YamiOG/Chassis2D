@@ -15,7 +15,9 @@ int main(int argc, char *argv[]){
 
   texture.Setup(&app, "icon1.png");
 
-  while(app.IsOpen()){
+  while(!app.ShouldClose()){
+    app.Update();
+
     app.Clear();
     app.Draw(&texture, Vec4(0, 0, 1578, 826));
     app.Present();

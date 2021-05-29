@@ -28,19 +28,19 @@ class App{
  private:
   SDL_Window* window;
   SDL_Renderer* renderer;
+
   SDL_Event *ev;
   vector<SDL_Event *> eventList;
   bool mouseClicks[3];
+  bool close = false;
 
   int width, height;
-  float mVol = 1.f;
-  float cVol = 1.f;
 
   b2World* world;
   int velocityI, positionI;
 
-  int pFPS;
-  int pTime;
+  int physicsFPS;
+  int pastTime;
 
   SoLoud::Soloud *soloud;
   
@@ -50,14 +50,21 @@ class App{
  public:
   App(){}
   App(const char* title, int width, int height);
-  App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
-
   int Setup(const char* title, int width, int height);
+  App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
 
+  SDL_Renderer *GetRenderer(){return renderer;}
+  SDL_Window *GetWindow(){return window;}
+  SDL_Event *GetEvent() { return ev; }
+  vector<SDL_Event*> GetEventList() { return eventList; }
+
   void PhysicsUpdate();
-  void SetPhysicsFPS(int pFPS) { this->pFPS = pFPS; }
-  bool CheckEvents();
+  void SetPhysicsFPS(int physicsFPS) { this->physicsFPS = physicsFPS; }
+  int GetPhysicsFPS() { return physicsFPS; }
+
+  void Update();
+  bool ShouldClose() { return close; }
 
   //Render Cmds
   void Clear();
@@ -73,19 +80,13 @@ class App{
   void DrawParticles();
   void Present();
 
-  //Set Commands
-  void SetMusicVolume(float value);
-  void SetSFXVolume(float value);
+  SoLoud::Soloud *GetSoLoud() { return soloud; }
   void SetMasterVolume(float value);
+  
+  b2World* GetWorld() { return world; }
   int SpawnParticle(Particle* particle, Vec2 position, Vec2 velocity);
   int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 
-  //Get Commands
-  b2World* GetWorld() { return world; }
-  SDL_Renderer *GetRenderer(){return renderer;}
-  SDL_Window *GetWindow(){return window;}
-  SDL_Event *GetEvent() { return ev; }
-  bool IsOpen();
   string GetInputText();
   Vec2 GetMouse();
   long int GetTime();
@@ -97,8 +98,6 @@ class App{
   bool IsLeftMouse() { return mouseClicks[0]; }
   bool IsMiddleMouse() { return mouseClicks[1]; }
   bool IsRightMouse() { return mouseClicks[2]; }
-  SoLoud::Soloud *GetSoLoud() { return soloud; }
-  vector<SDL_Event*> GetEventList() { return eventList; }
 
   //Destructor
   ~App();
