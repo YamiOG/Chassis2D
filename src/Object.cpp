@@ -5,21 +5,19 @@
 #include <SDL.h>
 #include <box2d/box2d.h>
 
-Object::Object(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
-  Setup(a, x, y, w, h, categoryBits, maskBits, scale);
+Object::Object(float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
+  Setup(x, y, w, h, categoryBits, maskBits, scale);
 }
 
-int Object::Setup(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
-  return Static(a, x, y, w, h, categoryBits, maskBits, scale);
+int Object::Setup(float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
+  return Static(x, y, w, h, categoryBits, maskBits, scale);
 }
 
-int Object::Static(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
-  if(a->GetWorld() != nullptr){
+int Object::Static(float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
+  if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
-
-    this->a = a;
 
     width = w;
     height = h;
@@ -34,7 +32,7 @@ int Object::Static(App *a, float x, float y, float w, float h, int categoryBits,
 
     bodyDef.type = b2_staticBody;
 
-    body = a->GetWorld()->CreateBody(&bodyDef);
+    body = c2World->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -46,21 +44,19 @@ int Object::Static(App *a, float x, float y, float w, float h, int categoryBits,
   return 0;
 }
 
-Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
-  Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
 }
 
-int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
-  return Dynamic(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+  return Dynamic(x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
 }
 
-int Object::Dynamic(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
-  if(a->GetWorld() != nullptr){
+int Object::Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+  if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
-
-    this->a = a;
 
     width = w;
     height = h;
@@ -78,7 +74,7 @@ int Object::Dynamic(App *a, float x, float y, float w, float h, float friction, 
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = a->GetWorld()->CreateBody(&bodyDef);
+    body = c2World->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -90,17 +86,15 @@ int Object::Dynamic(App *a, float x, float y, float w, float h, float friction, 
   return 0;
 }
 
-Object::Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
-  Setup(a, x, y, w, h, friction, density, restitution, categoryBits, maskBits, isDynamic, scale);
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
+  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, isDynamic, scale);
 }
 
-int Object::Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
-  if(a->GetWorld() != nullptr){
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
+  if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
-
-    this->a = a;
 
     width = w;
     height = h;
@@ -123,7 +117,7 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
       bodyDef.type = b2_staticBody;
     }
 
-    body = a->GetWorld()->CreateBody(&bodyDef);
+    body = c2World->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -136,10 +130,9 @@ int Object::Setup(App *a, float x, float y, float w, float h, float friction, fl
 }
 
 Object::~Object(){
-  if(a != nullptr){
-    a->GetWorld()->DestroyBody(body);
+  if(c2World != nullptr){
+    c2World->DestroyBody(body);
     body = nullptr;
-    a = nullptr;
   }
 }
 

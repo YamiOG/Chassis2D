@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"
@@ -32,7 +33,7 @@ class ParticleSystem{
   ParticleSystem(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed);
   void Setup(Particle* particle, int minAngle, int maxAngle, int rate, int max, float speed);
 
-  void Update(App *a);
+  void Update();
 
   vector<shared_ptr<Particle>> GetParticles() { return particles; }
 

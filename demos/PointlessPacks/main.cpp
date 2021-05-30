@@ -35,11 +35,11 @@ int Setup(){
     title.Setup(240, 56, "Pointless Packs", &font);
     title.SetOriginCenter(true);
 
-    packs[0].Setup(&app, "assets/images/cheap.png");
-    packs[1].Setup(&app, "assets/images/normal.png");
-    packs[2].Setup(&app, "assets/images/rich.png");
+    packs[0].Setup("assets/images/cheap.png");
+    packs[1].Setup("assets/images/normal.png");
+    packs[2].Setup("assets/images/rich.png");
     for(int i = 0; i < 15; i++){
-        cards[i].Setup(&app, "assets/images/" + to_string(i+1) + ".png");
+        cards[i].Setup("assets/images/" + to_string(i+1) + ".png");
     }
 
     music.Setup(&app, "assets/popcorn_remix.mp3");

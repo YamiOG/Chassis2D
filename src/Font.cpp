@@ -88,13 +88,13 @@ Font::~Font(){
   }
 }
 
-shared_ptr<Texture> Font::GetText(App *a, const char* text){
+shared_ptr<Texture> Font::GetText(const char* text){
   SDL_Surface *s = TTF_RenderText_Solid(font, text, color.ToSDL());
   if(!s){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
 
-  shared_ptr<Texture> t = make_shared<Texture>(a, s);
+  shared_ptr<Texture> t = make_shared<Texture>(s);
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
   }
@@ -106,7 +106,7 @@ shared_ptr<Texture> Font::GetText(App *a, const char* text){
   return t;
 }
 
-shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
+shared_ptr<Texture> Font::GetText(const char* text, int &iTime){
   if(iTime == -1){
     iTime = SDL_GetTicks();
   }
@@ -141,7 +141,7 @@ shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
 
-  shared_ptr<Texture> t = make_shared<Texture>(a, s);
+  shared_ptr<Texture> t = make_shared<Texture>(s);
   if(!t){
     cout << "ERROR:Text Texture is NULL" << endl;
   }

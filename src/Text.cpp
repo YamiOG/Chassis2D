@@ -16,13 +16,13 @@ int Text::Setup(int x, int y, string text, Font *font){
   return 0;
 }
 
-shared_ptr<Texture> Text::GetText(App *a){
+shared_ptr<Texture> Text::GetText(){
   if(!text.empty()){
     if(font->GetRGB()){
-      texture = font->GetText(a, text.c_str(), iTime);
+      texture = font->GetText(text.c_str(), iTime);
     }
     else{
-      texture = font->GetText(a, text.c_str());
+      texture = font->GetText(text.c_str());
     }
 
     if(!texture){

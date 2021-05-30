@@ -20,7 +20,7 @@ void ParticleSystem::Setup(Particle* particle, int minAngle, int maxAngle, int r
   this->speed = speed;
 }
 
-void ParticleSystem::Update(App *a){
+void ParticleSystem::Update(){
   for(int i = 0; i < rate; i++){
     if(particles.size() < maximum){
       Particle *p = new Particle(*bParticle);
@@ -37,7 +37,7 @@ void ParticleSystem::Update(App *a){
       velocity.x = velocity.x * cos(angle) - velocity.y * sin(angle);
       velocity.y = velocity.y * cos(angle) + velocity.x * sin(angle);
 
-      p->Create(a, position.x, position.y);
+      p->Create(position.x, position.y);
 
       p->SetVelocity(velocity);
       p->SetTime(SDL_GetTicks() + p->GetLifetime());

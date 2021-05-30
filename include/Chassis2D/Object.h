@@ -5,6 +5,7 @@
 #include <memory>
 #include <cstdint>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"
@@ -17,7 +18,6 @@ class b2Body;
 class Object{
  private:
  protected:
-  App *a = nullptr;
   b2Body* body = nullptr;
   shared_ptr<Texture> texture;
 
@@ -28,14 +28,14 @@ class Object{
   bool hide = false;
  public:
   Object(){}
-  Object(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
-  int Setup(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
-  int Static(App *a, float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
-  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
-  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
-  int Dynamic(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
-  Object(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
-  int Setup(App *a, float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
+  Object(float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
+  int Setup(float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
+  int Static(float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
+  Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  int Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
+  Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
 
   //Physics
   b2Body *GetBody(){ return body; }

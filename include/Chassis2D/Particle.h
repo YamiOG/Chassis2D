@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Object.h"
@@ -28,7 +29,7 @@ class Particle : public Object{
   int GetTime() {return time;}
   int GetLifetime() { return lifetime; }
 
-  int Create(App *a, float x, float y);
+  int Create(float x, float y);
   void SetLifetime(int set) {lifetime = set;}
   void SetTime(int set) {time = set;}
 

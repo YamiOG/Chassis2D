@@ -40,13 +40,11 @@ int Particle::Setup(float width, float height, float friction, float density, fl
   return 0;
 }
 
-int Particle::Create(App *a, float x, float y){
-  if(a->GetWorld() != nullptr){
+int Particle::Create(float x, float y){
+  if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
-
-    this->a = a; 
 
     bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
     shape.SetAsBox((width/2)/scale, (height/2)/scale);
@@ -60,7 +58,7 @@ int Particle::Create(App *a, float x, float y){
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = a->GetWorld()->CreateBody(&bodyDef);
+    body = c2World->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -72,9 +70,8 @@ int Particle::Create(App *a, float x, float y){
 }
 
 Particle::~Particle(){
-  if(a != nullptr){
-    a->GetWorld()->DestroyBody(body);
+  if(c2World != nullptr){
+    c2World->DestroyBody(body);
     body = nullptr;
-    a = nullptr;
   }
 }

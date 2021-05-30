@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+#include "Global.h"
 #include "Class.h"
 
 using namespace std;

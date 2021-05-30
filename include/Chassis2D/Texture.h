@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"
@@ -19,19 +20,17 @@ class Texture{
   int width, height;
  public:
   Texture(){}
-  Texture(App *a, const char* location);
-  Texture(App *a, string location);
+  Texture(const char* location);
+  int Setup(const char* location);
+  Texture(string location);
+  int Setup(string location);
   Texture(SDL_Texture *t);
-  Texture(App *a, SDL_Surface *surface);
-  int Setup(App *a, const char* location);
-  int Setup(App *a, string location);
   int Setup(SDL_Texture *t);
-  int Setup(App *a, SDL_Surface *surface);
+  Texture(SDL_Surface *surface);
+  int Setup(SDL_Surface *surface);
   SDL_Texture *GetData(){ return texture;}
   Vec4 GetCrop();
   Vec2 GetSize() { return Vec2((float)width, (float)height); }
-
-
 
   ~Texture();
 };

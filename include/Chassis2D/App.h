@@ -6,6 +6,7 @@
 #include <memory>
 #include <cstdint>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"
@@ -26,17 +27,12 @@ namespace SoLoud{
 
 class App{
  private:
-  SDL_Window* window;
-  SDL_Renderer* renderer;
-
-  SDL_Event *ev;
-  vector<SDL_Event *> eventList;
+  vector<SDL_Event*> eventList;
   bool mouseClicks[3];
   bool close = false;
 
   int width, height;
 
-  b2World* world;
   int velocityI, positionI;
 
   int physicsFPS;
@@ -54,9 +50,9 @@ class App{
   App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
 
-  SDL_Renderer *GetRenderer(){return renderer;}
-  SDL_Window *GetWindow(){return window;}
-  SDL_Event *GetEvent() { return ev; }
+  SDL_Renderer *GetRenderer() {return c2Renderer;}
+  SDL_Window *GetWindow() {return c2Window;}
+  SDL_Event *GetEvent() { return c2Event; }
   vector<SDL_Event*> GetEventList() { return eventList; }
 
   void PhysicsUpdate();
@@ -83,7 +79,7 @@ class App{
   SoLoud::Soloud *GetSoLoud() { return soloud; }
   void SetMasterVolume(float value);
   
-  b2World* GetWorld() { return world; }
+  b2World* GetWorld() { return c2World; }
   int SpawnParticle(Particle* particle, Vec2 position, Vec2 velocity);
   int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 

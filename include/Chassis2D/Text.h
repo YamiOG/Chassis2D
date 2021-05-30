@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"
@@ -27,7 +28,7 @@ class Text{
   Text(){}
   Text(int x, int y, string text, Font *font);
   int Setup(int x, int y, string text, Font *font);
-  shared_ptr<Texture> GetText(App *a);
+  shared_ptr<Texture> GetText();
   void SetPosition(float x, float y) { position.x = x; position.y = y; }
   Vec2 GetPosition() {return position;}
   Vec4 GetRect() { return rect; }

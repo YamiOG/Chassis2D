@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"

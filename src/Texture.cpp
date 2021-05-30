@@ -6,12 +6,12 @@
 
 #include "stb_image.h"
 
-Texture::Texture(App *a, const char* location){
-  Setup(a, location);
+Texture::Texture(const char* location){
+  Setup(location);
 }
 
-Texture::Texture(App *a, string location){
-  Setup(a, location);
+Texture::Texture(string location){
+  Setup(location);
 }
 
 Texture::Texture(SDL_Texture *t){
@@ -24,11 +24,11 @@ Texture::Texture(SDL_Texture *t){
   }
 }
 
-Texture::Texture(App *a, SDL_Surface *surface){
-  Setup(a, surface);
+Texture::Texture(SDL_Surface *surface){
+  Setup(surface);
 }
 
-int Texture::Setup(App *a, const char* location){
+int Texture::Setup(const char* location){
   int req_format = STBI_rgb_alpha;
   int width, height, orig_format;
   unsigned char* data = stbi_load(location, &width, &height, &orig_format, req_format);
@@ -45,7 +45,7 @@ int Texture::Setup(App *a, const char* location){
   if(surface){
     width = surface->w;
     height = surface->h;
-    texture = SDL_CreateTextureFromSurface(a->GetRenderer(), surface);
+    texture = SDL_CreateTextureFromSurface(c2Renderer, surface);
   }
   else{
     cout << "ERROR:Failed to load file" << endl;
@@ -55,7 +55,7 @@ int Texture::Setup(App *a, const char* location){
   return 0;
 }
 
-int Texture::Setup(App *a, string location){
+int Texture::Setup(string location){
   int req_format = STBI_rgb_alpha;
   int width, height, orig_format;
   unsigned char* data = stbi_load(location.c_str(), &width, &height, &orig_format, req_format);
@@ -72,7 +72,7 @@ int Texture::Setup(App *a, string location){
   if(surface){
     width = surface->w;
     height = surface->h;
-    texture = SDL_CreateTextureFromSurface(a->GetRenderer(), surface);
+    texture = SDL_CreateTextureFromSurface(c2Renderer, surface);
   }
   else{
     cout << "ERROR:Failed to load file" << endl;
@@ -94,11 +94,11 @@ int Texture::Setup(SDL_Texture *t){
   return 0;
 }
 
-int Texture::Setup(App *a, SDL_Surface *surface){
+int Texture::Setup(SDL_Surface *surface){
   if(surface){
     width = surface->w;
     height = surface->h;
-    texture = SDL_CreateTextureFromSurface(a->GetRenderer(), surface);
+    texture = SDL_CreateTextureFromSurface(c2Renderer, surface);
   }
   else{
     cout << "ERROR:Surface is NULL" << endl;
