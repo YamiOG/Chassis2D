@@ -52,8 +52,8 @@ int App::Setup(const char* title, int width, int height){
     return -1;
   }
 
-  soloud = new SoLoud::Soloud;
-  if(soloud->init() != 0){
+  c2Soloud = new SoLoud::Soloud;
+  if(c2Soloud->init() != 0){
     cout << "ERROR:SoLoud Initialization Failed" << endl;
     return -1;
   }
@@ -97,8 +97,8 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  soloud = new SoLoud::Soloud;
-  if(soloud->init() != 0){
+  c2Soloud = new SoLoud::Soloud;
+  if(c2Soloud->init() != 0){
     cout << "ERROR:SoLoud Initialization Failed" << endl;
     return -1;
   }
@@ -106,8 +106,8 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
 }
 
 App::~App(){
-  soloud->deinit();
-  delete soloud;
+  c2Soloud->deinit();
+  delete c2Soloud;
   delete c2World;
   TTF_Quit();
   SDL_DestroyRenderer(c2Renderer);
@@ -411,5 +411,5 @@ bool App::IsSensorColliding(Object *o, int id){
 }
 
 void App::SetMasterVolume(float value){
-  soloud->setGlobalVolume(value);
+  c2Soloud->setGlobalVolume(value);
 }

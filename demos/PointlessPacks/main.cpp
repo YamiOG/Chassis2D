@@ -42,7 +42,7 @@ int Setup(){
         cards[i].Setup("assets/images/" + to_string(i+1) + ".png");
     }
 
-    music.Setup(&app, "assets/popcorn_remix.mp3");
+    music.Setup("assets/popcorn_remix.mp3");
     music.SetVolume(0.1f);
     music.Play();
 

@@ -38,8 +38,6 @@ class App{
   int physicsFPS;
   int pastTime;
 
-  SoLoud::Soloud *soloud;
-  
   vector<shared_ptr<Particle>> particles;
   vector<shared_ptr<ParticleSystem>> particleSystems;
 
@@ -76,7 +74,7 @@ class App{
   void DrawParticles();
   void Present();
 
-  SoLoud::Soloud *GetSoLoud() { return soloud; }
+  SoLoud::Soloud *GetSoLoud() { return c2Soloud; }
   void SetMasterVolume(float value);
   
   b2World* GetWorld() { return c2World; }

@@ -5,10 +5,15 @@ struct SDL_Renderer;
 union SDL_Event;
 class b2World;
 
+namespace SoLoud{
+  class Soloud;
+}
+
 extern SDL_Window *c2Window; 
 extern SDL_Renderer *c2Renderer;
 extern SDL_Event *c2Event;
 extern b2World *c2World;
+extern SoLoud::Soloud *c2Soloud;
 
 enum Category {
     TERRAIN = 0x0001,
