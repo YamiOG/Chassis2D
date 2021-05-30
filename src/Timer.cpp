@@ -4,15 +4,13 @@
 
 #include <SDL.h>
 
-int Timer::Start(){
+void Timer::Start(){
     past = SDL_GetTicks();
-    return 0;
 }
 
-int Timer::Start(int millis){
+void Timer::Start(int millis){
     this->millis = millis;
     past = SDL_GetTicks();
-    return 0;
 }
 
 bool Timer::Ended(){

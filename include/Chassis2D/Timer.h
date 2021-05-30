@@ -11,11 +11,11 @@ class Timer{
   public:
     Timer(){} 
 
-    int Setup(int millis) { this->millis = millis; }
-    int SetLength(int millis) { Setup(millis); }
+    void Setup(int millis) { this->millis = millis; }
+    void SetLength(int millis) { Setup(millis); }
     
-    int Start();
-    int Start(int millis);
+    void Start();
+    void Start(int millis);
     bool Stopped();
     bool Ended();
 };
