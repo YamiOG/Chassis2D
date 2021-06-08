@@ -24,8 +24,8 @@ class Texture{
   int Setup(const char* location);
   Texture(string location);
   int Setup(string location);
-  Texture(SDL_Texture *t);
-  int Setup(SDL_Texture *t);
+  Texture(SDL_Texture *texture);
+  int Setup(SDL_Texture *texture);
   Texture(SDL_Surface *surface);
   int Setup(SDL_Surface *surface);
   SDL_Texture *GetData(){ return texture;}

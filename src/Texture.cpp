@@ -14,10 +14,10 @@ Texture::Texture(string location){
   Setup(location);
 }
 
-Texture::Texture(SDL_Texture *t){
-  if(t){
-    texture = t;
-    SDL_QueryTexture(t, NULL, NULL, &width, &height);
+Texture::Texture(SDL_Texture *texture){
+  if(texture){
+    this->texture = texture;
+    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
   }
   else{
     cout << "ERROR:Texture is NULL" << endl;
@@ -82,10 +82,10 @@ int Texture::Setup(string location){
   return 0;
 }
 
-int Texture::Setup(SDL_Texture *t){
-  if(t){
-    texture = t;
-    SDL_QueryTexture(t, NULL, NULL, &width, &height);
+int Texture::Setup(SDL_Texture *texture){
+  if(texture){
+    this->texture = texture;
+    SDL_QueryTexture(texture, NULL, NULL, &width, &height);
   }
   else{
     cout << "ERROR:Texture is NULL" << endl;

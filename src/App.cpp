@@ -322,12 +322,10 @@ void App::DrawParticles(){
 
 bool App::CheckButton(Button *b){
   if(IsMouseInVec4(b->GetRect())){
-    if(c2Event->type == SDL_MOUSEBUTTONDOWN) {
-      if(c2Event->button.button == SDL_BUTTON_LEFT){
-        if(b->GetPrevious() == false){
-          b->SetPrevious(true);
-          return true;
-        }
+    if(mouseClicks[0] == true) {
+      if(b->GetPrevious() == false){
+        b->SetPrevious(true);
+        return true;
       }
     }
     else{
