@@ -10,9 +10,11 @@ namespace SoLoud{
   class Soloud;
 }
 
-#define MOUSE_LEFT = 0;
-#define MOUSE_MIDDLE = 1;
-#define MOUSE_RIGHT = 2;
+extern int mouseClick[3];
+
+const int MOUSE_LEFT = 0;
+const int MOUSE_MIDDLE = 1;
+const int MOUSE_RIGHT = 2;
 
 extern SDL_Window *c2Window; 
 extern SDL_Renderer *c2Renderer;

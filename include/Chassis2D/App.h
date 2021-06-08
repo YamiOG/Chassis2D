@@ -28,7 +28,7 @@ namespace SoLoud{
 class App{
  private:
   vector<SDL_Event*> eventList;
-  bool mouseClicks[3];
+  //bool mouseClicks[3];
   bool close = false;
 
   int width, height;
@@ -48,8 +48,8 @@ class App{
   App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
 
-  SDL_Renderer *GetRenderer() {return c2Renderer;}
-  SDL_Window *GetWindow() {return c2Window;}
+  SDL_Renderer *GetRenderer() { return c2Renderer; }
+  SDL_Window *GetWindow() { return c2Window; }
   SDL_Event *GetEvent() { return c2Event; }
   vector<SDL_Event*> GetEventList() { return eventList; }
 
@@ -89,9 +89,9 @@ class App{
   bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
   bool IsSensorColliding(Object *o, int id);
-  bool IsLeftMouse() { return mouseClicks[0]; }
-  bool IsMiddleMouse() { return mouseClicks[1]; }
-  bool IsRightMouse() { return mouseClicks[2]; }
+  bool IsLeftMouse();
+  bool IsMiddleMouse();
+  bool IsRightMouse();
 
   //Destructor
   ~App();

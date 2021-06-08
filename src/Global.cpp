@@ -1,3 +1,5 @@
+#include "Global.h"
+
 #include "Chassis2D.h"
 
 struct SDL_Window;
@@ -14,3 +16,5 @@ SDL_Renderer *c2Renderer;
 SDL_Event *c2Event;
 b2World *c2World;
 SoLoud::Soloud *c2Soloud;
+
+int mouseClick[3] = {0, 0, 0};

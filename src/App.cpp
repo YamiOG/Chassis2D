@@ -118,9 +118,9 @@ App::~App(){
 void App::Update(){
   eventList.clear();
 
-  mouseClicks[0] = false;
-  mouseClicks[1] = false;
-  mouseClicks[2] = false;
+  mouseClick[MOUSE_LEFT] = 0;
+  mouseClick[MOUSE_MIDDLE] = 0;
+  mouseClick[MOUSE_RIGHT] = 0;
 
   while(SDL_PollEvent(c2Event)){
     eventList.push_back(c2Event);
@@ -133,13 +133,13 @@ void App::Update(){
       switch (c2Event->button.button)
       {
       case SDL_BUTTON_LEFT:
-        mouseClicks[0] = true;
+        mouseClick[MOUSE_LEFT] = 1;
         break;
       case SDL_BUTTON_MIDDLE:
-        mouseClicks[1] = true;
+        mouseClick[MOUSE_MIDDLE] = 1;
         break;
       case SDL_BUTTON_RIGHT:
-        mouseClicks[2] = true;
+        mouseClick[MOUSE_RIGHT] = 1;
         break;
 
       default:
@@ -223,9 +223,9 @@ long int App::GetTime() {
 }
 
 bool App::IsMouseInVec4(Vec4 rect){
-  SDL_Point mPos;
-  SDL_GetMouseState(&mPos.x, &mPos.y);
-  if(rect.x < mPos.x && mPos.x < rect.x + rect.w && rect.y < mPos.y && mPos.y < rect.y + rect.h){
+  SDL_Point mousePos;
+  SDL_GetMouseState(&mousePos.x, &mousePos.y);
+  if(rect.x < mousePos.x && mousePos.x < rect.x + rect.w && rect.y < mousePos.y && mousePos.y < rect.y + rect.h){
     return true;
   }
   return false;
@@ -322,7 +322,7 @@ void App::DrawParticles(){
 
 bool App::CheckButton(Button *b){
   if(IsMouseInVec4(b->GetRect())){
-    if(mouseClicks[0] == true) {
+    if(mouseClick[MOUSE_LEFT] == 1) {
       if(b->GetPrevious() == false){
         b->SetPrevious(true);
         return true;
@@ -410,4 +410,16 @@ bool App::IsSensorColliding(Object *o, int id){
 
 void App::SetMasterVolume(float value){
   c2Soloud->setGlobalVolume(value);
+}
+
+bool App::IsLeftMouse() { 
+  return mouseClick[MOUSE_LEFT] == 1;
+}
+
+bool App::IsMiddleMouse() { 
+  return mouseClick[MOUSE_MIDDLE] == 1;
+}
+
+bool App::IsRightMouse() { 
+  return mouseClick[MOUSE_RIGHT] == 1;
 }
