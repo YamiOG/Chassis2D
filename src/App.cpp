@@ -413,13 +413,13 @@ void App::SetMasterVolume(float value){
 }
 
 bool App::IsLeftMouse() { 
-  return mouseClick[MOUSE_LEFT] == 1;
+  return mouseClick[MOUSE_LEFT];
 }
 
 bool App::IsMiddleMouse() { 
-  return mouseClick[MOUSE_MIDDLE] == 1;
+  return mouseClick[MOUSE_MIDDLE];
 }
 
 bool App::IsRightMouse() { 
-  return mouseClick[MOUSE_RIGHT] == 1;
+  return mouseClick[MOUSE_RIGHT];
 }

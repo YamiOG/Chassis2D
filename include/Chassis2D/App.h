@@ -27,8 +27,6 @@ namespace SoLoud{
 
 class App{
  private:
-  vector<SDL_Event*> eventList;
-  //bool mouseClicks[3];
   bool close = false;
 
   int width, height;
@@ -40,6 +38,7 @@ class App{
 
   vector<shared_ptr<Particle>> particles;
   vector<shared_ptr<ParticleSystem>> particleSystems;
+  vector<SDL_Event*> eventList;
 
  public:
   App(){}
