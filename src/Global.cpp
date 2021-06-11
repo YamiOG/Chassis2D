@@ -17,4 +17,7 @@ SDL_Event *c2Event;
 b2World *c2World;
 SoLoud::Soloud *c2Soloud;
 
+int c2Scale = 1;
+
 int mouseClick[3] = {0, 0, 0};
+Vec2 mousePosition = Vec2(0, 0);

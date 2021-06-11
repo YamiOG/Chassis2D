@@ -34,6 +34,8 @@ class Button{
   shared_ptr<Texture> GetTexture() {return texture;}
   shared_ptr<Text> GetText() {return text;}
 
+  bool IsPressed(int mouseButton);
+
   void SetOrigin(Vec2 origin) { this->origin = origin; }
   Vec2 GetOrigin();
   void SetOriginCenter(bool center) { this->center = center; }

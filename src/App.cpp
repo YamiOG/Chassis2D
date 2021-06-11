@@ -122,6 +122,10 @@ void App::Update(){
   mouseClick[MOUSE_MIDDLE] = 0;
   mouseClick[MOUSE_RIGHT] = 0;
 
+  int x, y;
+  SDL_GetMouseState(&x, &y);
+  mousePosition.Set((float)x,(float)y);
+
   while(SDL_PollEvent(c2Event)){
     eventList.push_back(c2Event);
 
@@ -213,9 +217,7 @@ void App::FillRect(Vec4 rect, int r, int g, int b){
 }
 
 Vec2 App::GetMouse(){
-  int x, y;
-  SDL_GetMouseState(&x, &y);
-  return Vec2((float)x,(float)y);
+  return mousePosition;
 }
 
 long int App::GetTime() { 
@@ -223,9 +225,7 @@ long int App::GetTime() {
 }
 
 bool App::IsMouseInVec4(Vec4 rect){
-  SDL_Point mousePos;
-  SDL_GetMouseState(&mousePos.x, &mousePos.y);
-  if(rect.x < mousePos.x && mousePos.x < rect.x + rect.w && rect.y < mousePos.y && mousePos.y < rect.y + rect.h){
+  if(rect.x < mousePosition.x && mousePosition.x < rect.x + rect.w && rect.y < mousePosition.y && mousePosition.y < rect.y + rect.h){
     return true;
   }
   return false;
@@ -318,49 +318,6 @@ void App::DrawParticles(){
       }
     }
   }
-}
-
-bool App::CheckButton(Button *b){
-  if(IsMouseInVec4(b->GetRect())){
-    if(mouseClick[MOUSE_LEFT] == 1) {
-      if(b->GetPrevious() == false){
-        b->SetPrevious(true);
-        return true;
-      }
-    }
-    else{
-      if(b->GetPrevious()){
-        b->SetPrevious(false);
-      }
-      return false;
-    }
-  }
-  return false;
-}
-
-int App::SpawnParticle(Particle *particle, Vec2 position, Vec2 velocity){
-  if(particle){
-    Particle *tmp;
-    tmp = new Particle(*particle);
-
-    //Body Setup
-    tmp->Create(position.x, position.y);
-
-    //Inital Impulse
-    tmp->ApplyImpulse(velocity);
-
-    //Timer
-    tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
-
-    shared_ptr<Particle> sharedParticle(tmp);
-    particles.push_back(sharedParticle);
-
-  }
-  else{
-    cout << "ERROR:Particle is NULL" << endl;
-    return -1;
-  }
-  return 0;
 }
 
 int App::StartParticleSystem(ParticleSystem *particleSystem, Vec2 position, int time){

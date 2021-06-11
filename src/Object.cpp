@@ -5,15 +5,15 @@
 #include <SDL.h>
 #include <box2d/box2d.h>
 
-Object::Object(float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
-  Setup(x, y, w, h, categoryBits, maskBits, scale);
+Object::Object(float x, float y, float w, float h, int categoryBits, int maskBits){
+  Setup(x, y, w, h, categoryBits, maskBits);
 }
 
-int Object::Setup(float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
-  return Static(x, y, w, h, categoryBits, maskBits, scale);
+int Object::Setup(float x, float y, float w, float h, int categoryBits, int maskBits){
+  return Static(x, y, w, h, categoryBits, maskBits);
 }
 
-int Object::Static(float x, float y, float w, float h, int categoryBits, int maskBits, int scale){
+int Object::Static(float x, float y, float w, float h, int categoryBits, int maskBits){
   if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -21,10 +21,9 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
 
     width = w;
     height = h;
-    this->scale = scale;
 
-    bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
-    shape.SetAsBox((width/2)/scale, (height/2)/scale);
+    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
+    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -44,15 +43,15 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
   return 0;
 }
 
-Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
-  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits){
+  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits);
 }
 
-int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
-  return Dynamic(x, y, w, h, friction, density, restitution, categoryBits, maskBits, scale);
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits){
+  return Dynamic(x, y, w, h, friction, density, restitution, categoryBits, maskBits);
 }
 
-int Object::Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale){
+int Object::Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits){
   if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -60,10 +59,9 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
 
     width = w;
     height = h;
-    this->scale = scale;
 
-    bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
-    shape.SetAsBox((width/2)/scale, (height/2)/scale);
+    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
+    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -82,15 +80,14 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
     cout << "ERROR:b2World is nullptr" << endl;
     return -1;
   }
-
   return 0;
 }
 
-Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
-  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, isDynamic, scale);
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic){
+  Setup(x, y, w, h, friction, density, restitution, categoryBits, maskBits, isDynamic);
 }
 
-int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale){
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic){
   if(c2World != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
@@ -98,10 +95,9 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 
     width = w;
     height = h;
-    this->scale = scale;
 
-    bodyDef.position.Set((x + (width/2))/scale, (y + (height/2))/scale);
-    shape.SetAsBox((width/2)/scale, (height/2)/scale);
+    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
+    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -125,7 +121,6 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
     cout << "ERROR:b2World is nullptr" << endl;
     return -1;
   }
-
   return 0;
 }
 
@@ -170,7 +165,7 @@ void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
 
 Vec4 Object::GetCollisionBox(){
   if(body){
-    return Vec4((body->GetPosition().x * scale) - (width / 2) + origin.x, (body->GetPosition().y * scale) - (height / 2) + origin.x, width, height );
+    return Vec4((body->GetPosition().x * c2Scale) - (width / 2) + origin.x, (body->GetPosition().y * c2Scale) - (height / 2) + origin.x, width, height );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -180,7 +175,7 @@ Vec4 Object::GetCollisionBox(){
 
 Vec4 Object::GetRect() {
   if(body){ 
-    return Vec4((body->GetPosition().x * scale) - (width / 2) + offset.x, (body->GetPosition().y * scale) - (height / 2) + offset.y, size.x, size.y );
+    return Vec4((body->GetPosition().x * c2Scale) - (width / 2) + offset.x, (body->GetPosition().y * c2Scale) - (height / 2) + offset.y, size.x, size.y );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -221,7 +216,7 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
   if(body){
     b2FixtureDef tmpFixture;
     b2PolygonShape tmpShape;
-    tmpShape.SetAsBox(w/2/scale, h/2/scale, b2Vec2((x-width/2)/scale, (y-height/2)/scale), 0);
+    tmpShape.SetAsBox(w/2/c2Scale, h/2/c2Scale, b2Vec2((x-width/2)/c2Scale, (y-height/2)/c2Scale), 0);
     tmpFixture.shape = &tmpShape;
 
     tmpFixture.isSensor = true;

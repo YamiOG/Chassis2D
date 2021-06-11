@@ -1,6 +1,8 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include "Vec2.h"
+
 struct SDL_Window;
 struct SDL_Renderer;
 union SDL_Event;
@@ -10,7 +12,10 @@ namespace SoLoud{
   class Soloud;
 }
 
+extern int c2Scale;
+
 extern int mouseClick[3];
+extern Vec2 mousePosition;
 
 const int MOUSE_LEFT = 0;
 const int MOUSE_MIDDLE = 1;

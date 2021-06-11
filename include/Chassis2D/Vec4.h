@@ -16,6 +16,8 @@ class Vec4{
   Vec4(){}
   Vec4(float x, float y, float w, float h) { this->x = x; this->y = y; this->w = w; this->h = h; }
 
+  void Set(float x, float y, float w, float h) { this->x = x; this->y = y; this->w = w; this->h = h; }
+
   void Multi(Vec4 val) { x *= val.x; y *= val.y; w *= val.w; h *= val.h; }
   void Multi(float val) { x *= val; y *= val; w *= val; h *= val; }
   void Div(Vec4 val) { x /= val.x; y /= val.y; w /= val.w; h /= val.h; }

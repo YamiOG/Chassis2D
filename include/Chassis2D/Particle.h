@@ -21,19 +21,18 @@ class Particle : public Object{
 
  public:
   Particle(){}
-  Particle(float width, float height, int lifetime, Texture *texture, int scale);
-  int Setup(float width, float height, int lifetime, Texture *texture, int scale);
-  Particle(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
-  int Setup(float width, float height, float friction, float density, float restitution, int lifetime, Texture *texture, int scale);
+  Particle(float x, float y, float w, float h, int lifetime);
+  int Setup(float x, float y, float w, float h, int lifetime);
+  Particle(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime);
+  Particle(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime);
 
-  int GetTime() {return time;}
+  int GetTime() { return time; }
   int GetLifetime() { return lifetime; }
+  void SetLifetime(int lifetime) { this->lifetime = lifetime; }
+  void SetTime(int time) { this->time = time; }
 
-  int Create(float x, float y);
-  void SetLifetime(int set) {lifetime = set;}
-  void SetTime(int set) {time = set;}
-
-  //Destructor
   ~Particle();
 };
 

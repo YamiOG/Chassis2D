@@ -29,3 +29,21 @@ Vec2 Button::GetOrigin(){
   }
   return origin;
 }
+
+bool Button::IsPressed(int mouseButton){
+  if(rect.x < mousePosition.x && mousePosition.x < rect.x + rect.w && rect.y < mousePosition.y && mousePosition.y < rect.y + rect.h){
+    if(mouseClick[mouseButton] == 1){
+      if(!previous){
+        previous = true;
+        return true;
+      }
+    }
+    else{
+      if(previous){
+        previous = false;
+      }
+      return false;
+    }
+  }
+  return false;
+}

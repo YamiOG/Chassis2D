@@ -55,6 +55,8 @@ class App{
   void PhysicsUpdate();
   void SetPhysicsFPS(int physicsFPS) { this->physicsFPS = physicsFPS; }
   int GetPhysicsFPS() { return physicsFPS; }
+  void SetPhysicsScale(int scale) { c2Scale = scale; }
+  int GetPhysicsScale() { return c2Scale; }
 
   void Update();
   bool ShouldClose() { return close; }
@@ -72,20 +74,18 @@ class App{
   int Draw(Button *button);
   void DrawParticles();
   void Present();
+  
+  b2World* GetWorld() { return c2World; }
+  int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 
   SoLoud::Soloud *GetSoLoud() { return c2Soloud; }
   void SetMasterVolume(float value);
-  
-  b2World* GetWorld() { return c2World; }
-  int SpawnParticle(Particle* particle, Vec2 position, Vec2 velocity);
-  int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 
   string GetInputText();
   Vec2 GetMouse();
   long int GetTime();
   bool IsMouseInVec4(Vec4 rect);
   bool IsPressed(string k);
-  bool CheckButton(Button *b);
   bool IsColliding(Object* o1, Object* o2);
   bool IsSensorColliding(Object *o, int id);
   bool IsLeftMouse();

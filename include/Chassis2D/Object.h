@@ -22,20 +22,19 @@ class Object{
   shared_ptr<Texture> texture;
 
   float width, height;
-  int scale;
   Vec2 size, offset, origin;
 
   bool hide = false;
  public:
   Object(){}
-  Object(float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
-  int Setup(float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
-  int Static(float x, float y, float w, float h, int categoryBits, int maskBits, int scale);
-  Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
-  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
-  int Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int scale);
-  Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
-  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic, int scale);
+  Object(float x, float y, float w, float h, int categoryBits, int maskBits);
+  int Setup(float x, float y, float w, float h, int categoryBits, int maskBits);
+  int Static(float x, float y, float w, float h, int categoryBits, int maskBits);
+  Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits);
+  int Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits);
+  Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic);
 
   //Physics
   b2Body *GetBody(){ return body; }
@@ -48,7 +47,6 @@ class Object{
   Vec2 GetVelocity();
   Vec4 GetCollisionBox();
   void SetActive(bool set);
-  int GetScale() { return scale; }
   void SetPosition(Vec2 position);
   void SetSensor(float x, float y, float w, float h, int categoryBits, int maskBits, int id);
   void SetBullet(bool bullet);
