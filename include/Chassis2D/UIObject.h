@@ -2,18 +2,21 @@
 #define UIOBJECT_H
 
 #include <iostream>
+#include <memory>
 
 #include "Global.h"
 #include "Class.h"
 
 #include "Vec2.h"
 #include "Vec4.h"
+#include "Color.h"
 
 using namespace std;
 
 class UIObject{
  protected:
   shared_ptr<Texture> texture;
+  Color color = Color(0, 0, 0);
 
   Vec2 origin = Vec2(0, 0);
   Vec4 rect = Vec4(0, 0, 0, 0);
@@ -25,6 +28,13 @@ class UIObject{
 
   UIObject(int x, int y, int w, int h);
   void Setup(int x, int y, int w, int h); 
+
+  void SetTexture(Texture* texture);
+  virtual shared_ptr<Texture> GetTexture();
+
+  void SetColor(int r, int g, int b) { color.r = r; color.g = g; color.b = b; }
+  void SetColor(int r, int g, int b, int a) { color.r = r; color.g = g; color.b = b; color.a = a; }
+  Color GetColor() { return color; }
 
   Vec4 GetRect() { return rect; }
   void SetRect(Vec4 rect) { this->rect = rect; }

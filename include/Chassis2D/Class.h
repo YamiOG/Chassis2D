@@ -29,4 +29,6 @@ class Color;
 
 class UI;
 
+class UIObject;
+
 #endif

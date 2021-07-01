@@ -216,6 +216,18 @@ void App::FillRect(Vec4 rect, int r, int g, int b){
   SDL_RenderFillRect(c2Renderer, &tRect);
 }
 
+void App::FillRect(Vec4 rect, int r, int g, int b, int a){
+  SDL_SetRenderDrawColor(c2Renderer, r, g, b, a);
+  SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+  SDL_RenderFillRect(c2Renderer, &tRect);
+}
+
+void App::FillRect(Vec4 rect, Color color){
+  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
+  SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+  SDL_RenderFillRect(c2Renderer, &tRect);
+}
+
 Vec2 App::GetMouse(){
   return mousePosition;
 }
@@ -264,8 +276,7 @@ int App::Draw(Object *object){
 int App::Draw(Text *text){
   if(text){
     if(!text->IsHidden()){ 
-      text->GetOrigin();
-      Draw(text->GetText().get(), text->GetRect() - text->GetOrigin());
+      Draw(text->GetTexture().get(), text->GetRect() - text->GetOrigin());
     }
   }
   else{
@@ -278,9 +289,14 @@ int App::Draw(Text *text){
 int App::Draw(Button *button){
   if(button){
     if(!button->IsHidden()){ 
-      Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
+      if(button->GetTexture().get()){
+        Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
+      }
+      else{
+        FillRect(button->GetRect(), button->GetColor());
+      }
       if(!button->GetText()->IsHidden()){ 
-        Draw(button->GetText()->GetText().get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
+        Draw(button->GetText()->GetTexture().get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
       }
     }
   }

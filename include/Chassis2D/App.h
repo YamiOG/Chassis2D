@@ -66,6 +66,8 @@ class App{
   void Clear(int r, int g, int b);
   void Clear(Color color);
   void FillRect(Vec4 rect, int r, int g, int b);
+  void FillRect(Vec4 rect, int r, int g, int b, int a);
+  void FillRect(Vec4 rect, Color color);
   int Draw(Texture *texture, Vec4 rect);
   int Draw(Texture *texture, Vec4 crop, Vec4 rect);
   int Draw(Object* object);

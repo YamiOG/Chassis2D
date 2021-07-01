@@ -15,7 +15,7 @@ int Text::Setup(float x, float y, string text, Font *font){
   return 0;
 }
 
-shared_ptr<Texture> Text::GetText(){
+shared_ptr<Texture> Text::GetTexture(){
   if(!text.empty()){
     if(font->GetRGB()){
       texture = font->GetText(text.c_str(), iTime);

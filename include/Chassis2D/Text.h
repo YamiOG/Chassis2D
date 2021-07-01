@@ -15,7 +15,6 @@ using namespace std;
 
 class Text : public UIObject{
  private:
-  shared_ptr<Texture> texture;
   Font *font;
   string text;
 
@@ -25,9 +24,9 @@ class Text : public UIObject{
   Text(float x, float y, string text, Font *font);
   int Setup(float x, float y, string text, Font *font);
 
-  void SetInitialTime(int set) { iTime = set; }
+  shared_ptr<Texture> GetTexture();
 
-  shared_ptr<Texture> GetText();
+  void SetInitialTime(int set) { iTime = set; }
 };
 
 #endif
