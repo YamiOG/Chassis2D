@@ -320,6 +320,17 @@ void App::DrawParticles(){
   }
 }
 
+void App::DrawUI(){
+  if(ui){
+    for(int i = 0; i < ui->GetButtons().size(); i++){
+      Draw(ui->GetButtons()[i]);
+    }
+    for(int i = 0; i < ui->GetTexts().size(); i++){
+      Draw(ui->GetTexts()[i]);
+    }
+  }
+}
+
 int App::StartParticleSystem(ParticleSystem *particleSystem, Vec2 position, int time){
   if(particleSystem){
     ParticleSystem *tmp = new ParticleSystem(*particleSystem);

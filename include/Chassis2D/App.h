@@ -30,9 +30,9 @@ class App{
   bool close = false;
 
   int width, height;
+  UI *ui;
 
   int velocityI, positionI;
-
   int physicsFPS;
   int pastTime;
 
@@ -74,6 +74,8 @@ class App{
   int Draw(Button *button);
   void DrawParticles();
   void Present();
+  void DrawUI();
+  void SetUI(UI *ui) { this->ui = ui; }
   
   b2World* GetWorld() { return c2World; }
   int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);

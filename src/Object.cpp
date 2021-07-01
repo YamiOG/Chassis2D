@@ -131,6 +131,14 @@ Object::~Object(){
   }
 }
 
+void Object::SetTexture(Texture* t, int width, int height){
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(0,0);
+  size = Vec2(width, height);
+}
+
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
   shared_ptr<Texture> sharedTexture(t); 
   texture = sharedTexture;

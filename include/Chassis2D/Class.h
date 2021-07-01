@@ -27,4 +27,6 @@ class Vec4;
 
 class Color;
 
+class UI;
+
 #endif

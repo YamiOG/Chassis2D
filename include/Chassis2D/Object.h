@@ -58,6 +58,7 @@ class Object{
   Vec4 GetRect();
   void SetRect(Vec4 rect);
 
+  void SetTexture(Texture* t, int width, int height);
   void SetTexture(Texture* t, int xOffset, int yOffset, int width, int height);
   void SetTexture(Texture* t, Vec2 offset, int width, int height);
   void SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size);
