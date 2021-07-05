@@ -19,7 +19,9 @@ class Button : public UIObject{
   bool previous = false;
  public:
   Button(){}
+  Button(int x, int y, int w, int h);
   Button(int x, int y, int w, int h, const char* text, Font *font);
+  int Setup(int x, int y, int w, int h);
   int Setup(int x, int y, int w, int h, const char* text, Font *font);
   void SetPrevious(bool set) { previous = set; }
   bool GetPrevious() { return previous; }

@@ -20,6 +20,7 @@ class UIObject{
 
   Vec2 origin = Vec2(0, 0);
   Vec4 rect = Vec4(0, 0, 0, 0);
+  int radius = 0;
 
   bool hide = false;
   bool center = false;
@@ -38,6 +39,9 @@ class UIObject{
 
   Vec4 GetRect() { return rect; }
   void SetRect(Vec4 rect) { this->rect = rect; }
+
+  void SetRadius(int radius) { this->radius = radius; }
+  int GetRadius() { return radius; }
 
   void SetOrigin(Vec2 origin) { this->origin = origin; }
   Vec2 GetOrigin();

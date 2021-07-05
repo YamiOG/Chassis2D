@@ -2,6 +2,20 @@
 
 #include "Chassis2D.h"
 
+Button::Button(int x, int y, int w, int h){
+  Setup(x, y, w, h);
+}
+
+int Button::Setup(int x, int y, int w, int h){
+  rect.x = (float)x;
+  rect.y = (float)y;
+  rect.w = (float)w;
+  rect.h = (float)h;
+
+  this->text = nullptr;
+  return 0;
+}
+
 Button::Button(int x, int y, int w, int h, const char* text, Font *font){
   Setup(x, y, w, h, text, font);
 }

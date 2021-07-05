@@ -5,6 +5,7 @@
 #include <vector>
 #include <memory>
 #include <cstdint>
+#include <cmath>
 
 #include "Global.h"
 #include "Class.h"
@@ -68,10 +69,16 @@ class App{
   void FillRect(Vec4 rect, int r, int g, int b);
   void FillRect(Vec4 rect, int r, int g, int b, int a);
   void FillRect(Vec4 rect, Color color);
+  void FillRoundedRect(Vec4 rect, int radius, int r, int g, int b);
+  void FillRoundedRect(Vec4 rect, int radius, int r, int g, int b, int a);
+  void FillRoundedRect(Vec4 rect, int radius, Color color);
   int Draw(Texture *texture, Vec4 rect);
   int Draw(Texture *texture, Vec4 crop, Vec4 rect);
+  int Draw(Texture *texture, Vec4 rect, int radius);
+  int Draw(Texture *texture, Vec4 crop, Vec4 rect, int radius);
   int Draw(Object* object);
   int Draw(Particle *particle);
+  int Draw(UIObject* uiObject);
   int Draw(Text* text);
   int Draw(Button *button);
   void DrawParticles();

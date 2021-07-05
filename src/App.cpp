@@ -110,6 +110,7 @@ App::~App(){
   delete c2Soloud;
   delete c2World;
   TTF_Quit();
+  delete c2Event;
   SDL_DestroyRenderer(c2Renderer);
   SDL_DestroyWindow(c2Window);
   SDL_Quit();
@@ -211,21 +212,53 @@ void App::Present(){
 }
 
 void App::FillRect(Vec4 rect, int r, int g, int b){
-  SDL_SetRenderDrawColor(c2Renderer, r, g, b, 255);
-  SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-  SDL_RenderFillRect(c2Renderer, &tRect);
+  FillRect(rect, Color(r, g, b, 255));
 }
 
 void App::FillRect(Vec4 rect, int r, int g, int b, int a){
-  SDL_SetRenderDrawColor(c2Renderer, r, g, b, a);
-  SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-  SDL_RenderFillRect(c2Renderer, &tRect);
+  FillRect(rect, Color(r, g, b, a));
 }
 
 void App::FillRect(Vec4 rect, Color color){
   SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
   SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
   SDL_RenderFillRect(c2Renderer, &tRect);
+}
+
+void App::FillRoundedRect(Vec4 rect, int radius, int r, int g, int b){
+  FillRoundedRect(rect, radius, Color(r, g, b, 255));
+}
+
+void App::FillRoundedRect(Vec4 rect, int radius, int r, int g, int b, int a){
+  FillRoundedRect(rect, radius, Color(r, g, b, a));
+}
+
+void App::FillRoundedRect(Vec4 rect, int radius, Color color){
+  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
+  SDL_Rect wRect = {(int)rect.x+radius, (int)rect.y, (int)rect.w-(radius*2), (int)rect.h};
+  SDL_RenderFillRect(c2Renderer, &wRect);
+  SDL_Rect hRect = {(int)rect.x, (int)rect.y+radius, (int)rect.w, (int)rect.h-(radius*2)};
+  SDL_RenderFillRect(c2Renderer, &hRect);
+
+  if(radius >= 1){
+    SDL_Point *points = new SDL_Point[(int)pow(radius*2, 2)];
+
+    int count = 0;
+    for(int x = 0; x < radius; x++){
+      for(int y = 0; y < radius; y++){
+        double circle = pow(x, 2) + pow(y, 2) - pow(radius, 2);
+        if(circle <= 0.0){
+          points[count] = {(int)(rect.x + rect.w) - radius + x, (int)(rect.y) + radius - y - 1};
+          points[count+1] = {(int)(rect.x) + radius - x - 1, (int)(rect.y) + radius - y - 1};
+          points[count+2] = {(int)(rect.x) + radius - x - 1, (int)(rect.y + rect.h) - radius + y};
+          points[count+3] = {(int)(rect.x + rect.w) - radius + x, (int)(rect.y + rect.h) - radius + y};
+          count += 4;
+        }
+      }
+    } 
+    SDL_RenderDrawPoints(c2Renderer, points, (int)pow(radius*2, 2));
+    delete[] points;
+  }
 }
 
 Vec2 App::GetMouse(){
@@ -248,6 +281,10 @@ int App::Draw(Texture *texture, Vec4 rect){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
     SDL_RenderCopy(c2Renderer, texture->GetData(), NULL, &tRect);
   }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
+  }
   return 0;
 }
 
@@ -257,8 +294,37 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
     SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
     SDL_RenderCopy(c2Renderer, texture->GetData(), &tCrop, &tRect);
   }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
+  }
   return 0;
 }
+
+/*int App::Draw(Texture *texture, Vec4 rect, int radius){
+  if(texture){
+    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+    SDL_RenderCopy(c2Renderer, texture->GetData(), NULL, &tRect);
+  }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+int App::Draw(Texture *texture, Vec4 crop, Vec4 rect, int radius){
+  if(texture){
+    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+    SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
+    SDL_RenderCopy(c2Renderer, texture->GetData(), &tCrop, &tRect);
+  }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}*/
 
 int App::Draw(Object *object){
   if(object){
@@ -268,6 +334,24 @@ int App::Draw(Object *object){
   }
   else{
     cout << "ERROR:Object is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+int App::Draw(UIObject* uiObject){
+  if(uiObject){
+    if(!uiObject->IsHidden()){
+      if(uiObject->GetTexture().get()){
+        Draw(uiObject->GetTexture().get(), uiObject->GetRect() - uiObject->GetOrigin());
+      }
+      else{
+        FillRoundedRect(uiObject->GetRect() - uiObject->GetOrigin(), uiObject->GetRadius(), uiObject->GetColor());
+      }
+    }
+  }
+  else{
+    cout << "ERROR:UIObject is a nullptr" << endl;
     return -1;
   }
   return 0;
@@ -293,10 +377,13 @@ int App::Draw(Button *button){
         Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
       }
       else{
-        FillRect(button->GetRect(), button->GetColor());
+        Draw((UIObject*)button);
       }
-      if(!button->GetText()->IsHidden()){ 
-        Draw(button->GetText()->GetTexture().get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
+
+      if(button->GetText()){
+        if(!button->GetText()->IsHidden()){ 
+          Draw(button->GetText()->GetTexture().get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
+        }
       }
     }
   }
@@ -343,6 +430,9 @@ void App::DrawUI(){
     }
     for(int i = 0; i < ui->GetTexts().size(); i++){
       Draw(ui->GetTexts()[i]);
+    }
+    for(int i = 0; i < ui->GetUIObjects().size(); i++){
+      Draw(ui->GetUIObjects()[i]);
     }
   }
 }

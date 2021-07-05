@@ -9,6 +9,8 @@
 #include "Texture.h"
 #include "Sound.h"
 #include "UI.h"
+#include "UIObject.h"
+#include "Slider.h"
 #include "Text.h"
 #include "Font.h"
 #include "Button.h"

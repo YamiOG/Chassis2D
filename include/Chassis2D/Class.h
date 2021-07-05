@@ -31,4 +31,6 @@ class UI;
 
 class UIObject;
 
+class Slider;
+
 #endif
