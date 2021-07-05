@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+#include "Global.h"
 #include "Class.h"
 
 using namespace std;
@@ -15,16 +16,14 @@ namespace SoLoud{
 
 class Sound{
  private:
-  App *app;
-
   SoLoud::Wav *sample;
   SoLoud::WavStream *stream;
 
   bool isWAV;
  public:
   Sound(){}
-  Sound(App *app, string path);
-  int Setup(App *app, string path);
+  Sound(string path);
+  int Setup(string path);
 
   //Control
   void Play();

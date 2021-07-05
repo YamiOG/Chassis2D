@@ -17,7 +17,7 @@ int main(int argc, char *argv[]){
   text.Setup(150, 50, "popcorn_remix.mp3", &font);
   text.SetOriginCenter(true);
 
-  song.Setup(&app, "popcorn_remix.mp3");
+  song.Setup("popcorn_remix.mp3");
   song.Play();
 
   while(!app.ShouldClose()){

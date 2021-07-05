@@ -6,11 +6,11 @@
 #include <soloud_wav.h>
 #include <soloud_wavstream.h>
 
-Sound::Sound(App *app, string path){
-  Setup(app, path);
+Sound::Sound(string path){
+  Setup(path);
 }
 
-int Sound::Setup(App *app, string path){
+int Sound::Setup(string path){
   if(!path.empty()){
     string extension = path.substr(path.find_last_of(".")+1, path.size());
     if(extension == "wav"){
@@ -27,14 +27,6 @@ int Sound::Setup(App *app, string path){
   else{
     cout << "ERROR:Path is empty" << endl;
   }
-
-  if(app){
-    this->app = app;
-  }
-  else{
-    cout << "ERROR:App is NULL" << endl;
-  }
-
   return 0;
 }
 
@@ -51,10 +43,10 @@ Sound::~Sound(){
 
 void Sound::Play(){
   if(isWAV){
-    app->GetSoLoud()->play(*sample);
+    c2Soloud->play(*sample);
   }
   else{
-    app->GetSoLoud()->play(*stream);
+    c2Soloud->play(*stream);
   }
 }
 

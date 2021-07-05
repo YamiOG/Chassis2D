@@ -27,33 +27,33 @@ int App::Setup(const char* title, int width, int height){
     return -1;
   }
 
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
-  if (!window) {
+  c2Window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+  if (!c2Window) {
     cout << "ERROR:Window Creation Failed" << endl;
     return -1;
   }
 
-  renderer = SDL_CreateRenderer(window, -1, 0);
-  if (!renderer) {
+  c2Renderer = SDL_CreateRenderer(c2Window, -1, 0);
+  if (!c2Renderer) {
     cout << "ERROR:Renderer Creation Failed" << endl;
     return -1;
   }
 
-  ev = new SDL_Event;
+  c2Event = new SDL_Event;
 
   if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
   }
 
-  world = new b2World(b2Vec2(0,0));
-  if (!world) {
+  c2World = new b2World(b2Vec2(0,0));
+  if (!c2World) {
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
   }
 
-  soloud = new SoLoud::Soloud;
-  if(soloud->init() != 0){
+  c2Soloud = new SoLoud::Soloud;
+  if(c2Soloud->init() != 0){
     cout << "ERROR:SoLoud Initialization Failed" << endl;
     return -1;
   }
@@ -72,33 +72,33 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
-  if (!window) {
+  c2Window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+  if (!c2Window) {
     cout << "ERROR:Window Creation Failed" << endl;
     return -1;
   }
 
-  renderer = SDL_CreateRenderer(window, -1, 0);
-  if (!renderer) {
+  c2Renderer = SDL_CreateRenderer(c2Window, -1, 0);
+  if (!c2Renderer) {
     cout << "ERROR:Renderer Creation Failed" << endl;
     return -1;
   }
 
-  ev = new SDL_Event;
+  c2Event = new SDL_Event;
 
   if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
   }
 
-  world = new b2World(*gravity.ToB2());
-  if (!world) {
+  c2World = new b2World(*gravity.ToB2());
+  if (!c2World) {
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
   }
 
-  soloud = new SoLoud::Soloud;
-  if(soloud->init() != 0){
+  c2Soloud = new SoLoud::Soloud;
+  if(c2Soloud->init() != 0){
     cout << "ERROR:SoLoud Initialization Failed" << endl;
     return -1;
   }
@@ -106,40 +106,45 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
 }
 
 App::~App(){
-  soloud->deinit();
-  delete soloud;
-  delete world;
+  c2Soloud->deinit();
+  delete c2Soloud;
+  delete c2World;
   TTF_Quit();
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
+  delete c2Event;
+  SDL_DestroyRenderer(c2Renderer);
+  SDL_DestroyWindow(c2Window);
   SDL_Quit();
 }
 
 void App::Update(){
   eventList.clear();
 
-  mouseClicks[0] = false;
-  mouseClicks[1] = false;
-  mouseClicks[2] = false;
+  mouseClick[MOUSE_LEFT] = 0;
+  mouseClick[MOUSE_MIDDLE] = 0;
+  mouseClick[MOUSE_RIGHT] = 0;
 
-  while(SDL_PollEvent(ev)){
-    eventList.push_back(ev);
+  int x, y;
+  SDL_GetMouseState(&x, &y);
+  mousePosition.Set((float)x,(float)y);
 
-    if(ev->type == SDL_QUIT){
+  while(SDL_PollEvent(c2Event)){
+    eventList.push_back(c2Event);
+
+    if(c2Event->type == SDL_QUIT){
       close = true;
     }
 
-    else if(ev->type == SDL_MOUSEBUTTONDOWN){
-      switch (ev->button.button)
+    else if(c2Event->type == SDL_MOUSEBUTTONDOWN){
+      switch (c2Event->button.button)
       {
       case SDL_BUTTON_LEFT:
-        mouseClicks[0] = true;
+        mouseClick[MOUSE_LEFT] = 1;
         break;
       case SDL_BUTTON_MIDDLE:
-        mouseClicks[1] = true;
+        mouseClick[MOUSE_MIDDLE] = 1;
         break;
       case SDL_BUTTON_RIGHT:
-        mouseClicks[2] = true;
+        mouseClick[MOUSE_RIGHT] = 1;
         break;
 
       default:
@@ -170,7 +175,7 @@ bool App::IsPressed(string k){
 void App::PhysicsUpdate(){
   if((unsigned)(1000/physicsFPS) <= SDL_GetTicks()-pastTime){
     for(int i = 0; i < particleSystems.size();){
-      particleSystems[i]->Update(this);
+      particleSystems[i]->Update();
 
       if(SDL_GetTicks() >= (unsigned)particleSystems[i]->GetTime()){
         particleSystems.erase(particleSystems.begin()+i);
@@ -180,7 +185,7 @@ void App::PhysicsUpdate(){
       }
     }
 
-    world->Step(1.0f/physicsFPS, velocityI, positionI);
+    c2World->Step(1.0f/physicsFPS, velocityI, positionI);
     pastTime = SDL_GetTicks();
   }
 
@@ -188,34 +193,76 @@ void App::PhysicsUpdate(){
 }
 
 void App::Clear(){
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(c2Renderer, 255, 255, 255, 255);
+  SDL_RenderClear(c2Renderer);
 }
 
 void App::Clear(int r, int g, int b){
-  SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(c2Renderer, r, g, b, 255);
+  SDL_RenderClear(c2Renderer);
 }
 
 void App::Clear(Color color){
-  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
+  SDL_RenderClear(c2Renderer);
 }
 
 void App::Present(){
-  SDL_RenderPresent(renderer);
+  SDL_RenderPresent(c2Renderer);
 }
 
 void App::FillRect(Vec4 rect, int r, int g, int b){
-  SDL_SetRenderDrawColor(renderer, r, g, b, 255);
+  FillRect(rect, Color(r, g, b, 255));
+}
+
+void App::FillRect(Vec4 rect, int r, int g, int b, int a){
+  FillRect(rect, Color(r, g, b, a));
+}
+
+void App::FillRect(Vec4 rect, Color color){
+  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
   SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-  SDL_RenderFillRect(renderer, &tRect);
+  SDL_RenderFillRect(c2Renderer, &tRect);
+}
+
+void App::FillRoundedRect(Vec4 rect, int radius, int r, int g, int b){
+  FillRoundedRect(rect, radius, Color(r, g, b, 255));
+}
+
+void App::FillRoundedRect(Vec4 rect, int radius, int r, int g, int b, int a){
+  FillRoundedRect(rect, radius, Color(r, g, b, a));
+}
+
+void App::FillRoundedRect(Vec4 rect, int radius, Color color){
+  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
+  SDL_Rect wRect = {(int)rect.x+radius, (int)rect.y, (int)rect.w-(radius*2), (int)rect.h};
+  SDL_RenderFillRect(c2Renderer, &wRect);
+  SDL_Rect hRect = {(int)rect.x, (int)rect.y+radius, (int)rect.w, (int)rect.h-(radius*2)};
+  SDL_RenderFillRect(c2Renderer, &hRect);
+
+  if(radius >= 1){
+    SDL_Point *points = new SDL_Point[(int)pow(radius*2, 2)];
+
+    int count = 0;
+    for(int x = 0; x < radius; x++){
+      for(int y = 0; y < radius; y++){
+        double circle = pow(x, 2) + pow(y, 2) - pow(radius, 2);
+        if(circle <= 0.0){
+          points[count] = {(int)(rect.x + rect.w) - radius + x, (int)(rect.y) + radius - y - 1};
+          points[count+1] = {(int)(rect.x) + radius - x - 1, (int)(rect.y) + radius - y - 1};
+          points[count+2] = {(int)(rect.x) + radius - x - 1, (int)(rect.y + rect.h) - radius + y};
+          points[count+3] = {(int)(rect.x + rect.w) - radius + x, (int)(rect.y + rect.h) - radius + y};
+          count += 4;
+        }
+      }
+    } 
+    SDL_RenderDrawPoints(c2Renderer, points, (int)pow(radius*2, 2));
+    delete[] points;
+  }
 }
 
 Vec2 App::GetMouse(){
-  int x, y;
-  SDL_GetMouseState(&x, &y);
-  return Vec2((float)x,(float)y);
+  return mousePosition;
 }
 
 long int App::GetTime() { 
@@ -223,9 +270,7 @@ long int App::GetTime() {
 }
 
 bool App::IsMouseInVec4(Vec4 rect){
-  SDL_Point mPos;
-  SDL_GetMouseState(&mPos.x, &mPos.y);
-  if(rect.x < mPos.x && mPos.x < rect.x + rect.w && rect.y < mPos.y && mPos.y < rect.y + rect.h){
+  if(rect.x < mousePosition.x && mousePosition.x < rect.x + rect.w && rect.y < mousePosition.y && mousePosition.y < rect.y + rect.h){
     return true;
   }
   return false;
@@ -234,7 +279,11 @@ bool App::IsMouseInVec4(Vec4 rect){
 int App::Draw(Texture *texture, Vec4 rect){
   if(texture){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-    SDL_RenderCopy(renderer, texture->GetData(), NULL, &tRect);
+    SDL_RenderCopy(c2Renderer, texture->GetData(), NULL, &tRect);
+  }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
   }
   return 0;
 }
@@ -243,10 +292,39 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
   if(texture){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
     SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
-    SDL_RenderCopy(renderer, texture->GetData(), &tCrop, &tRect);
+    SDL_RenderCopy(c2Renderer, texture->GetData(), &tCrop, &tRect);
+  }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
   }
   return 0;
 }
+
+/*int App::Draw(Texture *texture, Vec4 rect, int radius){
+  if(texture){
+    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+    SDL_RenderCopy(c2Renderer, texture->GetData(), NULL, &tRect);
+  }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}
+
+int App::Draw(Texture *texture, Vec4 crop, Vec4 rect, int radius){
+  if(texture){
+    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
+    SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
+    SDL_RenderCopy(c2Renderer, texture->GetData(), &tCrop, &tRect);
+  }
+  else{
+    cout << "ERROR:Texture is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}*/
 
 int App::Draw(Object *object){
   if(object){
@@ -261,11 +339,28 @@ int App::Draw(Object *object){
   return 0;
 }
 
+int App::Draw(UIObject* uiObject){
+  if(uiObject){
+    if(!uiObject->IsHidden()){
+      if(uiObject->GetTexture().get()){
+        Draw(uiObject->GetTexture().get(), uiObject->GetRect() - uiObject->GetOrigin());
+      }
+      else{
+        FillRoundedRect(uiObject->GetRect() - uiObject->GetOrigin(), uiObject->GetRadius(), uiObject->GetColor());
+      }
+    }
+  }
+  else{
+    cout << "ERROR:UIObject is a nullptr" << endl;
+    return -1;
+  }
+  return 0;
+}
+
 int App::Draw(Text *text){
   if(text){
     if(!text->IsHidden()){ 
-      text->GetOrigin();
-      Draw(text->GetText(this).get(), text->GetRect() - text->GetOrigin());
+      Draw(text->GetTexture().get(), text->GetRect() - text->GetOrigin());
     }
   }
   else{
@@ -278,9 +373,17 @@ int App::Draw(Text *text){
 int App::Draw(Button *button){
   if(button){
     if(!button->IsHidden()){ 
-      Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
-      if(!button->GetText()->IsHidden()){ 
-        Draw(button->GetText()->GetText(this).get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
+      if(button->GetTexture().get()){
+        Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
+      }
+      else{
+        Draw((UIObject*)button);
+      }
+
+      if(button->GetText()){
+        if(!button->GetText()->IsHidden()){ 
+          Draw(button->GetText()->GetTexture().get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
+        }
       }
     }
   }
@@ -320,49 +423,18 @@ void App::DrawParticles(){
   }
 }
 
-bool App::CheckButton(Button *b){
-  if(IsMouseInVec4(b->GetRect())){
-    if(ev->type == SDL_MOUSEBUTTONDOWN) {
-      if(ev->button.button == SDL_BUTTON_LEFT){
-        if(b->GetPrevious() == false){
-          b->SetPrevious(true);
-          return true;
-        }
-      }
+void App::DrawUI(){
+  if(ui){
+    for(int i = 0; i < ui->GetButtons().size(); i++){
+      Draw(ui->GetButtons()[i]);
     }
-    else{
-      if(b->GetPrevious()){
-        b->SetPrevious(false);
-      }
-      return false;
+    for(int i = 0; i < ui->GetTexts().size(); i++){
+      Draw(ui->GetTexts()[i]);
+    }
+    for(int i = 0; i < ui->GetUIObjects().size(); i++){
+      Draw(ui->GetUIObjects()[i]);
     }
   }
-  return false;
-}
-
-int App::SpawnParticle(Particle *particle, Vec2 position, Vec2 velocity){
-  if(particle){
-    Particle *tmp;
-    tmp = new Particle(*particle);
-
-    //Body Setup
-    tmp->Create(this, position.x, position.y);
-
-    //Inital Impulse
-    tmp->ApplyImpulse(velocity);
-
-    //Timer
-    tmp->SetTime(SDL_GetTicks() + tmp->GetLifetime());
-
-    shared_ptr<Particle> sharedParticle(tmp);
-    particles.push_back(sharedParticle);
-
-  }
-  else{
-    cout << "ERROR:Particle is NULL" << endl;
-    return -1;
-  }
-  return 0;
 }
 
 int App::StartParticleSystem(ParticleSystem *particleSystem, Vec2 position, int time){
@@ -411,5 +483,17 @@ bool App::IsSensorColliding(Object *o, int id){
 }
 
 void App::SetMasterVolume(float value){
-  soloud->setGlobalVolume(value);
+  c2Soloud->setGlobalVolume(value);
+}
+
+bool App::IsLeftMouse() { 
+  return mouseClick[MOUSE_LEFT];
+}
+
+bool App::IsMiddleMouse() { 
+  return mouseClick[MOUSE_MIDDLE];
+}
+
+bool App::IsRightMouse() { 
+  return mouseClick[MOUSE_RIGHT];
 }

@@ -13,7 +13,7 @@ Texture texture;
 int main(int argc, char *argv[]){
   app.Setup("Textures", 1578, 826);
 
-  texture.Setup(&app, "icon1.png");
+  texture.Setup("icon1.png");
 
   while(!app.ShouldClose()){
     app.Update();

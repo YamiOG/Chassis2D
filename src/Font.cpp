@@ -88,25 +88,25 @@ Font::~Font(){
   }
 }
 
-shared_ptr<Texture> Font::GetText(App *a, const char* text){
-  SDL_Surface *s = TTF_RenderText_Solid(font, text, color.ToSDL());
-  if(!s){
+shared_ptr<Texture> Font::GetText(const char* text){
+  SDL_Surface *surface = TTF_RenderText_Solid(font, text, color.ToSDL());
+  if(!surface){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
 
-  shared_ptr<Texture> t = make_shared<Texture>(a, s);
-  if(!t){
+  shared_ptr<Texture> texture = make_shared<Texture>(surface);
+  if(!texture){
     cout << "ERROR:Text Texture is NULL" << endl;
   }
 
-  if(s){
-    SDL_FreeSurface(s);
+  if(surface){
+    SDL_FreeSurface(surface);
   }
   
-  return t;
+  return texture;
 }
 
-shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
+shared_ptr<Texture> Font::GetText(const char* text, int &iTime){
   if(iTime == -1){
     iTime = SDL_GetTicks();
   }
@@ -136,19 +136,19 @@ shared_ptr<Texture> Font::GetText(App *a, const char* text, int &iTime){
     case 5: rgbColor.r = 255;      rgbColor.g = 0;        rgbColor.b = 255 - c; break;
   }
 
-  SDL_Surface *s = TTF_RenderText_Solid(font, text, rgbColor);
-  if(!s){
+  SDL_Surface *surface = TTF_RenderText_Solid(font, text, rgbColor);
+  if(!surface){
     cout << "ERROR:Text Surface is NULL" << endl;
   }
 
-  shared_ptr<Texture> t = make_shared<Texture>(a, s);
-  if(!t){
+  shared_ptr<Texture> texture = make_shared<Texture>(surface);
+  if(!texture){
     cout << "ERROR:Text Texture is NULL" << endl;
   }
 
-  if(s){
-    SDL_FreeSurface(s);
+  if(surface){
+    SDL_FreeSurface(surface);
   }
 
-  return t;
+  return texture;
 }

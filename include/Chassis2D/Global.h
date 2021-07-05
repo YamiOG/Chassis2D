@@ -1,10 +1,31 @@
+#ifndef GLOBAL_H
+#define GLOBAL_H
+
+#include "Vec2.h"
+
 struct SDL_Window;
 struct SDL_Renderer;
 union SDL_Event;
+class b2World;
 
-extern SDL_Window *c2_window; 
-extern SDL_Renderer *c2_renderer;
-extern SDL_Event *c2_event;
+namespace SoLoud{
+  class Soloud;
+}
+
+extern int c2Scale;
+
+extern int mouseClick[3];
+extern Vec2 mousePosition;
+
+const int MOUSE_LEFT = 0;
+const int MOUSE_MIDDLE = 1;
+const int MOUSE_RIGHT = 2;
+
+extern SDL_Window *c2Window; 
+extern SDL_Renderer *c2Renderer;
+extern SDL_Event *c2Event;
+extern b2World *c2World;
+extern SoLoud::Soloud *c2Soloud;
 
 enum Category {
     TERRAIN = 0x0001,
@@ -13,3 +34,5 @@ enum Category {
     PARTICLE = 0x0008,
     SENSOR = 0x0010
 };
+
+#endif

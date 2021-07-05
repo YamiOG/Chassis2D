@@ -14,6 +14,8 @@ class Vec2{
   Vec2(float x, float y) { this->x = x; this->y = y; }
   Vec2(b2Vec2 p);
 
+  void Set(float x, float y) { this->x = x; this->y = y; }
+
   void Multi(Vec2 val) { x *= val.x; y *= val.y; }
   void Multi(float val) { x *= val; y *= val; }
   void Div(Vec2 val) { x /= val.x; y /= val.y; }

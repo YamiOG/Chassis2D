@@ -27,4 +27,10 @@ class Vec4;
 
 class Color;
 
+class UI;
+
+class UIObject;
+
+class Slider;
+
 #endif

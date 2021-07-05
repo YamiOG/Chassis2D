@@ -2,27 +2,26 @@
 
 #include "Chassis2D.h"
 
-Text::Text(int x, int y, string text, Font *font){
+Text::Text(float x, float y, string text, Font *font){
   Setup(x, y, text, font);
 }
 
-int Text::Setup(int x, int y, string text, Font *font){
+int Text::Setup(float x, float y, string text, Font *font){
   this->font = font;
   this->text = text;
 
-  //position = Vec2((float)x, (float)y);
   rect.x = x;
   rect.y = y;
   return 0;
 }
 
-shared_ptr<Texture> Text::GetText(App *a){
+shared_ptr<Texture> Text::GetTexture(){
   if(!text.empty()){
     if(font->GetRGB()){
-      texture = font->GetText(a, text.c_str(), iTime);
+      texture = font->GetText(text.c_str(), iTime);
     }
     else{
-      texture = font->GetText(a, text.c_str());
+      texture = font->GetText(text.c_str());
     }
 
     if(!texture){
@@ -36,11 +35,4 @@ shared_ptr<Texture> Text::GetText(App *a){
     return texture;
   }
   return nullptr;
-}
-
-Vec2 Text::GetOrigin(){
-  if(center){
-    origin = Vec2(rect.w/2, rect.h/2);
-  }
-  return origin;
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 
+#include "Global.h"
 #include "Class.h"
 
 #include "Vec4.h"
@@ -31,8 +32,8 @@ class Font{
   int Setup(const char* location, int size, int r, int g, int b, int a);
   Font(const char* location, int size, int divisor);
   int Setup(const char* location, int size, int divisor);
-  shared_ptr<Texture> GetText(App *a, const char* text);
-  shared_ptr<Texture> GetText(App *a, const char* text, int &iTime);
+  shared_ptr<Texture> GetText(const char* text);
+  shared_ptr<Texture> GetText(const char* text, int &iTime);
   bool GetRGB(){ return rgb; }
   void SetDivisor(int divisor) { this->divisor = divisor; }
 
