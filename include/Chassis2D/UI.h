@@ -15,12 +15,10 @@ class UI{
   vector<Text*> textList;
   vector<UIObject*> uiObjectList;
  public:
-  void AddButton(Button* button) { buttonList.push_back(button); }
   void AddText(Text* text) { textList.push_back(text); }
   void AddUIObject(UIObject* uiObject) { uiObjectList.push_back(uiObject); }
-  void RemoveButton(Button *button);
   void RemoveText(Text* text);
-  void RemoveUIObject(Button *button);
+  //void RemoveUIObject(Button *button);
 
   vector<Button*> GetButtons() { return buttonList; }
   vector<Text*> GetTexts() { return textList; }
