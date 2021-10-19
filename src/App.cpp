@@ -399,17 +399,6 @@ void App::DrawParticles(){
   }
 }
 
-void App::DrawUI(){
-  if(ui){
-    for(int i = 0; i < ui->GetTexts().size(); i++){
-      Draw(ui->GetTexts()[i]);
-    }
-    for(int i = 0; i < ui->GetUIObjects().size(); i++){
-      Draw(ui->GetUIObjects()[i]);
-    }
-  }
-}
-
 int App::StartParticleSystem(ParticleSystem *particleSystem, Vec2 position, int time){
   if(particleSystem){
     ParticleSystem *tmp = new ParticleSystem(*particleSystem);

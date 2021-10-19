@@ -8,7 +8,6 @@
 #include "Object.h"
 #include "Texture.h"
 #include "Sound.h"
-#include "UI.h"
 #include "UIObject.h"
 #include "Text.h"
 #include "Font.h"

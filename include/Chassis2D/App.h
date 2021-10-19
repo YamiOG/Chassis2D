@@ -82,8 +82,6 @@ class App{
   int Draw(Text* text);
   void DrawParticles();
   void Present();
-  void DrawUI();
-  void SetUI(UI *ui) { this->ui = ui; }
   
   b2World* GetWorld() { return c2World; }
   int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
