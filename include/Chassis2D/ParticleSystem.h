@@ -17,15 +17,11 @@ class ParticleSystem{
  private:
   Vec2 velocity;
   int time = -1;
-  int rate = 1;
-  int maximum = -1;
-  int count = 0;
-  int minAngle, maxAngle;
-  float speed = 1.f;
+  int rate, maximum, minAngle, maxAngle, categoryBits, maskBits, lifetime;
+  float speed = 1.0f;
 
   Vec2 position, size;
   float friction, density, restitution;
-  int categoryBits, maskBits, lifetime;
   vector<shared_ptr<Particle>> particles;
 
   bool hide = false;

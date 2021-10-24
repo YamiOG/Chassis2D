@@ -31,7 +31,6 @@ class App{
   bool close = false;
 
   int width, height;
-  UI *ui;
 
   int velocityI, positionI;
   int physicsFPS;
