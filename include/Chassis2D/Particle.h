@@ -21,6 +21,12 @@ class Particle : public Object{
 
  public:
   Particle(){}
+  Particle(Vec4 rect, int lifetime);
+  int Setup(Vec4 rect, int lifetime);
+  Particle(Vec4 rect, float friction, float density, float restitution, int lifetime);
+  int Setup(Vec4 rect, float friction, float density, float restitution, int lifetime);
+  Particle(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime);
+  int Setup(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime);
   Particle(float x, float y, float w, float h, int lifetime);
   int Setup(float x, float y, float w, float h, int lifetime);
   Particle(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime);
