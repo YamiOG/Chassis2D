@@ -7,7 +7,7 @@ UIObject::UIObject(int x, int y, int w, int h){
 }
 
 void UIObject::Setup(int x, int y, int w, int h){
-  rect = Vec4(x, y, w, h);
+  rect = Vec4((float)x, (float)y, (float)w, (float)h);
 }
 
 void UIObject::SetTexture(Texture* texture){
