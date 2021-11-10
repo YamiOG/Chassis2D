@@ -17,7 +17,7 @@ int Text::Setup(float x, float y, string text, Font *font){
 
 shared_ptr<Texture> Text::GetTexture(){
   if(!text.empty()){
-    if(pText != text || &color != &font->GetColor()){
+    if(pText != text || (color.r != font->GetColor().r || color.g != font->GetColor().g || color.b != font->GetColor().b)){
       texture = font->GetText(text.c_str());
       pText = text;
       color = font->GetColor();
