@@ -3,7 +3,7 @@
 **This version is still largely incomplete**
 
 # Chassis2D
-[![Build Status](https://travis-ci.com/YamiOG/Chassis2D.svg?branch=master)](https://travis-ci.com/YamiOG/Chassis2D)
+[![Build Status](https://github.com/YamiOG/Chassis2D/actions/workflows/cmake.yml/badge.svg?branch=master)](https://github.com/YamiOG/Chassis2D/actions/workflows/cmake.yml)
 [![](https://img.shields.io/github/last-commit/YamiOG/Chassis2D.svg)](https://github.com/YamiOG/Chassis2D/commits/master)
 [![Language grade: C/C++](https://img.shields.io/lgtm/grade/cpp/g/YamiOG/Chassis2D.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/YamiOG/Chassis2D/context:cpp)
 [![License: MIT](https://img.shields.io/github/license/YamiOG/Chassis2D.svg)](https://opensource.org/licenses/MIT)
