@@ -17,15 +17,10 @@ int Text::Setup(float x, float y, string text, Font *font){
 
 shared_ptr<Texture> Text::GetTexture(){
   if(!text.empty()){
-    if(text == pText){
-      if(font->GetRGB()){
-        texture = font->GetText(text.c_str(), iTime);
-        pText = text;
-      }
-      else{
-        texture = font->GetText(text.c_str());
-        pText = text;
-      }
+    if(pText != text || &color != &font->GetColor()){
+      texture = font->GetText(text.c_str());
+      pText = text;
+      color = font->GetColor();
     }
 
     if(!texture){

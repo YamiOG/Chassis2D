@@ -47,7 +47,6 @@ class ParticleSystem{
   void SetMaximum(int max) { this->maximum = max; }
   void SetRate(int rate) { this->rate = rate; }
 
-  //Vec2 GetPosition() { return position; }
   int GetTime() { return time; }
   int GetMaximum() { return maximum; }
   int GetRate() { return rate; }

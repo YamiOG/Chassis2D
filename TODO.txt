@@ -1,0 +1,9 @@
+<2021>
+-Polish or Remove ParticleSystem / 11
+-Ease of Access to SDL2 Commands / 11
+    - Changing Window Type / 11
+    - Checking Inputs / 11
+-Add Network Class / 11 
+-Add More Demos / 11
+
+##Chassis2D TODO##

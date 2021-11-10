@@ -448,6 +448,10 @@ void App::SetMasterVolume(float value){
   c2Soloud->setGlobalVolume(value);
 }
 
+bool App::IsMouseClicked(int MOUSE_TYPE){
+  return mouseClick[MOUSE_TYPE];
+}
+
 bool App::IsLeftMouse() { 
   return mouseClick[MOUSE_LEFT];
 }
