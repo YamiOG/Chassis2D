@@ -18,14 +18,12 @@ void ParticleSystem::Setup(int minAngle, int maxAngle, int rate, int maximum, fl
 }
 
 void ParticleSystem::SetParticle(float x, float y, float w, float h, int lifetime, int scale){
-  position = Vec2(x, y);
-  size = Vec2(w, h);
+  this->rect = Vec4(x, y, w, h); 
   this->lifetime = lifetime;
 }
 
 void ParticleSystem::SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime, int scale){
-  position = Vec2(x, y);
-  size = Vec2(w, h);
+  this->rect = Vec4(x, y, w, h);
   this->friction = friction;
   this->density = density;
   this->restitution = restitution;
@@ -33,8 +31,30 @@ void ParticleSystem::SetParticle(float x, float y, float w, float h, float frict
 }
 
 void ParticleSystem::SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime, int scale){
-  position = Vec2(x, y);
-  size = Vec2(w, h);
+  this->rect = Vec4(x, y, w, h);
+  this->friction = friction;
+  this->density = density;
+  this->restitution = restitution;
+  this->categoryBits = categoryBits;
+  this->maskBits = maskBits;
+  this->lifetime = lifetime;
+}
+
+void ParticleSystem::SetParticle(Vec4 rect, int lifetime, int scale){
+  this->rect = rect;
+  this->lifetime = lifetime;
+}
+
+void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float restitution, int lifetime, int scale){
+  this->rect = rect;
+  this->friction = friction;
+  this->density = density;
+  this->restitution = restitution;
+  this->lifetime = lifetime;
+}
+
+void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime, int scale){
+  this->rect = rect;
   this->friction = friction;
   this->density = density;
   this->restitution = restitution;
@@ -46,7 +66,7 @@ void ParticleSystem::SetParticle(float x, float y, float w, float h, float frict
 void ParticleSystem::Update(){
   for(int i = 0; i < rate; i++){
     if(particles.size() < maximum){
-      Particle *p = new Particle(position.x, position.y, size.x, size.y, friction, density, restitution, categoryBits, maskBits, lifetime);
+      Particle *p = new Particle(rect, friction, density, restitution, categoryBits, maskBits, lifetime);
 
       int diff = 180 - abs(abs(minAngle - maxAngle) - 180); 
       double angle = minAngle + (rand() % diff);

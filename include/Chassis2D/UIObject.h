@@ -37,6 +37,10 @@ class UIObject{
   void SetColor(int r, int g, int b, int a) { color.r = r; color.g = g; color.b = b; color.a = a; }
   Color GetColor() { return color; }
 
+  Vec2 GetPosition() { return Vec2(rect.x, rect.y); }
+  void SetPosition(float x, float y) { this->rect.x = x; this->rect.y = y; }
+  void SetPosition(Vec2 position) { this->rect.x = position.x; this->rect.y = position.y; }
+
   Vec4 GetRect() { return rect; }
   void SetRect(Vec4 rect) { this->rect = rect; }
 

@@ -11,6 +11,7 @@ class Timer{
   public:
     Timer(){} 
 
+    Timer(int millis) { this->millis = millis; }
     void Setup(int millis) { this->millis = millis; }
     void SetLength(int millis) { Setup(millis); }
     

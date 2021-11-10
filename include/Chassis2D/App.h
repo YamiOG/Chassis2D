@@ -31,7 +31,6 @@ class App{
   bool close = false;
 
   int width, height;
-  UI *ui;
 
   int velocityI, positionI;
   int physicsFPS;
@@ -80,12 +79,9 @@ class App{
   int Draw(Particle *particle);
   int Draw(UIObject* uiObject);
   int Draw(Text* text);
-  int Draw(Button *button);
   void DrawParticles();
   void Present();
-  void DrawUI();
-  void SetUI(UI *ui) { this->ui = ui; }
-  
+
   b2World* GetWorld() { return c2World; }
   int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 
@@ -99,6 +95,7 @@ class App{
   bool IsPressed(string k);
   bool IsColliding(Object* o1, Object* o2);
   bool IsSensorColliding(Object *o, int id);
+  bool IsMouseClicked(int MOUSE_TYPE);
   bool IsLeftMouse();
   bool IsMiddleMouse();
   bool IsRightMouse();

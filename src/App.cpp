@@ -370,30 +370,6 @@ int App::Draw(Text *text){
   return 0;
 }
 
-int App::Draw(Button *button){
-  if(button){
-    if(!button->IsHidden()){ 
-      if(button->GetTexture().get()){
-        Draw(button->GetTexture().get(), button->GetRect() - button->GetOrigin());
-      }
-      else{
-        Draw((UIObject*)button);
-      }
-
-      if(button->GetText()){
-        if(!button->GetText()->IsHidden()){ 
-          Draw(button->GetText()->GetTexture().get(), button->GetText()->GetRect() - button->GetText()->GetOrigin());
-        }
-      }
-    }
-  }
-  else{
-    cout << "ERROR:Button is a nullptr" << endl;
-    return -1;
-  }
-  return 0;
-}
-
 int App::Draw(Particle *particle){
   if(particle){
     if(!particle->IsHidden()){ 
@@ -419,20 +395,6 @@ void App::DrawParticles(){
       for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
           Draw(particleSystems[i]->GetParticles()[j]->GetTexture().get(), particleSystems[i]->GetParticles()[j]->GetRect() - particleSystems[i]->GetParticles()[j]->GetOrigin());
       }
-    }
-  }
-}
-
-void App::DrawUI(){
-  if(ui){
-    for(int i = 0; i < ui->GetButtons().size(); i++){
-      Draw(ui->GetButtons()[i]);
-    }
-    for(int i = 0; i < ui->GetTexts().size(); i++){
-      Draw(ui->GetTexts()[i]);
-    }
-    for(int i = 0; i < ui->GetUIObjects().size(); i++){
-      Draw(ui->GetUIObjects()[i]);
     }
   }
 }
@@ -484,6 +446,10 @@ bool App::IsSensorColliding(Object *o, int id){
 
 void App::SetMasterVolume(float value){
   c2Soloud->setGlobalVolume(value);
+}
+
+bool App::IsMouseClicked(int MOUSE_TYPE){
+  return mouseClick[MOUSE_TYPE];
 }
 
 bool App::IsLeftMouse() { 

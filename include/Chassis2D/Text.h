@@ -16,13 +16,15 @@ using namespace std;
 class Text : public UIObject{
  private:
   Font *font;
-  string text;
+  string text, pText;
 
   int iTime = -1;
  public:
   Text(){}
   Text(float x, float y, string text, Font *font);
   int Setup(float x, float y, string text, Font *font);
+
+  void SetText(string text) { this->text = text; }
 
   shared_ptr<Texture> GetTexture();
 

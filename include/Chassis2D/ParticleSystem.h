@@ -17,15 +17,12 @@ class ParticleSystem{
  private:
   Vec2 velocity;
   int time = -1;
-  int rate = 1;
-  int maximum = -1;
-  int count = 0;
-  int minAngle, maxAngle;
-  float speed = 1.f;
+  int rate, maximum, minAngle, maxAngle, categoryBits, maskBits, lifetime;
+  float speed = 1.0f;
 
-  Vec2 position, size;
+  //Vec2 position, size;
+  Vec4 rect;
   float friction, density, restitution;
-  int categoryBits, maskBits, lifetime;
   vector<shared_ptr<Particle>> particles;
 
   bool hide = false;
@@ -34,20 +31,22 @@ class ParticleSystem{
   ParticleSystem(int minAngle, int maxAngle, int rate, int maximum, float speed);
   void Setup(int minAngle, int maxAngle, int rate, int maximum, float speed);
 
-  void SetParticle(float x, float y,float w, float h, int lifetime, int scale);
+  void SetParticle(float x, float y, float w, float h, int lifetime, int scale);
   void SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime, int scale);
   void SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime, int scale);
+  void SetParticle(Vec4 rect, int lifetime, int scale);
+  void SetParticle(Vec4 rect, float friction, float density, float restitution, int lifetime, int scale);
+  void SetParticle(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime, int scale);
 
   void Update();
 
   vector<shared_ptr<Particle>> GetParticles() { return particles; }
 
-  void SetPosition(Vec2 position) { this->position = position; }
+  void SetPosition(Vec2 position) { rect = Vec4(position.x, position.y, rect.w, rect.h); }
   void SetTime(int time) { this->time = time; }
   void SetMaximum(int max) { this->maximum = max; }
   void SetRate(int rate) { this->rate = rate; }
 
-  Vec2 GetPosition() { return position; }
   int GetTime() { return time; }
   int GetMaximum() { return maximum; }
   int GetRate() { return rate; }

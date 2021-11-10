@@ -41,7 +41,6 @@ class Vec4{
   Vec4 operator +(Vec4 val) { return Vec4(x + val.x, y + val.y, w + val.w, h + val.h); }
   Vec4 operator +(float val) { return Vec4(x + val, y + val, w + val, h + val); }
   Vec4 operator +(Vec2 val) { return Vec4(x + val.x, y + val.y, w, h); }
-
 };
 
 #endif
