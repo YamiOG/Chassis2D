@@ -40,6 +40,7 @@ class Object{
   b2Body *GetBody(){ return body; }
   void SetBody(b2Body *body) {this->body = body; }
   void SetVelocity(Vec2 velocity);
+  void SetVelocity(float magnitude, float angle);
   void RotationFixed(bool fixed);
   int ApplyConstVelocity(Vec2 velocity);
   int ApplyConstVelocity(Vec2 velocity, bool jumping);

@@ -242,6 +242,14 @@ void Object::SetVelocity(Vec2 velocity) {
   if(body) body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y)); 
 }
 
+void Object::SetVelocity(float magnitude, float angle){
+  if(body){
+    b2Vec2 velocity = b2Vec2(cos(angle), sin(angle));
+    velocity *= magnitude;
+    body->SetLinearVelocity(velocity); 
+  }
+}
+
 void Object::RotationFixed(bool fixed) { 
   if(body) body->SetFixedRotation(fixed);
 }
