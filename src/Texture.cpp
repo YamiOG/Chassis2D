@@ -108,10 +108,8 @@ int Texture::Setup(SDL_Surface *surface){
 }
 
 Vec4 Texture::GetCrop(){
-  Vec4 rect = Vec4(0.0f, 0.0f, (float)width, (float)height);
-  return rect;
+  return Vec4(0.0f, 0.0f, (float)width, (float)height);
 }
 
 Texture::~Texture(){
-  SDL_DestroyTexture(texture);
 }

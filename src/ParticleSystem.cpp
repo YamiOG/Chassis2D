@@ -65,7 +65,7 @@ void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float
 
 void ParticleSystem::Update(){
   for(int i = 0; i < rate; i++){
-    if(particles.size() < maximum){ //particles.size() returns 0
+    if(particles.size() < maximum){
       Particle *p = new Particle(rect, friction, density, restitution, categoryBits, maskBits, lifetime);
       p->SetTexture(texture.get(), offset, size);
 
@@ -83,18 +83,15 @@ void ParticleSystem::Update(){
     }
   }
 
-  for(int i = 0; i < particles.size();){
-   if(SDL_GetTicks() >= particles[i]->GetTime()){
+  for(int i = 0; i < particles.size(); i++){
+    if(SDL_GetTicks() >= particles[i]->GetTime()){
       particles.erase(particles.begin()+i);
-    }
-    else{
-      i++;
     }
   }
 }
 
 void ParticleSystem::SetTexture(Texture* t){
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(0,0);
@@ -102,7 +99,7 @@ void ParticleSystem::SetTexture(Texture* t){
 }
 
 void ParticleSystem::SetTexture(Texture* t, int width, int height){
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(0,0);
@@ -110,7 +107,7 @@ void ParticleSystem::SetTexture(Texture* t, int width, int height){
 }
 
 void ParticleSystem::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(xOffset, yOffset);
@@ -118,7 +115,7 @@ void ParticleSystem::SetTexture(Texture* t, int xOffset, int yOffset, int width,
 }
 
 void ParticleSystem::SetTexture(Texture* t, Vec2 offset, int width, int height) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   this->offset = offset;
@@ -126,7 +123,7 @@ void ParticleSystem::SetTexture(Texture* t, Vec2 offset, int width, int height) 
 }
 
 void ParticleSystem::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(xOffset, yOffset);
@@ -134,7 +131,7 @@ void ParticleSystem::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size)
 }
 
 void ParticleSystem::SetTexture(Texture* t, Vec2 offset, Vec2 size) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   this->offset = offset;
@@ -142,4 +139,5 @@ void ParticleSystem::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
 }
 
 ParticleSystem::~ParticleSystem(){
+  //texture = nullptr;
 }

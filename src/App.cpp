@@ -176,14 +176,11 @@ bool App::IsPressed(string k){
 
 void App::PhysicsUpdate(){
   if((1000/physicsFPS) <= SDL_GetTicks()-pastTime){
-    for(int i = 0; i < particleSystems.size();){
+    for(int i = 0; i < particleSystems.size(); i++){
       particleSystems[i]->Update();
 
       if(SDL_GetTicks() >= (unsigned)particleSystems[i]->GetTime()){
         particleSystems.erase(particleSystems.begin()+i);
-      }
-      else{
-        i++;
       }
     }
 

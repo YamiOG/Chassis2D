@@ -126,13 +126,12 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 
 Object::~Object(){
   if(c2World != nullptr){
-    //c2World->DestroyBody(body); //Causes Debugging Error, but also causes crash so idk
-    body = nullptr;
+    c2World->DestroyBody(body);
   }
 }
 
 void Object::SetTexture(Texture* t){
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(0,0);
@@ -140,7 +139,7 @@ void Object::SetTexture(Texture* t){
 }
 
 void Object::SetTexture(Texture* t, int width, int height){
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(0,0);
@@ -148,7 +147,7 @@ void Object::SetTexture(Texture* t, int width, int height){
 }
 
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(xOffset, yOffset);
@@ -156,7 +155,7 @@ void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int hei
 }
 
 void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   this->offset = offset;
@@ -164,7 +163,7 @@ void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) {
 }
 
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   offset = Vec2(xOffset, yOffset);
@@ -172,7 +171,7 @@ void Object::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) {
 }
 
 void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) { 
-  shared_ptr<Texture> sharedTexture(t); 
+  shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
   this->offset = offset;

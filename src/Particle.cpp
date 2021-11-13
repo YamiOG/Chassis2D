@@ -220,10 +220,6 @@ int Particle::Setup(float x, float y, float w, float h, float friction, float de
   return 0;
 }
 
-
 Particle::~Particle(){
-  if(c2World != nullptr){
-    //c2World->DestroyBody(body);
-    body = nullptr;
-  }
+  //texture = nullptr;
 }

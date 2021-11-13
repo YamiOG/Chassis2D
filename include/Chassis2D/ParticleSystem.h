@@ -27,7 +27,7 @@ class ParticleSystem{
 
   Vec4 rect;
   float friction, density, restitution;
-  vector<shared_ptr<Particle>> particles = vector<shared_ptr<Particle>>();
+  vector<shared_ptr<Particle>> particles;
 
   bool hide = false;
  public:
