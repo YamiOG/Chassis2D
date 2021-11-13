@@ -126,9 +126,17 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 
 Object::~Object(){
   if(c2World != nullptr){
-    c2World->DestroyBody(body);
+    //c2World->DestroyBody(body); //Causes Debugging Error, but also causes crash so idk
     body = nullptr;
   }
+}
+
+void Object::SetTexture(Texture* t){
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(0,0);
+  size = Vec2(width, height);
 }
 
 void Object::SetTexture(Texture* t, int width, int height){
@@ -244,7 +252,7 @@ void Object::SetVelocity(Vec2 velocity) {
 
 void Object::SetVelocity(float magnitude, float angle){
   if(body){
-    b2Vec2 velocity = b2Vec2(cos(angle), sin(angle));
+    b2Vec2 velocity = b2Vec2(cos(angle * M_PI / 180), -sin(angle * M_PI / 180));
     velocity *= magnitude;
     body->SetLinearVelocity(velocity); 
   }

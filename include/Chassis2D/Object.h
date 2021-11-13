@@ -22,7 +22,9 @@ class Object{
   shared_ptr<Texture> texture;
 
   float width, height;
-  Vec2 size, offset, origin;
+
+  Vec2 size, offset;
+  Vec2 origin = Vec2(0,0);
 
   bool hide = false;
  public:
@@ -59,6 +61,7 @@ class Object{
   Vec4 GetRect();
   void SetRect(Vec4 rect);
 
+  void SetTexture(Texture* t);
   void SetTexture(Texture* t, int width, int height);
   void SetTexture(Texture* t, int xOffset, int yOffset, int width, int height);
   void SetTexture(Texture* t, Vec2 offset, int width, int height);

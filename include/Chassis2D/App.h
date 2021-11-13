@@ -34,7 +34,7 @@ class App{
 
   int velocityI, positionI;
   int physicsFPS;
-  int pastTime;
+  int pastTime = 0;
 
   vector<shared_ptr<Particle>> particles;
   vector<shared_ptr<ParticleSystem>> particleSystems;
@@ -55,7 +55,7 @@ class App{
   void PhysicsUpdate();
   void SetPhysicsFPS(int physicsFPS) { this->physicsFPS = physicsFPS; }
   int GetPhysicsFPS() { return physicsFPS; }
-  void SetPhysicsScale(int scale) { c2Scale = scale; }
+  void SetPhysicsScale(int scale);
   int GetPhysicsScale() { return c2Scale; }
 
   void Update();

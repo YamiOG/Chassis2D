@@ -17,12 +17,12 @@ void ParticleSystem::Setup(int minAngle, int maxAngle, int rate, int maximum, fl
   this->speed = speed;
 }
 
-void ParticleSystem::SetParticle(float x, float y, float w, float h, int lifetime, int scale){
+void ParticleSystem::SetParticle(float x, float y, float w, float h, int lifetime){
   this->rect = Vec4(x, y, w, h); 
   this->lifetime = lifetime;
 }
 
-void ParticleSystem::SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime, int scale){
+void ParticleSystem::SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime){
   this->rect = Vec4(x, y, w, h);
   this->friction = friction;
   this->density = density;
@@ -30,7 +30,7 @@ void ParticleSystem::SetParticle(float x, float y, float w, float h, float frict
   this->lifetime = lifetime;
 }
 
-void ParticleSystem::SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime, int scale){
+void ParticleSystem::SetParticle(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime){
   this->rect = Vec4(x, y, w, h);
   this->friction = friction;
   this->density = density;
@@ -40,12 +40,12 @@ void ParticleSystem::SetParticle(float x, float y, float w, float h, float frict
   this->lifetime = lifetime;
 }
 
-void ParticleSystem::SetParticle(Vec4 rect, int lifetime, int scale){
+void ParticleSystem::SetParticle(Vec4 rect, int lifetime){
   this->rect = rect;
   this->lifetime = lifetime;
 }
 
-void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float restitution, int lifetime, int scale){
+void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float restitution, int lifetime){
   this->rect = rect;
   this->friction = friction;
   this->density = density;
@@ -53,7 +53,7 @@ void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float
   this->lifetime = lifetime;
 }
 
-void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime, int scale){
+void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime){
   this->rect = rect;
   this->friction = friction;
   this->density = density;
@@ -65,20 +65,15 @@ void ParticleSystem::SetParticle(Vec4 rect, float friction, float density, float
 
 void ParticleSystem::Update(){
   for(int i = 0; i < rate; i++){
-    if(particles.size() < maximum){
+    if(particles.size() < maximum){ //particles.size() returns 0
       Particle *p = new Particle(rect, friction, density, restitution, categoryBits, maskBits, lifetime);
+      p->SetTexture(texture.get(), offset, size);
 
       int diff = 180 - abs(abs(minAngle - maxAngle) - 180); 
       double angle = minAngle + (rand() % diff);
 
-      if(angle > 360.f) angle -= 360.f;
-      angle -= 180;
-      angle *= (3.14 / 180);
-        
-      Vec2 velocity(0.0f, speed);
-
-      velocity.x = velocity.x * cos(angle) - velocity.y * sin(angle);
-      velocity.y = velocity.y * cos(angle) + velocity.x * sin(angle);
+      Vec2 velocity = Vec2(cos(angle * M_PI / 180), -sin(angle * M_PI / 180));
+      velocity = velocity * speed;
 
       p->SetVelocity(velocity);
       p->SetTime(SDL_GetTicks() + p->GetLifetime());
@@ -96,6 +91,54 @@ void ParticleSystem::Update(){
       i++;
     }
   }
+}
+
+void ParticleSystem::SetTexture(Texture* t){
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(0,0);
+  size = Vec2(rect.w, rect.h);
+}
+
+void ParticleSystem::SetTexture(Texture* t, int width, int height){
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(0,0);
+  size = Vec2(width, height);
+}
+
+void ParticleSystem::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(xOffset, yOffset);
+  size = Vec2(width, height);
+}
+
+void ParticleSystem::SetTexture(Texture* t, Vec2 offset, int width, int height) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  this->offset = offset;
+  size = Vec2(width, height);
+}
+
+void ParticleSystem::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  offset = Vec2(xOffset, yOffset);
+  this->size = size;
+}
+
+void ParticleSystem::SetTexture(Texture* t, Vec2 offset, Vec2 size) { 
+  shared_ptr<Texture> sharedTexture(t); 
+  texture = sharedTexture;
+
+  this->offset = offset;
+  this->size = size;
 }
 
 ParticleSystem::~ParticleSystem(){

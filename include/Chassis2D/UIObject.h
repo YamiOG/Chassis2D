@@ -19,7 +19,7 @@ class UIObject{
   Color color = Color(0, 0, 0);
 
   Vec2 origin = Vec2(0, 0);
-  Vec4 rect = Vec4(0, 0, 0, 0);
+  Vec4 rect;
   int radius = 0;
 
   bool hide = false;

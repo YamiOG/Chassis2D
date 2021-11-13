@@ -21,6 +21,7 @@ int App::Setup(const char* title, int width, int height){
 
   this->velocityI = 8;
   this->positionI = 3;
+  this->physicsFPS = 60;
 
   if( SDL_Init(SDL_INIT_EVERYTHING) != 0){
     cout << "ERROR:SDL2 Initialization Failed" << endl;
@@ -66,6 +67,7 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
 
   this->velocityI = velocityI;
   this->positionI = positionI;
+  this->physicsFPS = 60;
 
   if( SDL_Init(SDL_INIT_EVERYTHING) != 0){
     cout << "ERROR:SDL2 Initialization Failed" << endl;
@@ -91,7 +93,7 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  c2World = new b2World(*gravity.ToB2());
+  c2World = new b2World(b2Vec2(gravity.x, gravity.y));
   if (!c2World) {
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
@@ -173,7 +175,7 @@ bool App::IsPressed(string k){
 }
 
 void App::PhysicsUpdate(){
-  if((unsigned)(1000/physicsFPS) <= SDL_GetTicks()-pastTime){
+  if((1000/physicsFPS) <= SDL_GetTicks()-pastTime){
     for(int i = 0; i < particleSystems.size();){
       particleSystems[i]->Update();
 
@@ -462,4 +464,8 @@ bool App::IsMiddleMouse() {
 
 bool App::IsRightMouse() { 
   return mouseClick[MOUSE_RIGHT];
+}
+
+void App::SetPhysicsScale(int scale) { 
+  c2Scale = scale;
 }
