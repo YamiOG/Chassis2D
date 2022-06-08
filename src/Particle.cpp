@@ -9,7 +9,7 @@ Particle::Particle(Vec4 rect, int lifetime){
 }
 
 int Particle::Setup(Vec4 rect, int lifetime){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -17,8 +17,8 @@ int Particle::Setup(Vec4 rect, int lifetime){
     width = rect.w;
     height = rect.h;
 
-    bodyDef.position.Set((rect.x + (width/2))/c2Scale, (rect.y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((rect.x + (width/2))/gScale, (rect.y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     bodyDef.type = b2_dynamicBody;
@@ -26,7 +26,7 @@ int Particle::Setup(Vec4 rect, int lifetime){
     fixture.density = 1.0f;
     fixture.restitution = 0.6f;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
 
@@ -44,7 +44,7 @@ Particle::Particle(Vec4 rect, float friction, float density, float restitution, 
 }
 
 int Particle::Setup(Vec4 rect, float friction, float density, float restitution, int lifetime){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -52,8 +52,8 @@ int Particle::Setup(Vec4 rect, float friction, float density, float restitution,
     width = rect.w;
     height = rect.h;
 
-    bodyDef.position.Set((rect.x + (width/2))/c2Scale, (rect.y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((rect.x + (width/2))/gScale, (rect.y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     bodyDef.type = b2_dynamicBody;
@@ -61,7 +61,7 @@ int Particle::Setup(Vec4 rect, float friction, float density, float restitution,
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
 
@@ -79,7 +79,7 @@ Particle::Particle(Vec4 rect, float friction, float density, float restitution, 
 }
 
 int Particle::Setup(Vec4 rect, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -87,8 +87,8 @@ int Particle::Setup(Vec4 rect, float friction, float density, float restitution,
     width = rect.w;
     height = rect.h;
 
-    bodyDef.position.Set((rect.x + (width/2))/c2Scale, (rect.y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((rect.x + (width/2))/gScale, (rect.y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -99,7 +99,7 @@ int Particle::Setup(Vec4 rect, float friction, float density, float restitution,
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
 
@@ -117,7 +117,7 @@ Particle::Particle(float x, float y, float w, float h, int lifetime){
 }
 
 int Particle::Setup(float x, float y, float w, float h, int lifetime){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -125,8 +125,8 @@ int Particle::Setup(float x, float y, float w, float h, int lifetime){
     width = w;
     height = h;
 
-    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     bodyDef.type = b2_dynamicBody;
@@ -134,7 +134,7 @@ int Particle::Setup(float x, float y, float w, float h, int lifetime){
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
 
@@ -152,7 +152,7 @@ Particle::Particle(float x, float y, float w, float h, float friction, float den
 }
 
 int Particle::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int lifetime){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -160,8 +160,8 @@ int Particle::Setup(float x, float y, float w, float h, float friction, float de
     width = w;
     height = h;
 
-    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     bodyDef.type = b2_dynamicBody;
@@ -169,7 +169,7 @@ int Particle::Setup(float x, float y, float w, float h, float friction, float de
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
 
@@ -187,7 +187,7 @@ Particle::Particle(float x, float y, float w, float h, float friction, float den
 }
 
 int Particle::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, int lifetime){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -195,8 +195,8 @@ int Particle::Setup(float x, float y, float w, float h, float friction, float de
     width = w;
     height = h;
 
-    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -207,7 +207,7 @@ int Particle::Setup(float x, float y, float w, float h, float friction, float de
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
 

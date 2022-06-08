@@ -47,16 +47,16 @@ class App{
   App(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
   int Setup(const char* title, int width, int height, Vec2 gravity, int velocityI, int positionI);
 
-  SDL_Renderer *GetRenderer() { return c2Renderer; }
-  SDL_Window *GetWindow() { return c2Window; }
-  SDL_Event *GetEvent() { return c2Event; }
+  SDL_Renderer *GetRenderer() { return gRenderer; }
+  SDL_Window *GetWindow() { return gWindow; }
+  SDL_Event *GetEvent() { return gEvent; }
   vector<SDL_Event*> GetEventList() { return eventList; }
 
   void PhysicsUpdate();
   void SetPhysicsFPS(int physicsFPS) { this->physicsFPS = physicsFPS; }
   int GetPhysicsFPS() { return physicsFPS; }
   void SetPhysicsScale(int scale);
-  int GetPhysicsScale() { return c2Scale; }
+  int GetPhysicsScale() { return gScale; }
 
   void Update();
   bool ShouldClose() { return close; }
@@ -82,10 +82,10 @@ class App{
   void DrawParticles();
   void Present();
 
-  b2World* GetWorld() { return c2World; }
+  b2World* GetWorld() { return gWorld; }
   int StartParticleSystem(ParticleSystem* particleSystem, Vec2 position, int time);
 
-  SoLoud::Soloud *GetSoLoud() { return c2Soloud; }
+  SoLoud::Soloud *GetSoLoud() { return gSoloud; }
   void SetMasterVolume(float value);
 
   string GetInputText();

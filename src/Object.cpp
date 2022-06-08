@@ -14,7 +14,7 @@ int Object::Setup(float x, float y, float w, float h, int categoryBits, int mask
 }
 
 int Object::Static(float x, float y, float w, float h, int categoryBits, int maskBits){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -22,8 +22,8 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
     width = w;
     height = h;
 
-    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -31,7 +31,7 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
 
     bodyDef.type = b2_staticBody;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -52,7 +52,7 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 }
 
 int Object::Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -60,8 +60,8 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
     width = w;
     height = h;
 
-    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -72,7 +72,7 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
     fixture.density = density;
     fixture.restitution = restitution;
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -88,7 +88,7 @@ Object::Object(float x, float y, float w, float h, float friction, float density
 }
 
 int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic){
-  if(c2World != nullptr){
+  if(gWorld != nullptr){
     b2BodyDef bodyDef;
     b2FixtureDef fixture;
     b2PolygonShape shape;
@@ -96,8 +96,8 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
     width = w;
     height = h;
 
-    bodyDef.position.Set((x + (width/2))/c2Scale, (y + (height/2))/c2Scale);
-    shape.SetAsBox((width/2)/c2Scale, (height/2)/c2Scale);
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
     fixture.shape = &shape;
 
     fixture.filter.categoryBits = categoryBits;
@@ -113,7 +113,7 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
       bodyDef.type = b2_staticBody;
     }
 
-    body = c2World->CreateBody(&bodyDef);
+    body = gWorld->CreateBody(&bodyDef);
     body->CreateFixture(&fixture);
     body->GetUserData().pointer = (uintptr_t)this;
   }
@@ -125,8 +125,8 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 }
 
 Object::~Object(){
-  if(c2World != nullptr){
-    c2World->DestroyBody(body);
+  if(gWorld != nullptr){
+    gWorld->DestroyBody(body);
   }
 }
 
@@ -180,7 +180,7 @@ void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
 
 Vec4 Object::GetCollisionBox(){
   if(body){
-    return Vec4((body->GetPosition().x * c2Scale) - (width / 2) + origin.x, (body->GetPosition().y * c2Scale) - (height / 2) + origin.x, width, height );
+    return Vec4((body->GetPosition().x * gScale) - (width / 2) + origin.x, (body->GetPosition().y * gScale) - (height / 2) + origin.x, width, height );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -190,7 +190,7 @@ Vec4 Object::GetCollisionBox(){
 
 Vec4 Object::GetRect() {
   if(body){ 
-    return Vec4((body->GetPosition().x * c2Scale) - (width / 2) + offset.x, (body->GetPosition().y * c2Scale) - (height / 2) + offset.y, size.x, size.y );
+    return Vec4((body->GetPosition().x * gScale) - (width / 2) + offset.x, (body->GetPosition().y * gScale) - (height / 2) + offset.y, size.x, size.y );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -231,7 +231,7 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
   if(body){
     b2FixtureDef tmpFixture;
     b2PolygonShape tmpShape;
-    tmpShape.SetAsBox(w/2/c2Scale, h/2/c2Scale, b2Vec2((x-width/2)/c2Scale, (y-height/2)/c2Scale), 0);
+    tmpShape.SetAsBox(w/2/gScale, h/2/gScale, b2Vec2((x-width/2)/gScale, (y-height/2)/gScale), 0);
     tmpFixture.shape = &tmpShape;
 
     tmpFixture.isSensor = true;

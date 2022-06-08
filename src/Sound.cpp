@@ -43,10 +43,10 @@ Sound::~Sound(){
 
 void Sound::Play(){
   if(isWAV){
-    c2Soloud->play(*sample);
+    gSoloud->play(*sample);
   }
   else{
-    c2Soloud->play(*stream);
+    gSoloud->play(*stream);
   }
 }
 

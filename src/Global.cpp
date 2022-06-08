@@ -11,13 +11,13 @@ namespace SoLoud{
   class Soloud;
 }
 
-SDL_Window *c2Window; 
-SDL_Renderer *c2Renderer;
-SDL_Event *c2Event;
-b2World *c2World;
-SoLoud::Soloud *c2Soloud;
+SDL_Window *gWindow; 
+SDL_Renderer *gRenderer;
+SDL_Event *gEvent;
+b2World *gWorld;
+SoLoud::Soloud *gSoloud;
 
-int c2Scale = 1;
+int gScale = 1;
 
-int mouseClick[3] = {0, 0, 0};
-Vec2 mousePosition = Vec2(0, 0);
+int gMouseClick[3] = {0, 0, 0};
+Vec2 gMousePosition = Vec2(0, 0);

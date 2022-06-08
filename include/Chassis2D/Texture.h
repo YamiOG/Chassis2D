@@ -16,7 +16,7 @@ struct SDL_Texture;
 
 class Texture{
  private:
-  SDL_Texture *texture;
+  SDL_Texture *_texture;
   int width, height;
  public:
   Texture(){}
@@ -28,7 +28,7 @@ class Texture{
   int Setup(SDL_Texture *texture);
   Texture(SDL_Surface *surface);
   int Setup(SDL_Surface *surface);
-  SDL_Texture *GetData(){ return texture;}
+  SDL_Texture *GetData(){ return _texture;}
   Vec4 GetCrop();
   Vec2 GetSize() { return Vec2((float)width, (float)height); }
 

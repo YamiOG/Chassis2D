@@ -12,20 +12,20 @@ namespace SoLoud{
   class Soloud;
 }
 
-extern int c2Scale;
+extern int gScale;
 
-extern int mouseClick[3];
-extern Vec2 mousePosition;
+extern int gMouseClick[3];
+extern Vec2 gMousePosition;
 
 const int MOUSE_LEFT = 0;
 const int MOUSE_MIDDLE = 1;
 const int MOUSE_RIGHT = 2;
 
-extern SDL_Window *c2Window; 
-extern SDL_Renderer *c2Renderer;
-extern SDL_Event *c2Event;
-extern b2World *c2World;
-extern SoLoud::Soloud *c2Soloud;
+extern SDL_Window *gWindow; 
+extern SDL_Renderer *gRenderer;
+extern SDL_Event *gEvent;
+extern b2World *gWorld;
+extern SoLoud::Soloud *gSoloud;
 
 enum Category {
     TERRAIN = 0x0001,

@@ -28,33 +28,33 @@ int App::Setup(const char* title, int width, int height){
     return -1;
   }
 
-  c2Window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
-  if (!c2Window) {
+  gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+  if (!gWindow) {
     cout << "ERROR:Window Creation Failed" << endl;
     return -1;
   }
 
-  c2Renderer = SDL_CreateRenderer(c2Window, -1, 0);
-  if (!c2Renderer) {
+  gRenderer = SDL_CreateRenderer(gWindow, -1, 0);
+  if (!gRenderer) {
     cout << "ERROR:Renderer Creation Failed" << endl;
     return -1;
   }
 
-  c2Event = new SDL_Event;
+  gEvent = new SDL_Event;
 
   if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
   }
 
-  c2World = new b2World(b2Vec2(0,0));
-  if (!c2World) {
+  gWorld = new b2World(b2Vec2(0,0));
+  if (!gWorld) {
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
   }
 
-  c2Soloud = new SoLoud::Soloud;
-  if(c2Soloud->init() != 0){
+  gSoloud = new SoLoud::Soloud;
+  if(gSoloud->init() != 0){
     cout << "ERROR:SoLoud Initialization Failed" << endl;
     return -1;
   }
@@ -74,33 +74,33 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
     return -1;
   }
 
-  c2Window = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
-  if (!c2Window) {
+  gWindow = SDL_CreateWindow(title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+  if (!gWindow) {
     cout << "ERROR:Window Creation Failed" << endl;
     return -1;
   }
 
-  c2Renderer = SDL_CreateRenderer(c2Window, -1, 0);
-  if (!c2Renderer) {
+  gRenderer = SDL_CreateRenderer(gWindow, -1, 0);
+  if (!gRenderer) {
     cout << "ERROR:Renderer Creation Failed" << endl;
     return -1;
   }
 
-  c2Event = new SDL_Event;
+  gEvent = new SDL_Event;
 
   if(TTF_Init() != 0){
     cout << "ERROR:TTF Initialization Failed" << endl;
     return -1;
   }
 
-  c2World = new b2World(b2Vec2(gravity.x, gravity.y));
-  if (!c2World) {
+  gWorld = new b2World(b2Vec2(gravity.x, gravity.y));
+  if (!gWorld) {
     cout << "ERROR:b2World Creation Failed" << endl;
     return -1;
   }
 
-  c2Soloud = new SoLoud::Soloud;
-  if(c2Soloud->init() != 0){
+  gSoloud = new SoLoud::Soloud;
+  if(gSoloud->init() != 0){
     cout << "ERROR:SoLoud Initialization Failed" << endl;
     return -1;
   }
@@ -108,45 +108,45 @@ int App::Setup(const char* title, int width, int height, Vec2 gravity, int veloc
 }
 
 App::~App(){
-  c2Soloud->deinit();
-  delete c2Soloud;
-  delete c2World;
+  gSoloud->deinit();
+  delete gSoloud;
+  delete gWorld;
   TTF_Quit();
-  delete c2Event;
-  SDL_DestroyRenderer(c2Renderer);
-  SDL_DestroyWindow(c2Window);
+  delete gEvent;
+  SDL_DestroyRenderer(gRenderer);
+  SDL_DestroyWindow(gWindow);
   SDL_Quit();
 }
 
 void App::Update(){
   eventList.clear();
 
-  mouseClick[MOUSE_LEFT] = 0;
-  mouseClick[MOUSE_MIDDLE] = 0;
-  mouseClick[MOUSE_RIGHT] = 0;
+  gMouseClick[MOUSE_LEFT] = 0;
+  gMouseClick[MOUSE_MIDDLE] = 0;
+  gMouseClick[MOUSE_RIGHT] = 0;
 
   int x, y;
   SDL_GetMouseState(&x, &y);
-  mousePosition.Set((float)x,(float)y);
+  gMousePosition.Set((float)x,(float)y);
 
-  while(SDL_PollEvent(c2Event)){
-    eventList.push_back(c2Event);
+  while(SDL_PollEvent(gEvent)){
+    eventList.push_back(gEvent);
 
-    if(c2Event->type == SDL_QUIT){
+    if(gEvent->type == SDL_QUIT){
       close = true;
     }
 
-    else if(c2Event->type == SDL_MOUSEBUTTONDOWN){
-      switch (c2Event->button.button)
+    else if(gEvent->type == SDL_MOUSEBUTTONDOWN){
+      switch (gEvent->button.button)
       {
       case SDL_BUTTON_LEFT:
-        mouseClick[MOUSE_LEFT] = 1;
+        gMouseClick[MOUSE_LEFT] = 1;
         break;
       case SDL_BUTTON_MIDDLE:
-        mouseClick[MOUSE_MIDDLE] = 1;
+        gMouseClick[MOUSE_MIDDLE] = 1;
         break;
       case SDL_BUTTON_RIGHT:
-        mouseClick[MOUSE_RIGHT] = 1;
+        gMouseClick[MOUSE_RIGHT] = 1;
         break;
 
       default:
@@ -184,7 +184,7 @@ void App::PhysicsUpdate(){
       }
     }
 
-    c2World->Step(1.0f/physicsFPS, velocityI, positionI);
+    gWorld->Step(1.0f/physicsFPS, velocityI, positionI);
     pastTime = SDL_GetTicks();
   }
 
@@ -192,22 +192,22 @@ void App::PhysicsUpdate(){
 }
 
 void App::Clear(){
-  SDL_SetRenderDrawColor(c2Renderer, 255, 255, 255, 255);
-  SDL_RenderClear(c2Renderer);
+  SDL_SetRenderDrawColor(gRenderer, 255, 255, 255, 255);
+  SDL_RenderClear(gRenderer);
 }
 
 void App::Clear(int r, int g, int b){
-  SDL_SetRenderDrawColor(c2Renderer, r, g, b, 255);
-  SDL_RenderClear(c2Renderer);
+  SDL_SetRenderDrawColor(gRenderer, r, g, b, 255);
+  SDL_RenderClear(gRenderer);
 }
 
 void App::Clear(Color color){
-  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
-  SDL_RenderClear(c2Renderer);
+  SDL_SetRenderDrawColor(gRenderer, color.r, color.g, color.b, color.a);
+  SDL_RenderClear(gRenderer);
 }
 
 void App::Present(){
-  SDL_RenderPresent(c2Renderer);
+  SDL_RenderPresent(gRenderer);
 }
 
 void App::FillRect(Vec4 rect, int r, int g, int b){
@@ -219,9 +219,9 @@ void App::FillRect(Vec4 rect, int r, int g, int b, int a){
 }
 
 void App::FillRect(Vec4 rect, Color color){
-  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
+  SDL_SetRenderDrawColor(gRenderer, color.r, color.g, color.b, color.a);
   SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-  SDL_RenderFillRect(c2Renderer, &tRect);
+  SDL_RenderFillRect(gRenderer, &tRect);
 }
 
 void App::FillRoundedRect(Vec4 rect, int radius, int r, int g, int b){
@@ -233,11 +233,11 @@ void App::FillRoundedRect(Vec4 rect, int radius, int r, int g, int b, int a){
 }
 
 void App::FillRoundedRect(Vec4 rect, int radius, Color color){
-  SDL_SetRenderDrawColor(c2Renderer, color.r, color.g, color.b, color.a);
+  SDL_SetRenderDrawColor(gRenderer, color.r, color.g, color.b, color.a);
   SDL_Rect wRect = {(int)rect.x+radius, (int)rect.y, (int)rect.w-(radius*2), (int)rect.h};
-  SDL_RenderFillRect(c2Renderer, &wRect);
+  SDL_RenderFillRect(gRenderer, &wRect);
   SDL_Rect hRect = {(int)rect.x, (int)rect.y+radius, (int)rect.w, (int)rect.h-(radius*2)};
-  SDL_RenderFillRect(c2Renderer, &hRect);
+  SDL_RenderFillRect(gRenderer, &hRect);
 
   if(radius >= 1){
     SDL_Point *points = new SDL_Point[(int)pow(radius*2, 2)];
@@ -255,13 +255,13 @@ void App::FillRoundedRect(Vec4 rect, int radius, Color color){
         }
       }
     } 
-    SDL_RenderDrawPoints(c2Renderer, points, (int)pow(radius*2, 2));
+    SDL_RenderDrawPoints(gRenderer, points, (int)pow(radius*2, 2));
     delete[] points;
   }
 }
 
 Vec2 App::GetMouse(){
-  return mousePosition;
+  return gMousePosition;
 }
 
 long int App::GetTime() { 
@@ -269,7 +269,7 @@ long int App::GetTime() {
 }
 
 bool App::IsMouseInVec4(Vec4 rect){
-  if(rect.x < mousePosition.x && mousePosition.x < rect.x + rect.w && rect.y < mousePosition.y && mousePosition.y < rect.y + rect.h){
+  if(rect.x < gMousePosition.x && gMousePosition.x < rect.x + rect.w && rect.y < gMousePosition.y && gMousePosition.y < rect.y + rect.h){
     return true;
   }
   return false;
@@ -278,7 +278,7 @@ bool App::IsMouseInVec4(Vec4 rect){
 int App::Draw(Texture *texture, Vec4 rect){
   if(texture){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-    SDL_RenderCopy(c2Renderer, texture->GetData(), NULL, &tRect);
+    SDL_RenderCopy(gRenderer, texture->GetData(), NULL, &tRect);
   }
   else{
     cout << "ERROR:Texture is a nullptr" << endl;
@@ -291,7 +291,7 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
   if(texture){
     SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
     SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
-    SDL_RenderCopy(c2Renderer, texture->GetData(), &tCrop, &tRect);
+    SDL_RenderCopy(gRenderer, texture->GetData(), &tCrop, &tRect);
   }
   else{
     cout << "ERROR:Texture is a nullptr" << endl;
@@ -444,25 +444,25 @@ bool App::IsSensorColliding(Object *o, int id){
 }
 
 void App::SetMasterVolume(float value){
-  c2Soloud->setGlobalVolume(value);
+  gSoloud->setGlobalVolume(value);
 }
 
 bool App::IsMouseClicked(int MOUSE_TYPE){
-  return mouseClick[MOUSE_TYPE];
+  return gMouseClick[MOUSE_TYPE];
 }
 
 bool App::IsLeftMouse() { 
-  return mouseClick[MOUSE_LEFT];
+  return gMouseClick[MOUSE_LEFT];
 }
 
 bool App::IsMiddleMouse() { 
-  return mouseClick[MOUSE_MIDDLE];
+  return gMouseClick[MOUSE_MIDDLE];
 }
 
 bool App::IsRightMouse() { 
-  return mouseClick[MOUSE_RIGHT];
+  return gMouseClick[MOUSE_RIGHT];
 }
 
 void App::SetPhysicsScale(int scale) { 
-  c2Scale = scale;
+  gScale = scale;
 }
