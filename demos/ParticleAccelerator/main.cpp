@@ -7,14 +7,12 @@ using namespace std;
 
 App app;
 
-bool running = true;
-
 Texture texture;
 
 ParticleSystem pSystem;
 
 int main(int argc, char *argv[]){
-  app.Setup("ParticleAccelerator", 1500, 800, Vec2(0, 9.8), 5, 5);
+  app.Setup("ParticleAccelerator", 1500, 800, Vec2(0, 9.8f), 5, 5);
   app.SetPhysicsScale(8);
 
   texture.Setup("icon1.png");

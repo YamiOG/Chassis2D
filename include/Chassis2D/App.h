@@ -33,7 +33,7 @@ class App{
   int width, height;
 
   int velocityI, positionI;
-  int physicsFPS;
+  int physicsFPS = 60;
   int pastTime = 0;
 
   vector<shared_ptr<Particle>> particles;
@@ -89,7 +89,7 @@ class App{
   void SetMasterVolume(float value);
 
   string GetInputText();
-  Vec2 GetMouse();
+  Vec2 GetMousePosition();
   long int GetTime();
   bool IsMouseInVec4(Vec4 rect);
   bool IsPressed(string k);

@@ -139,5 +139,4 @@ void ParticleSystem::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
 }
 
 ParticleSystem::~ParticleSystem(){
-  //texture = nullptr;
 }

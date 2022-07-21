@@ -43,6 +43,7 @@ class Object{
   void SetBody(b2Body *body) {this->body = body; }
   void SetVelocity(Vec2 velocity);
   void SetVelocity(float magnitude, float angle);
+  void SetAngularVelocity(float magnitude);
   void RotationFixed(bool fixed);
   int ApplyConstVelocity(Vec2 velocity);
   int ApplyConstVelocity(Vec2 velocity, bool jumping);
@@ -51,8 +52,11 @@ class Object{
   Vec4 GetCollisionBox();
   void SetActive(bool set);
   void SetPosition(Vec2 position);
+  void SetPosition(Vec2 position, float angle);
   void SetSensor(float x, float y, float w, float h, int categoryBits, int maskBits, int id);
   void SetBullet(bool bullet);
+  void SetGravityScale(float value);
+  float GetGravityScale();
   float GetMass();
   float GetAngle();
   bool IsActive();

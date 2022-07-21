@@ -21,6 +21,7 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
 
     width = w;
     height = h;
+    size = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -59,6 +60,7 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
 
     width = w;
     height = h;
+    size = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -95,6 +97,7 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 
     width = w;
     height = h;
+    size = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -257,6 +260,12 @@ void Object::SetVelocity(float magnitude, float angle){
   }
 }
 
+void Object::SetAngularVelocity(float magnitude){
+  if(body){
+    body->SetAngularVelocity(magnitude);
+  }
+}
+
 void Object::RotationFixed(bool fixed) { 
   if(body) body->SetFixedRotation(fixed);
 }
@@ -277,6 +286,10 @@ void Object::SetPosition(Vec2 position) {
   if(body) body->SetTransform(*Vec2(position - origin).ToB2(), 0);
 }
 
+void Object::SetPosition(Vec2 position, float angle) { 
+  if(body) body->SetTransform(*Vec2(position - origin).ToB2(), angle);
+}
+
 void Object::SetBullet(bool bullet) { 
   if(body) body->SetBullet(bullet); 
 }
@@ -291,4 +304,12 @@ float Object::GetAngle() {
 
 bool Object::IsActive() { 
   return (body) ? body->IsAwake() : false;
+}
+
+void Object::SetGravityScale(float value){
+  body->SetGravityScale(value);
+}
+
+float Object::GetGravityScale(){
+  return body->GetGravityScale();
 }

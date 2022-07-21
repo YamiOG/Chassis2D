@@ -260,7 +260,7 @@ void App::FillRoundedRect(Vec4 rect, int radius, Color color){
   }
 }
 
-Vec2 App::GetMouse(){
+Vec2 App::GetMousePosition(){
   return gMousePosition;
 }
 
@@ -299,31 +299,6 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
   }
   return 0;
 }
-
-/*int App::Draw(Texture *texture, Vec4 rect, int radius){
-  if(texture){
-    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-    SDL_RenderCopy(c2Renderer, texture->GetData(), NULL, &tRect);
-  }
-  else{
-    cout << "ERROR:Texture is a nullptr" << endl;
-    return -1;
-  }
-  return 0;
-}
-
-int App::Draw(Texture *texture, Vec4 crop, Vec4 rect, int radius){
-  if(texture){
-    SDL_Rect tRect = {(int)rect.x, (int)rect.y, (int)rect.w, (int)rect.h};
-    SDL_Rect tCrop = {(int)crop.x, (int)crop.y, (int)crop.w, (int)crop.h};
-    SDL_RenderCopy(c2Renderer, texture->GetData(), &tCrop, &tRect);
-  }
-  else{
-    cout << "ERROR:Texture is a nullptr" << endl;
-    return -1;
-  }
-  return 0;
-}*/
 
 int App::Draw(Object *object){
   if(object){
