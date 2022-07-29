@@ -29,12 +29,23 @@ class Object{
   bool hide = false;
  public:
   Object(){}
+
+  Object(float x, float y, float w, float h);
+  int Setup(float x, float y, float w, float h);
+  int Static(float x, float y, float w, float h);
+
   Object(float x, float y, float w, float h, int categoryBits, int maskBits);
   int Setup(float x, float y, float w, float h, int categoryBits, int maskBits);
   int Static(float x, float y, float w, float h, int categoryBits, int maskBits);
+
+  Object(float x, float y, float w, float h, float friction, float density, float restitution);
+  int Setup(float x, float y, float w, float h, float friction, float density, float restitution);
+  int Dynamic(float x, float y, float w, float h, float friction, float density, float restitution);
+
   Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits);
   int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits);
   int Dynamic(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits);
+
   Object(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic);
   int Setup(float x, float y, float w, float h, float friction, float density, float restitution, int categoryBits, int maskBits, bool isDynamic);
 

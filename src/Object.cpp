@@ -5,6 +5,45 @@
 #include <SDL.h>
 #include <box2d/box2d.h>
 
+Object::Object(float x, float y, float w, float h){
+  Setup(x, y, w, h);
+}
+
+int Object::Setup(float x, float y, float w, float h){
+  return Static(x, y, w, h);
+}
+
+int Object::Static(float x, float y, float w, float h){
+  if(gWorld != nullptr){
+    b2BodyDef bodyDef;
+    b2FixtureDef fixture;
+    b2PolygonShape shape;
+
+    width = w;
+    height = h;
+    size = Vec2(w, h);
+
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
+    fixture.shape = &shape;
+
+    fixture.filter.categoryBits = 0x0001;
+    fixture.filter.maskBits = 0xFFFF;
+
+    bodyDef.type = b2_staticBody;
+
+    body = gWorld->CreateBody(&bodyDef);
+    body->CreateFixture(&fixture);
+    body->GetUserData().pointer = (uintptr_t)this;
+  }
+  else{
+    cout << "ERROR:b2World is nullptr" << endl;
+    return -1;
+  }
+
+  return 0;
+}
+
 Object::Object(float x, float y, float w, float h, int categoryBits, int maskBits){
   Setup(x, y, w, h, categoryBits, maskBits);
 }
@@ -41,6 +80,47 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
     return -1;
   }
 
+  return 0;
+}
+
+Object::Object(float x, float y, float w, float h, float friction, float density, float restitution){
+  Setup(x, y, w, h, friction, density, restitution);
+}
+
+int Object::Setup(float x, float y, float w, float h, float friction, float density, float restitution){
+  return Dynamic(x , y, w, h, friction, density, restitution);
+}
+
+int Object::Dynamic(float x, float y, float w, float h, float friction, float density, float restitution){
+  if(gWorld != nullptr){
+    b2BodyDef bodyDef;
+    b2FixtureDef fixture;
+    b2PolygonShape shape;
+
+    width = w;
+    height = h;
+    size = Vec2(w, h);
+
+    bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
+    shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
+    fixture.shape = &shape;
+
+    fixture.filter.categoryBits = 0x0001;
+    fixture.filter.maskBits = 0xFFFF;
+
+    bodyDef.type = b2_dynamicBody;
+    fixture.friction = friction;
+    fixture.density = density;
+    fixture.restitution = restitution;
+
+    body = gWorld->CreateBody(&bodyDef);
+    body->CreateFixture(&fixture);
+    body->GetUserData().pointer = (uintptr_t)this;
+  }
+  else{
+    cout << "ERROR:b2World is nullptr" << endl;
+    return -1;
+  }
   return 0;
 }
 
@@ -183,7 +263,9 @@ void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
 
 Vec4 Object::GetCollisionBox(){
   if(body){
-    return Vec4((body->GetPosition().x * gScale) - (width / 2) + origin.x, (body->GetPosition().y * gScale) - (height / 2) + origin.x, width, height );
+    //Removed origin remove from Library
+    Vec2 scaledPosition = Vec2(body->GetPosition()) * gScale;
+    return Vec4(scaledPosition.x - (width / 2), scaledPosition.y - (height / 2), width, height );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -193,7 +275,8 @@ Vec4 Object::GetCollisionBox(){
 
 Vec4 Object::GetRect() {
   if(body){ 
-    return Vec4((body->GetPosition().x * gScale) - (width / 2) + offset.x, (body->GetPosition().y * gScale) - (height / 2) + offset.y, size.x, size.y );
+    Vec2 scaledPosition = Vec2(body->GetPosition()) * gScale;
+    return Vec4(scaledPosition.x - (width / 2) + offset.x, scaledPosition.y - (height / 2) + offset.y, size.x, size.y );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -205,6 +288,7 @@ int Object::ApplyConstVelocity(Vec2 velocity){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
+    velocity.Div(gScale);
     body->ApplyLinearImpulse( b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
   }
   else{
@@ -218,6 +302,7 @@ int Object::ApplyConstVelocity(Vec2 velocity, bool jumping){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
+    velocity.Div(gScale);
     if(jumping){
       velocity.y = 0;
     }
@@ -249,6 +334,7 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
 }
 
 void Object::SetVelocity(Vec2 velocity) { 
+  velocity.Div(gScale);
   if(body) body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y)); 
 }
 
@@ -256,6 +342,7 @@ void Object::SetVelocity(float magnitude, float angle){
   if(body){
     b2Vec2 velocity = b2Vec2(cos(angle * M_PI / 180), -sin(angle * M_PI / 180));
     velocity *= magnitude;
+    velocity *= (1.f/gScale);
     body->SetLinearVelocity(velocity); 
   }
 }
@@ -271,11 +358,13 @@ void Object::RotationFixed(bool fixed) {
 }
 
 void Object::ApplyImpulse(Vec2 velocity) { 
-  velocity.Multi(body->GetMass()); if(body) body->ApplyLinearImpulse(b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
+  velocity.Div(gScale);
+  velocity.Multi(body->GetMass());
+  if(body) body->ApplyLinearImpulse(b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
 }
 
 Vec2 Object::GetVelocity() { 
-  return (body) ? Vec2(body->GetLinearVelocity()) : Vec2(0,0); 
+  return (body) ? Vec2(body->GetLinearVelocity()) * gScale : Vec2(0,0); 
 }
 
 void Object::SetActive(bool set) {
@@ -283,11 +372,17 @@ void Object::SetActive(bool set) {
 }
 
 void Object::SetPosition(Vec2 position) { 
-  if(body) body->SetTransform(*Vec2(position - origin).ToB2(), 0);
+  if(body) {
+    Vec2 centeredPosition = position + Vec2(width/2, height/2);
+    body->SetTransform(b2Vec2(centeredPosition.x/gScale, centeredPosition.y/gScale), 0);
+  }
 }
 
 void Object::SetPosition(Vec2 position, float angle) { 
-  if(body) body->SetTransform(*Vec2(position - origin).ToB2(), angle);
+  if(body) {
+    Vec2 centeredPosition = position + Vec2(width/2, height/2);
+    body->SetTransform(b2Vec2(centeredPosition.x/gScale, centeredPosition.y/gScale), angle);
+  }
 }
 
 void Object::SetBullet(bool bullet) { 

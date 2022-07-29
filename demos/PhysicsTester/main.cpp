@@ -16,8 +16,11 @@ int main(int argc, char *argv[]){
 
     while(!app.ShouldClose()){
         Vec4 rect = object.GetRect();
+        cout << rect.x << endl;
 
         app.PhysicsUpdate();
+
+        object.SetPosition(Vec2(100,100));
 
         app.Clear();
         app.FillRect(rect, Color(100, 0, 100));

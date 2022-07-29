@@ -73,7 +73,7 @@ void ParticleSystem::Update(){
       double angle = minAngle + (rand() % diff);
 
       Vec2 velocity = Vec2(cos(angle * M_PI / 180), -sin(angle * M_PI / 180));
-      velocity = velocity * speed;
+      velocity = velocity * speed / gScale;
 
       p->SetVelocity(velocity);
       p->SetTime(SDL_GetTicks() + p->GetLifetime());
