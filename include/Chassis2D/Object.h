@@ -23,7 +23,8 @@ class Object{
 
   float width, height;
 
-  Vec2 size, offset;
+  Vec2 size;
+  Vec2 texSize, offset;
   Vec2 origin = Vec2(0,0);
 
   bool hide = false;
@@ -83,7 +84,8 @@ class Object{
   void SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size);
   void SetTexture(Texture* t, Vec2 offset, Vec2 size);
   shared_ptr<Texture> GetTexture(){ return texture; }
-  Vec2 GetTextureSize() { return size; }
+  Vec2 GetTextureSize() { return texSize; }
+  void SetTextureSize(Vec2 size) { texSize = size; }
 
   void SetOffset(int xOffset, int yOffset) { offset.x = (float)xOffset; offset.y = (float)yOffset; }
   void SetOffset(Vec2 offset) { this->offset = offset; }

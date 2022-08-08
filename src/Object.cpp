@@ -21,7 +21,7 @@ int Object::Static(float x, float y, float w, float h){
 
     width = w;
     height = h;
-    size = Vec2(w, h);
+    texSize = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -60,7 +60,7 @@ int Object::Static(float x, float y, float w, float h, int categoryBits, int mas
 
     width = w;
     height = h;
-    size = Vec2(w, h);
+    texSize = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -99,7 +99,7 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
 
     width = w;
     height = h;
-    size = Vec2(w, h);
+    texSize = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -140,7 +140,7 @@ int Object::Dynamic(float x, float y, float w, float h, float friction, float de
 
     width = w;
     height = h;
-    size = Vec2(w, h);
+    texSize = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -177,7 +177,7 @@ int Object::Setup(float x, float y, float w, float h, float friction, float dens
 
     width = w;
     height = h;
-    size = Vec2(w, h);
+    texSize = Vec2(w, h);
 
     bodyDef.position.Set((x + (width/2))/gScale, (y + (height/2))/gScale);
     shape.SetAsBox((width/2)/gScale, (height/2)/gScale);
@@ -218,7 +218,7 @@ void Object::SetTexture(Texture* t){
   texture = sharedTexture;
 
   offset = Vec2(0,0);
-  size = Vec2(width, height);
+  texSize = Vec2(width, height);
 }
 
 void Object::SetTexture(Texture* t, int width, int height){
@@ -226,7 +226,7 @@ void Object::SetTexture(Texture* t, int width, int height){
   texture = sharedTexture;
 
   offset = Vec2(0,0);
-  size = Vec2(width, height);
+  texSize = Vec2(width, height);
 }
 
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
@@ -234,7 +234,7 @@ void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int hei
   texture = sharedTexture;
 
   offset = Vec2(xOffset, yOffset);
-  size = Vec2(width, height);
+  texSize = Vec2(width, height);
 }
 
 void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) { 
@@ -242,7 +242,7 @@ void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) {
   texture = sharedTexture;
 
   this->offset = offset;
-  size = Vec2(width, height);
+  texSize = Vec2(width, height);
 }
 
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) { 
@@ -250,7 +250,7 @@ void Object::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) {
   texture = sharedTexture;
 
   offset = Vec2(xOffset, yOffset);
-  this->size = size;
+  this->texSize = size;
 }
 
 void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) { 
@@ -258,7 +258,7 @@ void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
   texture = sharedTexture;
 
   this->offset = offset;
-  this->size = size;
+  this->texSize = size;
 }
 
 Vec4 Object::GetCollisionBox(){
@@ -276,7 +276,7 @@ Vec4 Object::GetCollisionBox(){
 Vec4 Object::GetRect() {
   if(body){ 
     Vec2 scaledPosition = Vec2(body->GetPosition()) * gScale;
-    return Vec4(scaledPosition.x - (width / 2) + offset.x, scaledPosition.y - (height / 2) + offset.y, size.x, size.y );
+    return Vec4(scaledPosition.x - (width / 2) + offset.x, scaledPosition.y - (height / 2) + offset.y, texSize.x, texSize.y );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
