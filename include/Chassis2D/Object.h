@@ -25,7 +25,6 @@ class Object{
 
   Vec2 size;
   Vec2 texSize, offset;
-  Vec2 origin = Vec2(0,0);
 
   bool hide = false;
  public:
@@ -90,9 +89,6 @@ class Object{
   void SetOffset(int xOffset, int yOffset) { offset.x = (float)xOffset; offset.y = (float)yOffset; }
   void SetOffset(Vec2 offset) { this->offset = offset; }
   Vec2 GetOffset() { return offset; }
-
-  void SetOrigin(Vec2 origin) { this->origin = origin; }
-  Vec2 GetOrigin() { return origin; }
 
   void Hide() { hide = true; }
   void Show() { hide = false; }

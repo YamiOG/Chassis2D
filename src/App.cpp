@@ -303,7 +303,7 @@ int App::Draw(Texture *texture, Vec4 crop, Vec4 rect){
 int App::Draw(Object *object){
   if(object){
     if(!object->IsHidden()){
-      Draw(object->GetTexture().get(), object->GetRect() - object->GetOrigin());
+      Draw(object->GetTexture().get(), object->GetRect());
     }
   }
   else{
@@ -347,7 +347,7 @@ int App::Draw(Text *text){
 int App::Draw(Particle *particle){
   if(particle){
     if(!particle->IsHidden()){ 
-      Draw(particle->GetTexture().get(), particle->GetRect() - particle->GetOrigin());
+      Draw(particle->GetTexture().get(), particle->GetRect());
     }
   }
   else{
@@ -360,14 +360,14 @@ int App::Draw(Particle *particle){
 void App::DrawParticles(){
   for(int i = 0; i < particles.size(); i++){
     if(!particles[i]->IsHidden()){
-      Draw(particles[i]->GetTexture().get(), particles[i]->GetRect() - particles[i]->GetOrigin());
+      Draw(particles[i]->GetTexture().get(), particles[i]->GetRect());
     }
   }
 
   for(int i = 0; i < particleSystems.size(); i++){
     if(!particleSystems[i]->IsHidden()){
       for(int j = 0; j < particleSystems[i]->GetParticles().size(); j++){
-          Draw(particleSystems[i]->GetParticles()[j]->GetTexture().get(), particleSystems[i]->GetParticles()[j]->GetRect() - particleSystems[i]->GetParticles()[j]->GetOrigin());
+          Draw(particleSystems[i]->GetParticles()[j]->GetTexture().get(), particleSystems[i]->GetParticles()[j]->GetRect());
       }
     }
   }

@@ -226,15 +226,15 @@ void Object::SetTexture(Texture* t, int width, int height){
   texture = sharedTexture;
 
   offset = Vec2(0,0);
-  texSize = Vec2(width, height);
+  texSize = Vec2((float)width, (float)height);
 }
 
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, int width, int height) { 
   shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
-  offset = Vec2(xOffset, yOffset);
-  texSize = Vec2(width, height);
+  offset = Vec2((float)xOffset, (float)yOffset);
+  texSize = Vec2((float)width, (float)height);
 }
 
 void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) { 
@@ -242,14 +242,14 @@ void Object::SetTexture(Texture* t, Vec2 offset, int width, int height) {
   texture = sharedTexture;
 
   this->offset = offset;
-  texSize = Vec2(width, height);
+  texSize = Vec2((float)width, (float)height);
 }
 
 void Object::SetTexture(Texture* t, int xOffset, int yOffset, Vec2 size) { 
   shared_ptr<Texture> sharedTexture(new Texture(*t));
   texture = sharedTexture;
 
-  offset = Vec2(xOffset, yOffset);
+  offset = Vec2((float)xOffset, (float)yOffset);
   this->texSize = size;
 }
 
@@ -263,9 +263,8 @@ void Object::SetTexture(Texture* t, Vec2 offset, Vec2 size) {
 
 Vec4 Object::GetCollisionBox(){
   if(body){
-    //Removed origin remove from Library
-    Vec2 scaledPosition = Vec2(body->GetPosition()) * gScale;
-    return Vec4(scaledPosition.x - (width / 2), scaledPosition.y - (height / 2), width, height );
+    Vec2 scaledPosition = Vec2(body->GetPosition()) * (float)gScale;
+    return Vec4( scaledPosition.x - (width / 2), scaledPosition.y - (height / 2), width, height );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -275,8 +274,9 @@ Vec4 Object::GetCollisionBox(){
 
 Vec4 Object::GetRect() {
   if(body){ 
-    Vec2 scaledPosition = Vec2(body->GetPosition()) * gScale;
-    return Vec4(scaledPosition.x - (width / 2) + offset.x, scaledPosition.y - (height / 2) + offset.y, texSize.x, texSize.y );
+    Vec2 scaledPosition = Vec2(body->GetPosition()) * (float)gScale;
+    Vec2 position = Vec2( scaledPosition.x - (width / 2), scaledPosition.y - (height / 2) );
+    return Vec4( position.x + offset.x, position.y + offset.y, texSize.x, texSize.y );
   }
   else{
     cout << "ERROR:Object Body is NULL" << endl;
@@ -288,7 +288,7 @@ int Object::ApplyConstVelocity(Vec2 velocity){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
-    velocity.Div(gScale);
+    velocity.Div((float)gScale);
     body->ApplyLinearImpulse( b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
   }
   else{
@@ -302,7 +302,7 @@ int Object::ApplyConstVelocity(Vec2 velocity, bool jumping){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
-    velocity.Div(gScale);
+    velocity.Div((float)gScale);
     if(jumping){
       velocity.y = 0;
     }
@@ -334,13 +334,13 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
 }
 
 void Object::SetVelocity(Vec2 velocity) { 
-  velocity.Div(gScale);
+  velocity.Div((float)gScale);
   if(body) body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y)); 
 }
 
 void Object::SetVelocity(float magnitude, float angle){
   if(body){
-    b2Vec2 velocity = b2Vec2(cos(angle * M_PI / 180), -sin(angle * M_PI / 180));
+    b2Vec2 velocity = b2Vec2((float)cos(angle * M_PI / 180), (float)-sin(angle * M_PI / 180));
     velocity *= magnitude;
     velocity *= (1.f/gScale);
     body->SetLinearVelocity(velocity); 
@@ -358,13 +358,13 @@ void Object::RotationFixed(bool fixed) {
 }
 
 void Object::ApplyImpulse(Vec2 velocity) { 
-  velocity.Div(gScale);
+  velocity.Div((float)gScale);
   velocity.Multi(body->GetMass());
   if(body) body->ApplyLinearImpulse(b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
 }
 
 Vec2 Object::GetVelocity() { 
-  return (body) ? Vec2(body->GetLinearVelocity()) * gScale : Vec2(0,0); 
+  return (body) ? Vec2(body->GetLinearVelocity()) * (float)gScale : Vec2(0,0); 
 }
 
 void Object::SetActive(bool set) {
