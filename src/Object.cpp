@@ -284,7 +284,7 @@ Vec4 Object::GetRect() {
   return Vec4(0.f, 0.f, 0.f, 0.f);
 }
 
-int Object::ApplyConstVelocity(Vec2 velocity){
+int Object::ApplyConstSpeed(Vec2 velocity){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
@@ -298,7 +298,7 @@ int Object::ApplyConstVelocity(Vec2 velocity){
   return 0;
 }
 
-int Object::ApplyConstVelocity(Vec2 velocity, bool jumping){
+int Object::ApplyConstSpeed(Vec2 velocity, bool jumping){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
@@ -315,11 +315,11 @@ int Object::ApplyConstVelocity(Vec2 velocity, bool jumping){
   return 0;
 }
 
-void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int maskBits, int id){
+void Object::SetSensor(float xOffset, float yOffset, float w, float h, int categoryBits, int maskBits, int id){
   if(body){
     b2FixtureDef tmpFixture;
     b2PolygonShape tmpShape;
-    tmpShape.SetAsBox(w/2/gScale, h/2/gScale, b2Vec2((x-width/2)/gScale, (y-height/2)/gScale), 0);
+    tmpShape.SetAsBox(w/2/gScale, h/2/gScale, b2Vec2((xOffset-width/2)/gScale, (yOffset-height/2)/gScale), 0);
     tmpFixture.shape = &tmpShape;
 
     tmpFixture.isSensor = true;
@@ -333,6 +333,16 @@ void Object::SetSensor(float x, float y, float w, float h, int categoryBits, int
   }
 }
 
+bool Object::IsSensorColliding(int id){
+  for (b2ContactEdge* edge = body->GetContactList(); edge; edge = edge->next){
+    if(edge->contact->IsTouching()){
+      if((intptr_t)edge->contact->GetFixtureA()->GetUserData().pointer == id){
+        return true;
+      }
+    }
+  }
+  return false;
+}
 void Object::SetVelocity(Vec2 velocity) { 
   velocity.Div((float)gScale);
   if(body) body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y)); 
@@ -357,10 +367,10 @@ void Object::RotationFixed(bool fixed) {
   if(body) body->SetFixedRotation(fixed);
 }
 
-void Object::ApplyImpulse(Vec2 velocity) { 
-  velocity.Div((float)gScale);
-  velocity.Multi(body->GetMass());
-  if(body) body->ApplyLinearImpulse(b2Vec2(velocity.x, velocity.y), body->GetWorldCenter(), true);
+void Object::ApplyImpulse(Vec2 impulse) { 
+  impulse.Div((float)gScale);
+  impulse.Multi(body->GetMass());
+  if(body) body->ApplyLinearImpulse(b2Vec2(impulse.x, impulse.y), body->GetWorldCenter(), true);
 }
 
 Vec2 Object::GetVelocity() { 
