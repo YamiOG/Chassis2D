@@ -10,7 +10,7 @@
 
 ![Official logo](icon1.png "Official Logo")
 
-Chassis2D is a game framework that aims to make the use of libraries, like SDL2, Box2D, SoLoud, easy by wrapping around them. I am including, in this framework, my many hours of troubleshooting in an attempt to allow more beginners to avoid wasting their time troubleshooting! Overall, though, I am trying to lower the gateway of entry and allow more people to have a quick route to bringing their ideas to life.
+Chassis2D is a game framework that aims to make the use of libraries, like SDL2, Box2D, and SoLoud, easy by wrapping around them. I am including, in this framework, my many hours of troubleshooting in an attempt to allow more beginners to avoid wasting their time troubleshooting! Overall, though, I am trying to lower the gateway of entry and allow more people to have a quick route to bringing their ideas to life.
 
 # Build Steps
 
