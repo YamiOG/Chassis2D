@@ -97,6 +97,7 @@ class App{
   bool IsPressed(string k);
   bool IsColliding(Object* o1, Object* o2);
   bool SetContact(Object* o1, Object* o2, bool enabled);
+  bool SetContact(Object* o1, int categoryBits, bool enabled);
   bool IsSensorColliding(Object *o, int id);
   bool IsMouseClicked(int MOUSE_TYPE);
   bool IsLeftMouse();

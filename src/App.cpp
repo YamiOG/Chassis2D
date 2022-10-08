@@ -438,6 +438,19 @@ bool App::SetContact(Object* o1, Object* o2, bool enabled){
   return false;
 }
 
+//*IMPORTANT* Comment "m_flags |= e_enabledFlag;" in b2_contact.cpp
+bool App::SetContact(Object* o1, int categoryBits, bool enabled){
+  for (b2ContactEdge* edge = o1->GetBody()->GetContactList(); edge; edge = edge->next){
+    if(edge->contact->GetFixtureB()->GetFilterData().categoryBits == categoryBits){
+      if(edge->contact->IsTouching()){
+        edge->contact->SetEnabled(enabled);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 bool App::IsSensorColliding(Object *o, int id){
   for (b2ContactEdge* edge = o->GetBody()->GetContactList(); edge; edge = edge->next){
     if(edge->contact->IsTouching()){

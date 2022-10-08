@@ -8,7 +8,7 @@ const int S_WIDTH = 1500, S_HEIGHT = 800;
 
 App app;
 
-Object object, ground, platform;
+Object object, ground, platform[3];
 
 float speed = 200.f;
 
@@ -20,13 +20,15 @@ int main(int argc, char *argv[]){
     app.SetWindowIcon("apple.jpg");
     app.SetPhysicsScale(8);
 
-    object.Dynamic(S_WIDTH/2 - 15, 100, 30, 30, 0.f, 1.f, 0.f, TERRAIN, TERRAIN);
+    object.Dynamic(S_WIDTH/2 - 15, 100, 30, 30, 0.f, 1.f, 0.f);
     object.SetSensor(0, 30, 1, 1, 1);
     object.RotationFixed(true);
 
     ground.Static(0, S_HEIGHT+1, S_WIDTH, 1);
 
-    platform.Static(S_WIDTH/2 - 100, 700, 200, 10);
+    for(int i = 0; i<3; i++){
+        platform[i].Static(S_WIDTH*(i+1)/4 - 100, 700, 200, 10, 0x0002, 0xFFFF);
+    }
 
     font.Setup("Squarewave.ttf", 40, Color(0, 0, 0));
     data_text.Setup(10, 10, "", &font);
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]){
             object.SetYVelocity(-speed*2);
         }
         if(app.IsPressed("s")){
-            app.SetContact(&object, &platform, false);
+            app.SetContact(&object, 0x0002, false);
         }
 
         string physics_data = "Vel.<" +  to_string((int)object.GetVelocity().x) + ", " + to_string((int)object.GetVelocity().y) + ">";
@@ -53,7 +55,10 @@ int main(int argc, char *argv[]){
 
         app.Clear();
         app.FillRect(object.GetRect(), Color(100, 0, 100));
-        app.FillRect(platform.GetRect(), Color(200, 0, 100));
+
+        for(int i = 0; i<3; i++){
+            app.FillRect(platform[i].GetRect(), Color(200, 0, 100));
+        }
 
         app.Draw(&data_text);
 
