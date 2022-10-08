@@ -425,6 +425,7 @@ bool App::IsColliding(Object* o1, Object* o2){
   return false;
 }
 
+//*IMPORTANT* Comment "m_flags |= e_enabledFlag;" in b2_contact.cpp
 bool App::SetContact(Object* o1, Object* o2, bool enabled){
   for (b2ContactEdge* edge = o1->GetBody()->GetContactList(); edge; edge = edge->next){
     if(edge->contact->GetFixtureB()->GetBody() == o2->GetBody()){
