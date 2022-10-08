@@ -60,6 +60,8 @@ class App{
 
   void Update();
   bool ShouldClose() { return close; }
+  
+  void SetWindowIcon(const char* location);
 
   //Render Cmds
   void Clear();

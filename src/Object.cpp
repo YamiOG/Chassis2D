@@ -3,6 +3,7 @@
 #include "Chassis2D.h"
 
 #include <SDL.h>
+#include <stb_image.h>
 #include <box2d/box2d.h>
 
 Object::Object(float x, float y, float w, float h){
@@ -284,7 +285,7 @@ Vec4 Object::GetRect() {
   return Vec4(0.f, 0.f, 0.f, 0.f);
 }
 
-int Object::ApplyConstSpeed(Vec2 velocity){
+int Object::ApplyConstantSpeed(Vec2 velocity){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
@@ -298,7 +299,7 @@ int Object::ApplyConstSpeed(Vec2 velocity){
   return 0;
 }
 
-int Object::ApplyConstSpeed(Vec2 velocity, bool jumping){
+int Object::ApplyConstantSpeed(Vec2 velocity, bool jumping){
   if(body){
     velocity.Subt(GetVelocity());
     velocity.Multi(body->GetMass());
@@ -313,6 +314,24 @@ int Object::ApplyConstSpeed(Vec2 velocity, bool jumping){
     return -1;
   }
   return 0;
+}
+
+void Object::SetSensor(float xOffset, float yOffset, float w, float h, int id){
+  if(body){
+    b2FixtureDef tmpFixture;
+    b2PolygonShape tmpShape;
+    tmpShape.SetAsBox(w/2/gScale, h/2/gScale, b2Vec2((xOffset-width/2)/gScale, (yOffset-height/2)/gScale), 0);
+    tmpFixture.shape = &tmpShape;
+
+    tmpFixture.isSensor = true;
+    tmpFixture.filter.categoryBits = 0x0001;
+    tmpFixture.filter.maskBits = 0xFFFF;
+
+    body->CreateFixture(&tmpFixture)->GetUserData().pointer = (uintptr_t)id;
+  }
+  else{
+    cout << "ERROR:Object Body is NULL" << endl;
+  }
 }
 
 void Object::SetSensor(float xOffset, float yOffset, float w, float h, int categoryBits, int maskBits, int id){
@@ -361,6 +380,14 @@ void Object::SetAngularVelocity(float magnitude){
   if(body){
     body->SetAngularVelocity(magnitude);
   }
+}
+
+void Object::SetXVelocity(float x){
+  if(body) body->SetLinearVelocity(b2Vec2(x/(float)gScale, body->GetLinearVelocity().y));
+}
+
+void Object::SetYVelocity(float y){
+  if(body) body->SetLinearVelocity(b2Vec2(body->GetLinearVelocity().x, y/(float)gScale));
 }
 
 void Object::RotationFixed(bool fixed) { 

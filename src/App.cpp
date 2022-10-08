@@ -6,6 +6,7 @@
 #include <SDL_ttf.h>
 #include <box2d/box2d.h>
 #include <soloud.h>
+#include <stb_image.h>
 
 App::App(const char* title, int width, int height){
     Setup(title, width, height);
@@ -116,6 +117,23 @@ App::~App(){
   SDL_DestroyRenderer(gRenderer);
   SDL_DestroyWindow(gWindow);
   SDL_Quit();
+}
+
+void App::SetWindowIcon(const char* location){
+  int req_format = STBI_rgb_alpha;
+  int orig_format;
+  int s_width, s_height;
+  unsigned char* data = stbi_load(location, &s_width, &s_height, &orig_format, req_format);
+  if (data == NULL) {
+      cout << "ERROR:stb_image Failed to load file" << endl;
+  }
+
+  int depth = 32;
+  int pitch = 4*s_width;
+
+  SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormatFrom((void*)data, s_width, s_height, depth, pitch, SDL_PIXELFORMAT_RGBA32);
+
+  SDL_SetWindowIcon(gWindow, surface);
 }
 
 void App::Update(){

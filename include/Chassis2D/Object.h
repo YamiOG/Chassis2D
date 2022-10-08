@@ -64,8 +64,11 @@ class Object{
   void SetAngularVelocity(float magnitude);
   Vec2 GetVelocity();
 
-  int ApplyConstSpeed(Vec2 velocity); //Applies a force that creates a constant desired velocity
-  int ApplyConstSpeed(Vec2 velocity, bool jumping); //Applies a force that creates a constant desired velocity; can disable in one axis
+  void SetXVelocity(float x);
+  void SetYVelocity(float y);
+
+  int ApplyConstantSpeed(Vec2 velocity); //Applies a force that creates a constant desired velocity
+  int ApplyConstantSpeed(Vec2 velocity, bool jumping); //Applies a force that creates a constant desired velocity; can disable in one axis
   void ApplyImpulse(Vec2 impulse);
 
   void SetActive(bool set); //Sets object active or inactive in the simulation
@@ -75,6 +78,7 @@ class Object{
   void SetPosition(Vec2 position, float angle);
 
   void SetSensor(float xOffset, float yOffset, float w, float h, int categoryBits, int maskBits, int id); //Creates a sensor on the object that can be used to detect specific collisions
+  void SetSensor(float xOffset, float yOffset, float w, float h, int id);
   bool IsSensorColliding(int id); //Checks for collisions on sensors using an sensor ID defined previously
 
   void SetGravityScale(float value);
