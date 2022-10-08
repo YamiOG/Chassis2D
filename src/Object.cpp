@@ -434,6 +434,9 @@ float Object::GetAngle() {
   return body->GetAngle();
 } 
 
+float Object::GetRotationalInertia(){
+  return body->GetInertia();
+}
 bool Object::IsActive() { 
   return (body) ? body->IsAwake() : false;
 }

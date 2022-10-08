@@ -88,6 +88,7 @@ class Object{
   void SetBullet(bool bullet); //Checks continously for collisions; used for fast moving objects
   float GetMass();
   float GetAngle();
+  float GetRotationalInertia();
 
   ////////
   //Render

@@ -425,6 +425,18 @@ bool App::IsColliding(Object* o1, Object* o2){
   return false;
 }
 
+bool App::SetContact(Object* o1, Object* o2, bool enabled){
+  for (b2ContactEdge* edge = o1->GetBody()->GetContactList(); edge; edge = edge->next){
+    if(edge->contact->GetFixtureB()->GetBody() == o2->GetBody()){
+      if(edge->contact->IsTouching()){
+        edge->contact->SetEnabled(enabled);
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 bool App::IsSensorColliding(Object *o, int id){
   for (b2ContactEdge* edge = o->GetBody()->GetContactList(); edge; edge = edge->next){
     if(edge->contact->IsTouching()){
