@@ -1,6 +1,6 @@
 # Disclaimer
 
-**This version is still largely incomplete**
+**This version is still incomplete**
 
 # Chassis2D
 [![Build Status](https://github.com/YamiOG/Chassis2D/actions/workflows/cmake.yml/badge.svg?branch=master)](https://github.com/YamiOG/Chassis2D/actions/workflows/cmake.yml)
